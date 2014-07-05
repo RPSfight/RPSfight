@@ -1,0 +1,37 @@
+#pLife {
+	position: absolute;
+	left: 20px;
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+	filter: FlipH;
+	-ms-filter: "FlipH";
+}
+
+#pBlood {
+	position: absolute;
+	top:7px;
+	left: 60px;
+	height:16px;
+	width:82px;
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+	filter: FlipH;
+	-ms-filter: "FlipH";
+}
+
+#eLife {
+	position: absolute;
+	right: 20px;
+}
+
+#eBlood {
+	position: absolute;
+	right: 60px;
+	top:7px;
+	height:16px;
+	width:82px;
+}

@@ -1,0 +1,42 @@
+body {
+}
+#line1 {
+	width: 60px;
+	position: absolute;
+	transform: rotate(120deg);
+	-ms-transform: rotate(120deg); /* IE 9 */
+	-webkit-transform: rotate(120deg); /* Opera, Chrome, and Safari */
+	top: 72px;
+	left: 25px;
+}
+#line2 {
+	width: 60px;
+	position: absolute;
+	transform: rotate(-120deg);
+	-ms-transform: rotate(-120deg); /* IE 9 */
+	-webkit-transform: rotate(-120deg); /* Opera, Chrome, and Safari */
+	top: 72px;
+	left: 90px;
+}
+#line3 {
+	width: 60px;
+	position: absolute;
+	top: 120px;
+	left: 57px;
+}
+#paper {
+	position: absolute;
+	top:0px;
+	left: 57px;
+}
+#rock {
+	top: 95px;
+	position: absolute;
+	left:0px;
+}
+#scissors {
+	top: 95px;
+	left: 110px;
+	position: absolute;
+}
+

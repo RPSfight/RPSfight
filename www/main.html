@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>main</title>
+		<meta name="author" content="Junxin" />
+		<!-- Date: 2014-06-17 -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+		<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+		<script type="text/javascript" src="phonegap.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/rockpaperscissors.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/compare.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/rps.css" />
+		<link rel="stylesheet" type="text/css" href="css/life.css" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script>
+			var makeUnselectable = function($target) {
+				$target.addClass('unselectable')// All these attributes are inheritable
+				.attr('unselectable', 'on')// For IE9 - This property is not inherited, needs to be placed onto everything
+				.attr('draggable', 'false')// For moz and webkit, although Firefox 16 ignores this when -moz-user-select: none; is set, it's like these properties are mutually exclusive, seems to be a bug.
+				.on('dragstart', function() {
+					return false;
+				});
+				// Needed since Firefox 16 seems to ingore the 'draggable' attribute we just applied above when '-moz-user-select: none' is applied to the CSS
+
+				$target// Apply non-inheritable properties to the child elements
+				.find('*').attr('draggable', 'false').attr('unselectable', 'on');
+			};
+		</script>
+	</head>
+	<body>
+		<div align="center">
+			<input type="button" onclick="play()" value="start"\>
+			<div id="life">
+				<img src="img/rps/blood.png" id="pBlood">
+				<img src="img/rps/life.png" id="pLife">
+				<img src="img/rps/blood.png" id="eBlood">
+				<img src="img/rps/life.png" id="eLife">
+			</div>
+			<div id="rps">
+				<img src="img/rps/line.png" id="line1">
+				<img src="img/rps/line.png" id="line2">
+				<img src="img/rps/line.png" id="line3">
+				<img src="img/rps/paper.png" id="paper" onclick="add(this.id)">
+				<img src="img/rps/rock.png" id="rock" onclick="add(this.id)">
+				<img src="img/rps/scissors.png" id="scissors" onclick="add(this.id)">
+			</div>
+			<div id="compare"></div>
+			<div id="motion">
+				<img src=# id="player">
+				<img src=# id="computer">
+			</div>
+		</div>
+		<script type="text/javascript">
+			var playermove = new Array();
+			var computermove = new Array();
+			var rps = ["rock", "paper", "scissors"];
+			var start = 40;
+			var end = 80;
+			var position = start;
+			document.getElementById("player").src = "img/knight/brond/Ready.png";
+			document.getElementById("computer").src = "img/knight/brond/Ready.png";
+
+			document.addEventListener("deviceready", onDeviceReady, false);
+			window.addEventListener('orientationchange', doOnOrientationChange);
+			doOnOrientationChange();
+
+			function onDeviceReady() {
+			}
+
+			/*
+			 * This  function is for orientation
+			 */
+			function doOnOrientationChange() {
+				switch(window.orientation) {
+					case -90:
+					case 90:
+						document.getElementById("life").style.top = "10px";
+						document.getElementById("life").style.left = "120px";
+						document.getElementById("rps").style.top = "30px";
+						document.getElementById("rps").style.left = "-80px";
+						document.getElementById("compare").style.top = "60px";
+						document.getElementById("compare").style.left = "-80px";
+						document.getElementById("motion").style.top = "100px";
+						document.getElementById("motion").style.right = "-120px";
+						break;
+					default:
+						document.getElementById("life").style.top = "auto";
+						document.getElementById("life").style.left = "auto";
+						document.getElementById("rps").style.top = "80px";
+						document.getElementById("rps").style.left = "70px";
+						document.getElementById("compare").style.top = "80px";
+						document.getElementById("compare").style.left = "auto";
+						document.getElementById("motion").style.top = "300px";
+						document.getElementById("motion").style.right = "auto";
+						break;
+				}
+			}
+
+			/*
+			 * set up random array for computer
+			 * inital RPS js
+			 * intial Compare js
+			 * use fight() method display motion
+			 * reset arrays 
+			 */
+			function play() {
+				for (var i = 0; i < 5; i++) {
+					computermove.push(rps[Math.floor(Math.random() * 3)]);
+				}
+				initRPS(computermove, playermove);
+				document.getElementById("compare").innerHTML = initCompare(computermove, playermove);
+				fight(getComputer(), getPlayer());
+				playermove = new Array();
+				computermove = new Array();
+			}
+
+			/*
+			 * hide the rps triangle
+			 * display the compare
+			 * set up the time interval
+			 * when motion finish hide compare and display rps triangle
+			 */
+			function fight(computer, player) {
+				var i = 0;
+				var delay = 0;
+				document.getElementById("rps").style.visibility = "hidden";
+				document.getElementById("compare").style.visibility = "visible";
+				var time = setInterval(function() {
+					if (i < computer.length) {
+						if (delay === 0) {
+							document.getElementById("computer").src = "img/knight/brond/" + computer[i];
+							document.getElementById("player").src = "img/knight/brond/" + player[i];
+						}
+						delay++;
+						getCompareNext();
+						if (delay === 10) {
+							delay = 0;
+							switch(i%4) {
+								case 0:
+								case 2:
+									move();
+									break;
+								case 1:
+								//Add life change method;
+									break;
+								case 3:
+								//Add method during charater in ready position
+									break;
+							}
+							i++;
+						}
+					} else if (i < computer.length + 20) {
+						getNext();
+						i++;
+					} else {
+						clearInterval(time);
+						document.getElementById("rps").style.visibility = "visible";
+						document.getElementById("compare").style.visibility = "hidden";
+					}
+
+				}, 40);
+			}
+
+			//display how much player life left
+			function playerLife(i) {
+				document.getElementById("pBlood").style.width = Math.floor(82 * i) + "px";
+			}
+
+			//display how much computer life left
+			function computerLife(i) {
+				document.getElementById("eBlood").style.width = Math.floor(82 * i) + "px";
+			}
+
+			//switch poistion back and forward during two charater are fighting
+			function move() {
+				if (position === start) {
+					position = end;
+				} else {
+					position = start;
+				}
+				document.getElementById("player").style.left = position + "px";
+				document.getElementById("computer").style.right = position + "px";
+			}
+
+			//Add rock, paper, or scissors into array
+			function add(id) {
+				playermove.push(id);
+			}
+		</script>
+	</body>
+</html>
