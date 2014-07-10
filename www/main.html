@@ -31,6 +31,8 @@
 				$target// Apply non-inheritable properties to the child elements
 				.find('*').attr('draggable', 'false').attr('unselectable', 'on');
 			};
+			$('body').addClass('noscroll').css('top', -(document.documentElement.scrollTop) + 'px');
+
 		</script>
 	</head>
 	<body>
@@ -80,24 +82,16 @@
 				switch(window.orientation) {
 					case -90:
 					case 90:
-						document.getElementById("life").style.top = "10px";
-						document.getElementById("life").style.left = "120px";
-						document.getElementById("rps").style.top = "30px";
-						document.getElementById("rps").style.left = "-80px";
-						document.getElementById("compare").style.top = "60px";
-						document.getElementById("compare").style.left = "-80px";
-						document.getElementById("motion").style.top = "100px";
-						document.getElementById("motion").style.right = "-120px";
+						$("#life").css({"top":"10px","left":"120px"});
+						$("#rps").css({"top":"30px","left":"-80px"});
+						$("#compare").css({"top":"60px","left":"-180px"});
+						$("#motion").css({"top":"100px","right":"-120px"});
 						break;
 					default:
-						document.getElementById("life").style.top = "auto";
-						document.getElementById("life").style.left = "auto";
-						document.getElementById("rps").style.top = "80px";
-						document.getElementById("rps").style.left = "70px";
-						document.getElementById("compare").style.top = "80px";
-						document.getElementById("compare").style.left = "auto";
-						document.getElementById("motion").style.top = "300px";
-						document.getElementById("motion").style.right = "auto";
+						$("#life").css({"top":"auto","left":"auto"});
+						$("#rps").css({"top":"80px","left":"70px"});
+						$("#compare").css({"top":"80px","left":"auto"});
+						$("#motion").css({"top":"300px","right":"auto"});
 						break;
 				}
 			}
@@ -107,85 +101,95 @@
 			 * inital RPS js
 			 * intial Compare js
 			 * use fight() method display motion
-			 * reset arrays 
+			 * reset arrays
 			 */
 			function play() {
-				for (var i = 0; i < 5; i++) {
+				
+				for (var i = 0; i < 10; i++) {
 					computermove.push(rps[Math.floor(Math.random() * 3)]);
 				}
-				initRPS(computermove, playermove);
 				document.getElementById("compare").innerHTML = initCompare(computermove, playermove);
-				fight(getComputer(), getPlayer());
-				playermove = new Array();
-				computermove = new Array();
+				startpCompare(0);
+				starteCompare(0);
+				var size = Math.max(computermove.length, playermove.length);
+				for (var i = 0; i < size; i++) {
+					var eshow = computermove.shift();
+					var pshow = playermove.shift();
+					initRPS(eshow, pshow);
+					fight(getComputer(), getPlayer());
+				}
 			}
 
 			/*
-			 * hide the rps triangle
-			 * display the compare
+			 * hide or display rps
+			 * display or hide compare
+			 */
+
+			/*
 			 * set up the time interval
 			 * when motion finish hide compare and display rps triangle
 			 */
 			function fight(computer, player) {
-				var i = 0;
-				var delay = 0;
-				document.getElementById("rps").style.visibility = "hidden";
-				document.getElementById("compare").style.visibility = "visible";
-				var time = setInterval(function() {
-					if (i < computer.length) {
-						if (delay === 0) {
-							document.getElementById("computer").src = "img/knight/brond/" + computer[i];
-							document.getElementById("player").src = "img/knight/brond/" + player[i];
-						}
-						delay++;
-						getCompareNext();
-						if (delay === 10) {
-							delay = 0;
-							switch(i%4) {
-								case 0:
-								case 2:
-									move();
-									break;
-								case 1:
-								//Add life change method;
-									break;
-								case 3:
-								//Add method during charater in ready position
-									break;
-							}
-							i++;
-						}
-					} else if (i < computer.length + 20) {
-						getNext();
-						i++;
-					} else {
-						clearInterval(time);
-						document.getElementById("rps").style.visibility = "visible";
-						document.getElementById("compare").style.visibility = "hidden";
-					}
+				var p = "#player";
+				var e = "#computer";
+				var time = [600, 300, 20];
+				var pixal = ["40px", "80px", "70px"];
+				var pgetpxstart = {
+					opacity : '1'
+				};
+				var egetpxstart = {
+					opacity : '1'
+				};
+				var pgetpxend = {
+					opacity : '1'
+				};
+				var egetpxend = {
+					opacity : '1'
+				};
+				var pgetpxmove = {
+					opacity : '1'
+				};
+				var egetpxmove = {
+					opacity : '1'
+				};
 
-				}, 40);
+				pgetpxstart["left"] = pixal[0];
+				egetpxstart["right"] = pixal[0];
+				pgetpxend["left"] = pixal[1];
+				egetpxend["right"] = pixal[1];
+				pgetpxmove["left"] = pixal[2];
+				egetpxmove["right"] = pixal[2];
+
+				//player motion:
+				$(p).animate(pgetpxstart, time[0], function() {
+					$(p).attr("src", "img/knight/brond/" + player.shift()).css("opacity", "0");
+				}).animate(pgetpxend, time[1], function() {
+					$(p).attr("src", "img/knight/brond/" + player.shift());
+				}).animate(pgetpxmove, time[1]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[1], function() {
+					$(p).attr("src", "img/knight/brond/" + player.shift()).css("opacity", "0");
+				}).animate(pgetpxstart, time[1], function() {
+					$(p).attr("src", "img/knight/brond/" + player.shift());
+				});
+
+				//computer motion:
+				$(e).animate(egetpxstart, time[0], function() {
+					$("#computer").attr("src", "img/knight/brond/" + computer.shift()).css("opacity", "0");
+				}).animate(egetpxend, time[1], function() {
+					$("#computer").attr("src", "img/knight/brond/" + computer.shift());
+				}).animate(egetpxmove, time[1]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[1], function() {
+					$("#computer").attr("src", "img/knight/brond/" + computer.shift()).css("opacity", "0");
+				}).animate(egetpxstart, time[1], function() {
+					$("#computer").attr("src", "img/knight/brond/" + computer.shift());
+				});
+
 			}
 
-			//display how much player life left
-			function playerLife(i) {
-				document.getElementById("pBlood").style.width = Math.floor(82 * i) + "px";
-			}
-
-			//display how much computer life left
-			function computerLife(i) {
-				document.getElementById("eBlood").style.width = Math.floor(82 * i) + "px";
-			}
-
-			//switch poistion back and forward during two charater are fighting
-			function move() {
-				if (position === start) {
-					position = end;
-				} else {
-					position = start;
-				}
-				document.getElementById("player").style.left = position + "px";
-				document.getElementById("computer").style.right = position + "px";
+			//display how much charaters life left
+			function accessLife(charater, i) {
+				var w = {
+					"width" : Math.floor(82 * i) + "px"
+				};
+				$(charater).animate(w);
 			}
 
 			//Add rock, paper, or scissors into array

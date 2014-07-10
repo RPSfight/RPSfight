@@ -37,105 +37,98 @@ function getComputer() {
 function initRPS(eList, pList) {
 	player = new Array();
 	computer = new Array();
-	var size;
-	if (pList.length >= eList.length) {
-		size = pList.length;
-	} else {
-		size = eList.length;
+
+	switch(pList) {
+		case "rock":
+			player = player.concat(punch);
+			switch(eList) {
+				case "scissors":
+					player = player.concat(punchback);
+					computer = computer.concat(kick);
+					computer = computer.concat(hurt);
+					break;
+				case "rock":
+					player = player.concat(punchback);
+					computer = computer.concat(punch);
+					computer = computer.concat(punchback);
+					break;
+				case "paper":
+					player = player.concat(hurt);
+					computer = computer.concat(head);
+					computer = computer.concat(headback);
+					break;
+				default:
+					player = player.concat(punchback);
+					computer = computer.concat(ready);
+					computer = computer.concat(hurt);
+			}
+			break;
+		case "paper":
+			player = player.concat(head);
+			switch(eList) {
+				case "scissors":
+					player = player.concat(hurt);
+					computer = computer.concat(kick);
+					computer = computer.concat(kickback);
+					break;
+				case "rock":
+					player = player.concat(headback);
+					computer = computer.concat(punch);
+					computer = computer.concat(hurt);
+					break;
+				case "paper":
+					player = player.concat(headback);
+					computer = computer.concat(head);
+					computer = computer.concat(headback);
+					break;
+				default:
+					player = player.concat(headback);
+					computer = computer.concat(ready);
+					computer = computer.concat(hurt);
+			}
+			break;
+		case "scissors":
+			player = player.concat(kick);
+			switch(eList) {
+				case "scissors":
+					player = player.concat(kickback);
+					computer = computer.concat(kick);
+					computer = computer.concat(kickback);
+					break;
+				case "rock":
+					player = player.concat(hurt);
+					computer = computer.concat(punch);
+					computer = computer.concat(punchback);
+					break;
+				case "paper":
+					player = player.concat(kickback);
+					computer = computer.concat(head);
+					computer = computer.concat(hurt);
+					break;
+				default:
+					player = player.concat(kickback);
+					computer = computer.concat(ready);
+					computer = computer.concat(hurt);
+			}
+			break;
+		default:
+			player = player.concat(ready);
+			player = player.concat(hurt);
+			switch(eList) {
+				case "rock":
+					computer = computer.concat(punch);
+					computer = computer.concat(punchback);
+					break;
+				case "paper":
+					computer = computer.concat(head);
+					computer = computer.concat(headback);
+					break;
+				case "scissors":
+					computer = computer.concat(kick);
+					computer = computer.concat(kickback);
+					break;
+			}
 	}
 
-	for (var i = 0; i < size; i++) {
-		switch(pList[i]) {
-			case "rock":
-				player = player.concat(punch);
-				switch(eList[i]) {
-					case "scissors":
-						player = player.concat(punchback);
-						computer = computer.concat(kick);
-						computer = computer.concat(hurt);
-						break;
-					case "rock":
-						player = player.concat(punchback);
-						computer = computer.concat(punch);
-						computer = computer.concat(punchback);
-						break;
-					case "paper":
-						player = player.concat(hurt);
-						computer = computer.concat(head);
-						computer = computer.concat(headback);
-						break;
-					default:
-						player = player.concat(punchback);
-						computer = computer.concat(ready);
-						computer = computer.concat(hurt);
-				}
-				break;
-			case "paper":
-				player = player.concat(head);
-				switch(eList[i]) {
-					case "scissors":
-						player = player.concat(hurt);
-						computer = computer.concat(kick);
-						computer = computer.concat(kickback);
-						break;
-					case "rock":
-						player = player.concat(headback);
-						computer = computer.concat(punch);
-						computer = computer.concat(hurt);
-						break;
-					case "paper":
-						player = player.concat(headback);
-						computer = computer.concat(head);
-						computer = computer.concat(headback);
-						break;
-					default:
-						player = player.concat(headback);
-						computer = computer.concat(ready);
-						computer = computer.concat(hurt);
-				}
-				break;
-			case "scissors":
-				player = player.concat(kick);
-				switch(eList[i]) {
-					case "scissors":
-						player = player.concat(kickback);
-						computer = computer.concat(kick);
-						computer = computer.concat(kickback);
-						break;
-					case "rock":
-						player = player.concat(hurt);
-						computer = computer.concat(punch);
-						computer = computer.concat(punchback);
-						break;
-					case "paper":
-						player = player.concat(kickback);
-						computer = computer.concat(head);
-						computer = computer.concat(hurt);
-						break;
-					default:
-						player = player.concat(kickback);
-						computer = computer.concat(ready);
-						computer = computer.concat(hurt);
-				}
-				break;
-			default:
-				player =player.concat(ready);
-				player =player.concat(hurt);
-				switch(eList[i]) {
-					case "rock":
-						computer = computer.concat(punch);
-						computer = computer.concat(punchback);
-						break;
-					case "paper":
-						computer = computer.concat(head);
-						computer = computer.concat(headback);
-						break;
-					case "scissors":
-						computer = computer.concat(kick);
-						computer = computer.concat(kickback);
-						break;
-				}
-		}
-	}
 }
 

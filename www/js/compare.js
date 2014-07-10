@@ -1,64 +1,90 @@
 /**
  * @author Junxin
  */
-var computerList = new Array();
-var playerList = new Array();
-
+var eimage = new Array();
+var pimage = new Array();
+var queueclear = false;
+var getstart = {
+	"left" : "130px",
+	"width" : "75px",
+	"top":"-=20px",
+	opacity : '1'
+};
+var getend = {
+	"left" : "0px",
+	"width" : "20px",
+	"top":"+=20px",
+	opacity : '0'
+};
+var time=1000;
 //init compare display compare in html file
 function initCompare(eList, pList) {
-	computerList = eList;
-	playerList = pList;
+	queueclear = false;
 	var string = "";
-	var size;
-	if (pList.length >= eList.length) {
-		size = pList.length;
-	} else {
-		size = eList.length;
-	}
-	string += "<span style=\"position:absolute;  top: 20px; width:320px; height:10px; background-image: url('img/rps/line.png'); display:block\"><\span>";
-	string += "<span style=\"position:absolute;  top: 60px; width:320px; height:10px; background-image: url('img/rps/line.png'); display:block\"><\span>";
+	var size = Math.max(pList.length, eList.length);
 	string += "<div id='images'>";
-	var position = 250;
-	for (var i = 0; i < size; i++) {
+	var position = 280;
+	for (var i = size - 1; i >= 0; i--) {
 		if (pList[i]) {
 			var image = "'img/rps/" + pList[i] + ".png'";
-			string += "<img src=" + image + " style='position: absolute; top:-85px; width:60px; left:" + position.toString() + "px;' id='p" + i + "'>";
+			string += "<img src=" + image + " style='position: absolute; top:20px; opacity : 0;width:20px; left:" + position.toString() + "px;' id='p" + i + "'>";
 		}
 		if (eList[i]) {
 			image = "'img/rps/" + eList[i] + ".png'";
-			string += "<img src=" + image + " style='position: absolute; top:-25px; width:60px; left:" + position.toString() + "px;' id='e" + i + "'>";
+			string += "<img src=" + image + " style='position: absolute; top:100px; opacity : 0; width:20px; left:" + position.toString() + "px;' id='e" + i + "'>";
 		}
-		position += 200;
 	}
 	string += "</div>";
+	for (var i = 0; i < size; i++) {
+		changeColor(pList[i], eList[i]);
+	}
+	$("#rps").css("visibility", "hidden");
+	$("#compare").css("visibility", "visible");
 	return string;
 }
 
-//get the next position of compare
-function getCompareNext() {
-	var box = document.getElementById("images");
-	for (var i = 0; i < box.children.length; i++) {
-		var position = parseInt(box.children[i].style.left.replace(/^\D+/g, ''));
-		position -= 5;
-		box.children[i].style.left = position.toString() + "px";
-		if (position > 300) {
-			position = 0;
-		}
-		switch(position) {
-			case 0:
-				box.children[i].style.visibility = "hidden";
-				break;
-			case 300:
-				box.children[i].style.visibility = "visible";
-				break;
-			case 150:
-				box.children[i].style.width = "75px";
-				box.children[i].src = changeColor(box.children[i].id);
-				break;
-			case 120:
-				box.children[i].style.width = "60px";
+function startpCompare(i) {
+	var pid = "#p" + i;
+	if ($(pid).length > 0) {
+		//$(pid).animate(start, 9000, changeColor(pid)).animate(getbig, 900).animate(getsmall,900).animate(end, 7200, startpCompare(n));
+		$(pid).animate(getstart, time, function() {
+			$(pid).attr("src", pimage.shift());
+		}).animate(getend, time, function() {
+			startpCompare(i);
+		});
+	} else {
+		display();
+	}
+	i++;
+}
 
-		}
+function starteCompare(i) {
+	var eid = "#e" + i;
+	if ($(eid).length > 0) {
+		//$(eid).animate(start, 9000, changeColor(eid)).animate(getbig, 900).animate(getsmall,900).animate(end, 7200, starteCompare(n));
+		$(eid).animate(getstart, time, function() {
+			$(eid).attr("src", eimage.shift());
+		}).animate(getend, time, function() {
+			starteCompare(i);
+		});
+	} else {
+		display();
+	}
+	i++;
+}
+
+/*
+ * show rps
+ * hide compare
+ * when one of the start compare queue is done, shen queueclear true
+ * when both start compare done, display activate
+ */
+function display() {
+	if (queueclear) {
+		$("#rps").css("visibility", "visible");
+		$("#compare").css("visibility", "hidden");
+	} else {
+		queueclear = true;
 	}
 }
 
@@ -68,29 +94,28 @@ function getCompareNext() {
  * lose: red
  * tie: greeen
  */
-function changeColor(id) {
+function changeColor(p, e) {
 	var string = "img/rps/";
 	var score;
-	var index = parseInt(id.charAt(1));
-	if (id.charAt(0) === "p") {
-		score = wintielose(playerList[index], computerList[index]);
-		string += playerList[index];
-	} else {
-		score = wintielose(computerList[index], playerList[index]);
-		string += computerList[index];
-	}
+	score = wintielose(p, e);
 	switch(score) {
 		case "win":
-			string += "_blue.png";
+			if (p)
+				pimage.push(string + p + "_blue.png");
+			if (e)
+				eimage.push(string + e + "_red.png");
 			break;
 		case "lose":
-			string += "_red.png";
+			if (p)
+				pimage.push(string + p + "_red.png");
+			if (e)
+				eimage.push(string + e + "_blue.png");
 			break;
 		case "tie":
-			string += "_green.png";
+			pimage.push(string + p + "_green.png");
+			eimage.push(string + p + "_green.png");
 			break;
 	}
-	return string;
 }
 
 //compare strings and return win/lose/tie
