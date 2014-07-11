@@ -1,8 +1,8 @@
 /**
  * @author johng
- * 
+ *
  * Holds the javascript logic that was originally in main.html
- * 
+ *
  */
 
 var playerChosenMoves;
@@ -14,22 +14,23 @@ var position;
 var playerCurLife;
 var computerCurLife;
 
-function init(){
+function init() {
 	playerChosenMoves = new Array();
 	computerChosenMoves = new Array();
 	rps = ["rock", "paper", "scissors"];
 	start = 40;
 	end = 80;
 	position = start;
-	playerCurLife = 1;       
-	computerCurLife = 1;     
+	playerCurLife = 1;
+	computerCurLife = 1;
+	$("#explode").css('visibility', 'hidden');
 	document.getElementById("player").src = "img/knight/brond/Ready.png";
 	document.getElementById("computer").src = "img/knight/brond/Ready.png";
-	
+
 	document.addEventListener("deviceready", onDeviceReady, false);
 	window.addEventListener('orientationchange', doOnOrientationChange);
 	doOnOrientationChange();
-	
+
 	//init database
 	initDB();
 }
@@ -45,20 +46,47 @@ function doOnOrientationChange() {
 	switch(window.orientation) {
 		case -90:
 		case 90:
-			$("#life").css({"top":"10px","left":"120px"});
-			$("#rps").css({"top":"30px","left":"-80px"});
-			$("#compare").css({"top":"60px","left":"-180px"});
-			$("#motion").css({"top":"100px","right":"-120px"});
+			$("#life").css({
+				"top" : "10px",
+				"left" : "120px"
+			});
+			$("#rps").css({
+				"top" : "30px",
+				"left" : "-80px"
+			});
+			$("#compare").css({
+				"top" : "60px",
+				"left" : "-180px"
+			});
+			$("#motion").css({
+				"top" : "100px",
+				"right" : "-120px"
+			});
 			break;
 		default:
-			$("#life").css({"top":"auto","left":"auto"});
-			$("#rps").css({"top":"80px","left":"70px"});
-			$("#compare").css({"top":"80px","left":"auto"});
-			$("#motion").css({"top":"300px","right":"auto"});
+			$("#life").css({
+				"top" : "auto",
+				"left" : "auto"
+			});
+			$("#rps").css({
+				"top" : "80px",
+				"left" : "70px"
+			});
+			$("#compare").css({
+				"top" : "80px",
+				"left" : "auto"
+			});
+			$("#motion").css({
+				"top" : "300px",
+				"right" : "auto"
+			});
+			$("#explode").css({
+				"top" : "300px",
+				"right" : "auto"
+			});
 			break;
 	}
 }
-
 
 /*
  * set up random array for computer
@@ -68,8 +96,8 @@ function doOnOrientationChange() {
  * reset arrays
  */
 function play() {
-	
-	for (var i = 0; i < 10; i++) {
+
+	for (var i = 0; i < 5; i++) {
 		computerChosenMoves.push(rps[Math.floor(Math.random() * 3)]);
 	}
 	document.getElementById("compare").innerHTML = initCompare(computerChosenMoves, playerChosenMoves);
@@ -124,8 +152,10 @@ function fight(computer, player) {
 		$(p).attr("src", "img/knight/brond/" + player.shift()).css("opacity", "0");
 	}).animate(pgetpxend, time[1], function() {
 		$(p).attr("src", "img/knight/brond/" + player.shift());
+		$("#explode").css('visibility', 'visible');
 	}).animate(pgetpxmove, time[1]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[1], function() {
 		$(p).attr("src", "img/knight/brond/" + player.shift()).css("opacity", "0");
+		$("#explode").css('visibility', 'hidden');
 	}).animate(pgetpxstart, time[1], function() {
 		$(p).attr("src", "img/knight/brond/" + player.shift());
 	});
@@ -167,14 +197,14 @@ function add(id) {
 	playerChosenMoves.push(id);
 }
 
-function someoneWasHurt(type){
-	if(type === "player"){
+function someoneWasHurt(type) {
+	if (type === "player") {
 		//player was hurt
-		playerCurLife = playerCurLife-.1;
-		playerLife(playerCurLife); 
-	}else{
+		playerCurLife = playerCurLife - .1;
+		playerLife(playerCurLife);
+	} else {
 		//computer was hurt
-		computerCurLife = computerCurLife-.1;
+		computerCurLife = computerCurLife - .1;
 		computerLife(computerCurLife);
 	}
 }
