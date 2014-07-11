@@ -5,39 +5,25 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>index</title>
-		<meta name="author" content="Junxin" />
-		<!-- Date: 2014-06-26 -->
-		<!-- Date: 2014-06-17 -->
+		<meta name="author" content="JohnG" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
 		<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
-		<style>
-			div{
-				location:relative;
-				top:200px;
-			}
-			
-		</style>
-	</head>
-	<body>
-		<div>
-		<input type="button" onclick="start()" value="start"\>
-		<input type="button" onclick="setting()" value="setting"\>
-		<input type="button" onclick="viewDatabase()" value="View Database"\>
-		</div>
+		<script type="text/javascript" charset="utf-8" src="js/database.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/main.js"></script>
 		<script>
-			function start() {
-				window.location = "main.html";
-			}
-
-			function setting() {
-				window.location = "setting.html";
-			}
-			function viewDatabase(){
-				window.location = "database_log.html";
+			function home() {
+				window.location = "index.html";
 			}
 		</script>
+	</head>
+	<body onload="initDB()">
+		<input type="button" onclick="home()" value="Home"\>
+		<input type="button" onclick="printDB()" value="Print Database"\>
+		<div id="player_table_results"> Results will display here.</div>
+		<div id="computer_table_results"></div>
+		<div id="comp_def_stats_results"></div>
+		<div id="exp_per_level_results"></div>
 	</body>
 </html>
-
