@@ -13,6 +13,11 @@ var end;
 var position;
 var playerCurLife;
 var computerCurLife;
+//In order to have vibration on attact, set vibrate to true
+//Time delay has issue between motion and compare, need to change every time set vibrate.
+var setting = {
+	vibrate : false
+};
 
 function init() {
 	playerChosenMoves = new Array();
@@ -156,8 +161,11 @@ function fight(computer, player) {
 		$(p).attr("src", "img/knight/brond/" + player.shift()).css("opacity", "0");
 	}).animate(pgetpxend, time[1], function() {
 		$(p).attr("src", "img/knight/brond/" + player.shift());
-	}).animate(pgetpxmove, time[1], function(){
+	}).animate(pgetpxmove, time[1], function() {
 		$("#explode").css('visibility', 'visible');
+		if (setting["vibrate"]) {
+			navigator.notification.vibrate(100);
+		}
 	}).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[1], function() {
 		$(p).attr("src", "img/knight/brond/" + player.shift()).css("opacity", "0");
 		$("#explode").css('visibility', 'hidden');
