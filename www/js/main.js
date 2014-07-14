@@ -62,6 +62,10 @@ function doOnOrientationChange() {
 				"top" : "100px",
 				"right" : "-120px"
 			});
+			$("#explode").css({
+				"top" : "100px",
+				"right" : "-120px"
+			});
 			break;
 		default:
 			$("#life").css({
@@ -120,7 +124,7 @@ function fight(computer, player) {
 	var p = "#player";
 	var e = "#computer";
 	var time = [600, 300, 20];
-	var pixal = ["40px", "80px", "70px"];
+	var pixal = ["40px", "75px", "65px"];
 	var pgetpxstart = {
 		opacity : '1'
 	};
@@ -152,8 +156,9 @@ function fight(computer, player) {
 		$(p).attr("src", "img/knight/brond/" + player.shift()).css("opacity", "0");
 	}).animate(pgetpxend, time[1], function() {
 		$(p).attr("src", "img/knight/brond/" + player.shift());
+	}).animate(pgetpxmove, time[1], function(){
 		$("#explode").css('visibility', 'visible');
-	}).animate(pgetpxmove, time[1]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[1], function() {
+	}).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[1], function() {
 		$(p).attr("src", "img/knight/brond/" + player.shift()).css("opacity", "0");
 		$("#explode").css('visibility', 'hidden');
 	}).animate(pgetpxstart, time[1], function() {
