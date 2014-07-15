@@ -8,29 +8,28 @@
 var playerChosenMoves;
 var computerChosenMoves;
 var rps;
-var start;
-var end;
-var position;
 var playerCurLife;
 var computerCurLife;
 //In order to have vibration on attact, set vibrate to true
 //Time delay has issue between motion and compare, need to change every time set vibrate.
 var setting = {
-	vibrate : false
+	vibrate : false,
+	charater: "knight",
+	color: "brond"
 };
+
+var charImgSet;
 
 function init() {
 	playerChosenMoves = new Array();
 	computerChosenMoves = new Array();
 	rps = ["rock", "paper", "scissors"];
-	start = 40;
-	end = 80;
-	position = start;
+	charImgSet="img/"+setting["charater"]+"/"+setting["color"]+"/",
 	playerCurLife = 1;
 	computerCurLife = 1;
 	$("#explode").css('visibility', 'hidden');
-	document.getElementById("player").src = "img/knight/brond/Ready.png";
-	document.getElementById("computer").src = "img/knight/brond/Ready.png";
+	$("#player").attr("src", charImgSet+"Ready.png");
+	$("#computer").attr("src", charImgSet+"Ready.png");
 
 	document.addEventListener("deviceready", onDeviceReady, false);
 	window.addEventListener('orientationchange', doOnOrientationChange);
@@ -78,11 +77,11 @@ function doOnOrientationChange() {
 				"left" : "auto"
 			});
 			$("#rps").css({
-				"top" : "80px",
+				"top" : "100px",
 				"left" : "70px"
 			});
 			$("#compare").css({
-				"top" : "80px",
+				"top" : "100px",
 				"left" : "auto"
 			});
 			$("#motion").css({
@@ -158,30 +157,30 @@ function fight(computer, player) {
 
 	//player motion:
 	$(p).animate(pgetpxstart, time[0], function() {
-		$(p).attr("src", "img/knight/brond/" + player.shift()).css("opacity", "0");
+		$(p).attr("src", charImgSet + player.shift()).css("opacity", "0");
 	}).animate(pgetpxend, time[1], function() {
-		$(p).attr("src", "img/knight/brond/" + player.shift());
+		$(p).attr("src", charImgSet + player.shift());
 	}).animate(pgetpxmove, time[1], function() {
 		$("#explode").css('visibility', 'visible');
 		if (setting["vibrate"]) {
 			navigator.notification.vibrate(100);
 		}
 	}).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[1], function() {
-		$(p).attr("src", "img/knight/brond/" + player.shift()).css("opacity", "0");
+		$(p).attr("src", charImgSet + player.shift()).css("opacity", "0");
 		$("#explode").css('visibility', 'hidden');
 	}).animate(pgetpxstart, time[1], function() {
-		$(p).attr("src", "img/knight/brond/" + player.shift());
+		$(p).attr("src", charImgSet + player.shift());
 	});
 
 	//computer motion:
 	$(e).animate(egetpxstart, time[0], function() {
-		$("#computer").attr("src", "img/knight/brond/" + computer.shift()).css("opacity", "0");
+		$("#computer").attr("src", charImgSet + computer.shift()).css("opacity", "0");
 	}).animate(egetpxend, time[1], function() {
-		$("#computer").attr("src", "img/knight/brond/" + computer.shift());
+		$("#computer").attr("src", charImgSet + computer.shift());
 	}).animate(egetpxmove, time[1]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[1], function() {
-		$("#computer").attr("src", "img/knight/brond/" + computer.shift()).css("opacity", "0");
+		$("#computer").attr("src", charImgSet + computer.shift()).css("opacity", "0");
 	}).animate(egetpxstart, time[1], function() {
-		$("#computer").attr("src", "img/knight/brond/" + computer.shift());
+		$("#computer").attr("src", charImgSet + computer.shift());
 	});
 
 }
@@ -192,17 +191,6 @@ function accessLife(charater, i) {
 		"width" : Math.floor(82 * i) + "px"
 	};
 	$(charater).animate(w);
-}
-
-//switch poistion back and forward during two charater are fighting
-function move() {
-	if (position === start) {
-		position = end;
-	} else {
-		position = start;
-	}
-	document.getElementById("player").style.left = position + "px";
-	document.getElementById("computer").style.right = position + "px";
 }
 
 //Add rock, paper, or scissors into array

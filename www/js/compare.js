@@ -16,7 +16,10 @@ var getend = {
 	"top":"+=20px",
 	opacity : '0'
 };
-var time=1200;
+
+//time=1200 when vibrate
+var time=1000;
+
 //init compare display compare in html file
 function initCompare(eList, pList) {
 	queueclear = false;
