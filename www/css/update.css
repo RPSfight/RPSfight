@@ -1,0 +1,8 @@
+img{
+	height:35px;
+}
+input[type="text"]{
+	position:relative;
+	top:-12px;
+	border:none;
+}

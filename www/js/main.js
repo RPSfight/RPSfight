@@ -14,8 +14,11 @@ var computerCurLife;
 //Time delay has issue between motion and compare, need to change every time set vibrate.
 var setting = {
 	vibrate : false,
-	charater: "knight",
-	color: "brond"
+};
+
+var saveData={
+	charater : "knight",
+	color : "brond"
 };
 
 var charImgSet;
@@ -24,12 +27,11 @@ function init() {
 	playerChosenMoves = new Array();
 	computerChosenMoves = new Array();
 	rps = ["rock", "paper", "scissors"];
-	charImgSet="img/"+setting["charater"]+"/"+setting["color"]+"/",
-	playerCurLife = 1;
+	charImgSet = "img/" + saveData["charater"] + "/" + saveData["color"] + "/", playerCurLife = 1;
 	computerCurLife = 1;
 	$("#explode").css('visibility', 'hidden');
-	$("#player").attr("src", charImgSet+"Ready.png");
-	$("#computer").attr("src", charImgSet+"Ready.png");
+	$("#player").attr("src", charImgSet + "Ready.png");
+	$("#computer").attr("src", charImgSet + "Ready.png");
 
 	document.addEventListener("deviceready", onDeviceReady, false);
 	window.addEventListener('orientationchange', doOnOrientationChange);
@@ -59,7 +61,7 @@ function doOnOrientationChange() {
 				"left" : "-80px"
 			});
 			$("#compare").css({
-				"top" : "60px",
+				"top" : "30px",
 				"left" : "-180px"
 			});
 			$("#motion").css({
@@ -109,15 +111,33 @@ function play() {
 		computerChosenMoves.push(rps[Math.floor(Math.random() * 3)]);
 	}
 	document.getElementById("compare").innerHTML = initCompare(computerChosenMoves, playerChosenMoves);
-	startpCompare(0);
-	starteCompare(0);
 	var size = Math.max(computerChosenMoves.length, playerChosenMoves.length);
-	for (var i = 0; i < size; i++) {
-		var eshow = computerChosenMoves.shift();
-		var pshow = playerChosenMoves.shift();
-		initRPS(eshow, pshow);
-		fight(getComputer(), getPlayer());
-	}
+	$("#rps").css("visibility", "hidden");
+	$("#compare").css("visibility", "visible");
+	/*	startpCompare(0);
+	 starteCompare(0);
+	 for (var i = 0; i < size; i++) {
+	 var eshow = computerChosenMoves.shift();
+	 var pshow = playerChosenMoves.shift();
+	 initRPS(eshow, pshow);
+	 fight(getComputer(), getPlayer());
+	 }*/
+	var i = 0;
+	var timer = setInterval(function() {
+		if (i < size) {
+			startpCompare(i);
+			starteCompare(i);
+			var eshow = computerChosenMoves.shift();
+			var pshow = playerChosenMoves.shift();
+			initRPS(eshow, pshow);
+			fight(getComputer(), getPlayer());
+			i++;
+		} else {
+			clearInterval(timer);
+			$("#rps").css("visibility", "visible");
+			$("#compare").css("visibility", "hidden");
+		}
+	}, 2160);
 }
 
 /*
