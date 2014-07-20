@@ -13,51 +13,221 @@ function initDB(){
 	db.transaction(initTables,dbErrorHandler, dbReady);
 }
 
-// print the contents of the given database
-function printDB(){
-	db.transaction(getTestResults,dbErrorHandler,finishedTest);
+function testSavePlayer(){
+	var userinput;
+	userinput = prompt("Enter a value to save in the 'gold' field...", "999");
+	var player = {
+		level:"1",
+		experience:"1",
+		rock_att:"1",
+		rock_def:"1",
+		paper_att:"1",
+		paper_def:"1",
+		scissor_att:"1",
+		scissor_def:"1",
+		max_life:"1",
+		current_life:"1",
+		gold:userinput
+	};
+	savePlayer(player);
 }
 
-function generateTestData(){
-	db.transaction(insertTestData,dbErrorHandler,finishedTest);
+function testSaveComputer(){
+	var userinput;
+	userinput = prompt("Enter a value to save in the 'scissor_def' field...", "999");
+	var computer = {
+		level:"1",
+		rock_att:"1",
+		rock_def:"1",
+		paper_att:"1",
+		paper_def:"1",
+		scissor_att:"1",
+		scissor_def:userinput,
+		max_life:"1",
+		current_life:"1",
+	};
+	saveComputer(computer);
+}
+
+function testLoadPlayer(){
+	
+	// since database transaction calls are asynchronous
+	// we have to pass in a call back function that
+	// load player will call once the sql query has finished
+	// its execution.
+	player = loadPlayer(function(player){
+		
+		var results;
+		results = "Player's Current Stats...\n";
+		results += "level: "+player.level+"\n";
+		results += "exp: "+player.experience+"\n"; 
+		results += "ratt: "+player.rock_att+"\n"; 
+		results += "rdef: "+player.rock_def+"\n"; 
+		results += "patt: "+player.paper_att+"\n"; 
+		results += "pdef: "+player.paper_def+"\n"; 
+		results += "satt: "+player.scissor_att+"\n"; 
+		results += "sdef: "+player.scissor_def+"\n"; 
+		results += "max life: "+player.max_life+"\n"; 
+		results += "cur life: "+player.current_life+"\n"; 
+		results += "gold: "+player.gold+"\n";
+		alert(results);  
+	});
+}
+
+function testLoadComputer(){
+	// since database transaction calls are asynchronous
+	// we have to pass in a call back function that
+	// load player will call once the sql query has finished
+	// its execution.
+	player = loadComputer(function(computer){
+		
+		var results;
+		results = "Computer's Current Stats...\n";
+		results += "level: "+computer.level+"\n";
+		results += "ratt: "+computer.rock_att+"\n"; 
+		results += "rdef: "+computer.rock_def+"\n"; 
+		results += "patt: "+computer.paper_att+"\n"; 
+		results += "pdef: "+computer.paper_def+"\n"; 
+		results += "satt: "+computer.scissor_att+"\n"; 
+		results += "sdef: "+computer.scissor_def+"\n"; 
+		results += "max life: "+computer.max_life+"\n"; 
+		results += "cur life: "+computer.current_life+"\n"; 
+		alert(results);  
+	});
 }
 
 function savePlayer(player){
 	
-	var person = {
-				    level:"1";
-				    experience:"123;
-				    paper_att:"1";
-				    paper_def:"1";
-				    ...
-				    gold:"123123123";
-				 };
-				 
-	tx.executeSql("insert  into player(level,....,gold) values(?,...,?)",[level,....,gold],printExpTestResults,dbErrorHandler);			 
-				 
+	var level;
+	var experience;
+	var rock_att;
+	var rock_def;
+	var paper_att;
+	var paper_def;
+	var scissor_att;
+	var scissor_def;
+	var max_life;
+	var current_life;
+	var gold;
+	var query;
 	
+	level         = player.level;
+	experience    = player.experience;
+	rock_att      = player.rock_att;
+	rock_def      = player.rock_def;
+	paper_att     = player.paper_att;
+	paper_def     = player.paper_def;
+	scissor_att   = player.scissor_att;
+	scissor_def   = player.scissor_def;
+	max_life      = player.max_life;
+	current_life  = player.current_life;
+	gold          = player.gold;
+	
+	query = "update player	"+
+			"set level=?, experience=?, rock_att=?, rock_def=?, paper_att=?, paper_def=?, scissor_att=?, scissor_def=?, max_life=?, current_life=?, gold=?	"+
+			"where id='1'";
+	
+	db.transaction(function(tx){
+		tx.executeSql(query,[level,experience,rock_att,rock_def,paper_att,paper_def,scissor_att,scissor_def,max_life,current_life,gold]);	
+	},dbErrorHandler, querySuccess);
 }
 
 function saveComputer(computer){
+	var level;
+	var rock_att;
+	var rock_def;
+	var paper_att;
+	var paper_def;
+	var scissor_att;
+	var scissor_def;
+	var max_life;
+	var current_life;
+	var query;
 	
+	level         = computer.level;
+	rock_att      = computer.rock_att;
+	rock_def      = computer.rock_def;
+	paper_att     = computer.paper_att;
+	paper_def     = computer.paper_def;
+	scissor_att   = computer.scissor_att;
+	scissor_def   = computer.scissor_def;
+	max_life      = computer.max_life;
+	current_life  = computer.current_life;
+	
+	query = "update computer	"+
+			"set level=?, rock_att=?, rock_def=?, paper_att=?, paper_def=?, scissor_att=?, scissor_def=?, max_life=?, current_life=? "+
+			"where id='1'";
+			
+	db.transaction(function(tx){
+		tx.executeSql(query,[level,rock_att,rock_def,paper_att,paper_def,scissor_att,scissor_def,max_life,current_life]);	
+	},dbErrorHandler, querySuccess);
+} 
+
+/**
+ * Once the results have been retrieved, they will be stored in a
+ * player object and passed onto the given call back function callBackFunction
+ */
+function loadPlayer(callBackFunction){
+	db.transaction(function(tx){
+		tx.executeSql("Select * from player where id='1'",[],
+		function (tx, results){
+			var row = results.rows.item(0);
+			var result = {
+				level:row.level,
+				experience:row.experience,
+				rock_att:row.rock_att,
+				rock_def:row.rock_def,
+				paper_att:row.paper_att,
+				paper_def:row.paper_def,
+				scissor_att:row.scissor_att,
+				scissor_def:row.scissor_def,
+				max_life:row.max_life,
+				current_life:row.current_life,
+				gold:row.gold
+			};
+		   callBackFunction(result);		
+		}, dbErrorHandler);
+	},dbErrorHandler,querySuccess);
 }
 
-function loadPlayer(){
-	//....
-	return result;
-}
-
-function loadComputer(){
-	//....
-	return result;
+/**
+ * Once the results have been retrieved, they will be stored in a
+ * computer object and passed onto the given call back function callBackFunction
+ */
+function loadComputer(callBackFunction){
+	db.transaction(function(tx){
+	tx.executeSql("Select * from computer where id='1'",[],
+		function (tx, results){
+			var row = results.rows.item(0);
+			var result = {
+				level:row.level,
+				rock_att:row.rock_att,
+				rock_def:row.rock_def,
+				paper_att:row.paper_att,
+				paper_def:row.paper_def,
+				scissor_att:row.scissor_att,
+				scissor_def:row.scissor_def,
+				max_life:row.max_life,
+				current_life:row.current_life,
+			};
+		    callBackFunction(result);		
+		}, dbErrorHandler);
+	},dbErrorHandler,querySuccess);
 }
 
 function initTables(tx){
 	//init tables
+	tx.executeSql("drop table if exists player");
+	tx.executeSql("drop table if exists computer");
 	tx.executeSql(initPlayerTable());
 	tx.executeSql(initComputerTable());
 	tx.executeSql(initComputerDefaultStatsTable());
 	tx.executeSql(initExpPerLevelTable());
+	
+	//init default data
+	// if this is the first time the app has run.
+	// i.e. player, computer, etc. 
+	initData(tx);
 }
 
 function dbErrorHandler(e){
@@ -67,7 +237,10 @@ function dbErrorHandler(e){
 function dbReady(){
 	// tables were successfully created.
 	alert("db ready");
-	generateTestData();
+}
+
+function querySuccess(){
+	//query was executed successfully.
 }
 
 
@@ -75,16 +248,7 @@ function finishedTest(){
 	alert("finished getting test results");
 }
 
-// get test result data
-function getTestResults(tx){
-	tx.executeSql("Select * from exp_per_level",[],printExpTestResults,dbErrorHandler);
-	tx.executeSql("Select * from comp_def_stats",[],printCompDefTestResults,dbErrorHandler);
-	tx.executeSql("Select * from computer",[],printCompTestResults,dbErrorHandler);
-	tx.executeSql("Select * from player",[],printPlayerTestResults,dbErrorHandler);
-}
-
-function insertTestData(tx){
-	
+function initData(tx){
 	//defaults
 	var level = 1;
 	var experience = 0;
@@ -96,119 +260,20 @@ function insertTestData(tx){
 	var scissor_def = 1;
 	var max_life    = 1;
 	var current_life= 1;
-	var gold = 100;
+	var gold = 101;
 	
-	tx.executeSql("insert into player "+
-				   "(level,experience,rock_att,rock_def,paper_att,paper_def,scissor_att,scissor_def,max_life,current_life,gold) "+
-				   "values(?,?,?,?,?,?,?,?,?,?,?) ",
+	
+	// or ignore -> if data is already initialized in the table then do nothing.
+	tx.executeSql("insert or ignore into player "+
+				   "(id, level,experience,rock_att,rock_def,paper_att,paper_def,scissor_att,scissor_def,max_life,current_life,gold) "+
+				   "values(1,?,?,?,?,?,?,?,?,?,?,?) ",
 				   [level,experience,rock_att,rock_def,paper_att,paper_def,scissor_def,scissor_def,max_life,current_life,gold]);
 				   
-    tx.executeSql("insert into computer "+
-				   "(level,rock_att,rock_def,paper_att,paper_def,scissor_att,scissor_def,max_life,current_life) "+
-				   "values(?,?,?,?,?,?,?,?,?) ",
+    tx.executeSql("insert or ignore into computer "+
+				   "(id, level,rock_att,rock_def,paper_att,paper_def,scissor_att,scissor_def,max_life,current_life) "+
+				   "values(1,?,?,?,?,?,?,?,?,?) ",
 				   [level,rock_att,rock_def,paper_att,paper_def,scissor_def,scissor_def,max_life,current_life]);
 }
-
-// print exp_per_level test results
-function printExpTestResults(tx, results){
-	if(results.rows.length == 0){
-		// alert("no data in exp_per_level table");
-		document.getElementById("exp_per_level_results").innerHTML="no data in exp_per_level table";
-		return false;
-	}
-	
-	var result = "Exp_Per_Level: \n";
-	var item;
-	for(var i=0; i<results.rows.length; i++){
-		row = results.rows.item(i);
-		result=result+"	level: "+row.level+"\n"+
-				      " req_exp: "+row.req_exp+"\n";
-	}
-	// alert(result);
-	document.getElementById("exp_per_level_results").innerHTML=result;
-}
-
-// print comp_def_stats test results
-function printCompDefTestResults(tx, results){
-	if(results.rows.length == 0){
-		// alert("no data in comp_def_stats table");
-		document.getElementById("comp_def_stats_results").innerHTML="no data in comp_def_stats table";
-		return false;
-	}
-	
-	var result = "";
-	for(var i=0; i<results.rows.length; i++){
-		row = results.rows.item(i);
-		result=result+"	level: "+row.level+"\n"+
-				      " rock_att: "+row.rock_att+"\n"+
-				      " rock_def: "+row.rock_def+"\n"+
-				      " paper_att: "+row.paper_att+"\n"+
-				      " paper_def: "+row.paper_def+"\n"+
-				      " scissor_att: "+row.scissor_att+"\n"+
-				      " scissor_def: "+row.scissor_def+"\n"+
-				      " life: "+row.life+"\n";
-	}
-	// alert(result);
-	document.getElementById("comp_def_stats_results").innerHTML=result;
-}
-
-// print computer test results
-function printCompTestResults(tx, results){
-	if(results.rows.length == 0){
-		// alert("no data in computer table");
-		document.getElementById("computer_table_results").innerHTML="no data in computer table";
-		return false;
-	}
-	
-	var result = "";
-	for(var i=0; i<results.rows.length; i++){
-		row = results.rows.item(i);
-		result=result+"	id: "+row.id+"\n"+
-					  "	level: "+row.level+"\n"+
-				      " rock_att: "+row.rock_att+"\n"+
-				      " rock_def: "+row.rock_def+"\n"+
-				      " paper_att: "+row.paper_att+"\n"+
-				      " paper_def: "+row.paper_def+"\n"+
-				      " scissor_att: "+row.scissor_att+"\n"+
-				      " scissor_def: "+row.scissor_def+"\n"+
-				      " max_life: "+row.max_life+"\n"+
-				      " current_life: "+row.current_life+"\n";
-	}
-	// alert(result);
-	document.getElementById("computer_table_results").innerHTML=result;
-}
-
-//print player test results
-function printPlayerTestResults(tx, results){
-	if(results.rows.length == 0){
-		// alert("no data in the player table");
-		document.getElementById("player_table_results").innerHTML="no data in player table";
-		return false;
-	}
-	
-	var result = "[<br/>";
-	for(var i=0; i<results.rows.length; i++){
-		row = results.rows.item(i);
-		result=result+"{<br/>"+
-					  "		id: "+row.id+"<br/>"+
-					  "		level: "+row.level+"<br/>"+
-					  "		experience: "+row.experience+"<br/>"+
-				      " 	rock_att: "+row.rock_att+"<br/>"+
-				      " 	rock_def: "+row.rock_def+"<br/>"+
-				      " 	paper_att: "+row.paper_att+"<br/>"+
-				      " 	paper_def: "+row.paper_def+"<br/>"+
-				      " 	scissor_att: "+row.scissor_att+"<br/>"+
-				      " 	scissor_def: "+row.scissor_def+"<br/>"+
-				      " 	max_life: "+row.max_life+"<br/>"+
-				      " 	current_life: "+row.current_life+"<br/>"+
-				      " 	gold: "+row.gold+"<br/>"+
-				      "}";		
-	}
-	result = result+"<br/>]";
-	// alert(result);
-	document.getElementById("player_table_results").innerHTML=result;
-}
-
 
 //returns query to initialize the Exp_Per_Level table
 // holds the amount experience required to reach a given level
