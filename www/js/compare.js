@@ -16,7 +16,10 @@ var getend = {
 	"top":"+=20px",
 	opacity : '0'
 };
-var time=1000;
+
+//time=1200 when vibrate
+var time=1080;
+
 //init compare display compare in html file
 function initCompare(eList, pList) {
 	queueclear = false;
@@ -38,39 +41,25 @@ function initCompare(eList, pList) {
 	for (var i = 0; i < size; i++) {
 		changeColor(pList[i], eList[i]);
 	}
-	$("#rps").css("visibility", "hidden");
-	$("#compare").css("visibility", "visible");
 	return string;
 }
 
 function startpCompare(i) {
 	var pid = "#p" + i;
 	if ($(pid).length > 0) {
-		//$(pid).animate(start, 9000, changeColor(pid)).animate(getbig, 900).animate(getsmall,900).animate(end, 7200, startpCompare(n));
 		$(pid).animate(getstart, time, function() {
 			$(pid).attr("src", pimage.shift());
-		}).animate(getend, time, function() {
-			startpCompare(i);
-		});
-	} else {
-		display();
+		}).animate(getend, time);
 	}
-	i++;
 }
 
 function starteCompare(i) {
 	var eid = "#e" + i;
 	if ($(eid).length > 0) {
-		//$(eid).animate(start, 9000, changeColor(eid)).animate(getbig, 900).animate(getsmall,900).animate(end, 7200, starteCompare(n));
 		$(eid).animate(getstart, time, function() {
 			$(eid).attr("src", eimage.shift());
-		}).animate(getend, time, function() {
-			starteCompare(i);
-		});
-	} else {
-		display();
+		}).animate(getend, time);
 	}
-	i++;
 }
 
 /*

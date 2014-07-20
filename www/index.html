@@ -9,32 +9,38 @@
 		<!-- Date: 2014-06-26 -->
 		<!-- Date: 2014-06-17 -->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
-		<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-		<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.2.0.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.2.0.min.css" />
 		<style>
-			div{
-				location:relative;
-				top:200px;
+			div {
+				location: relative;
+				top: 200px;
 			}
-			
+
 		</style>
 	</head>
 	<body>
 		<div>
-		<input type="button" onclick="start()" value="start"\>
-		<input type="button" onclick="setting()" value="setting"\>
-		<input type="button" onclick="viewDatabase()" value="View Database"\>
+			<input type="button" onclick="play()" value="Play"\>
+			<input type="button" onclick="update()" value="Update"\>
+			<input type="button" onclick="setting()" value="Setting"\>
+			<input type="button" onclick="viewDatabase()" value="View Database"\>
 		</div>
 		<script>
-			function start() {
+			function play() {
 				window.location = "main.html";
+			}
+
+			function update() {
+				window.location = "update.html";
 			}
 
 			function setting() {
 				window.location = "setting.html";
 			}
-			function viewDatabase(){
+
+			function viewDatabase() {
 				window.location = "database_log.html";
 			}
 		</script>
