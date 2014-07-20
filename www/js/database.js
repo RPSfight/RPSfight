@@ -56,7 +56,8 @@ function testLoadPlayer(){
 	// load player will call once the sql query has finished
 	// its execution.
 	player = loadPlayer(function(player){
-		
+		// must define a callback when calling
+		// load computer
 		var results;
 		results = "Player's Current Stats...\n";
 		results += "level: "+player.level+"\n";
@@ -80,7 +81,8 @@ function testLoadComputer(){
 	// load player will call once the sql query has finished
 	// its execution.
 	player = loadComputer(function(computer){
-		
+		// must define a callback when calling
+		// load computer
 		var results;
 		results = "Computer's Current Stats...\n";
 		results += "level: "+computer.level+"\n";
@@ -185,6 +187,10 @@ function loadPlayer(callBackFunction){
 				current_life:row.current_life,
 				gold:row.gold
 			};
+			
+		   //callBackFunction to execute when 
+		   // we finally have the results from
+		   // the sql query
 		   callBackFunction(result);		
 		}, dbErrorHandler);
 	},dbErrorHandler,querySuccess);
@@ -210,6 +216,10 @@ function loadComputer(callBackFunction){
 				max_life:row.max_life,
 				current_life:row.current_life,
 			};
+			
+			//callBackFunction to execute when 
+		    // we finally have the results from
+		    // the sql query
 		    callBackFunction(result);		
 		}, dbErrorHandler);
 	},dbErrorHandler,querySuccess);
