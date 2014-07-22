@@ -1,8 +1,16 @@
 img{
 	height:35px;
 }
+.fixsize{
+	height:20px;
+	position:relative;
+	top:-8px;
+}
 input[type="text"]{
 	position:relative;
 	top:-12px;
 	border:none;
+}
+#gold,#exp{
+	width:42px;
 }

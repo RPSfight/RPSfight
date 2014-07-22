@@ -10,13 +10,14 @@ var computerChosenMoves;
 var rps;
 var playerCurLife;
 var computerCurLife;
+var visibility;
 //In order to have vibration on attact, set vibrate to true
 //Time delay has issue between motion and compare, need to change every time set vibrate.
 var setting = {
 	vibrate : false,
 };
 
-var saveData={
+var saveData = {
 	charater : "knight",
 	color : "brond"
 };
@@ -106,14 +107,12 @@ function doOnOrientationChange() {
  * reset arrays
  */
 function play() {
-
+	visibility = true;
 	for (var i = 0; i < 5; i++) {
 		computerChosenMoves.push(rps[Math.floor(Math.random() * 3)]);
 	}
 	document.getElementById("compare").innerHTML = initCompare(computerChosenMoves, playerChosenMoves);
 	var size = Math.max(computerChosenMoves.length, playerChosenMoves.length);
-	$("#rps").css("visibility", "hidden");
-	$("#compare").css("visibility", "visible");
 	/*	startpCompare(0);
 	 starteCompare(0);
 	 for (var i = 0; i < size; i++) {
@@ -122,29 +121,36 @@ function play() {
 	 initRPS(eshow, pshow);
 	 fight(getComputer(), getPlayer());
 	 }*/
+	triangleVisibilty();
 	var i = 0;
-	var timer = setInterval(function() {
-		if (i < size) {
-			startpCompare(i);
-			starteCompare(i);
-			var eshow = computerChosenMoves.shift();
-			var pshow = playerChosenMoves.shift();
-			initRPS(eshow, pshow);
-			fight(getComputer(), getPlayer());
-			i++;
-		} else {
-			clearInterval(timer);
-			$("#rps").css("visibility", "visible");
-			$("#compare").css("visibility", "hidden");
+	for (var i = 0; i < size; i++) {
+		var eshow = computerChosenMoves.shift();
+		var pshow = playerChosenMoves.shift();
+		var finish=false;
+		initRPS(eshow, pshow);
+		if(i===size-1){
+			finish=true;
 		}
-	}, 2160);
+		fight(getComputer(), getPlayer(), i, finish);
+	}
+}
+
+function triangleVisibilty() {
+	if (visibility) {
+		$("#rps").css("visibility", "hidden");
+		$("#compare").css("visibility", "visible");
+		visibility = false;
+	} else {
+		$("#rps").css("visibility", "visible");
+		$("#compare").css("visibility", "hidden");
+	}
 }
 
 /*
  * set up the time interval
  * when motion finish hide compare and display rps triangle
  */
-function fight(computer, player) {
+function fight(computer, player, geti, finish) {
 	var p = "#player";
 	var e = "#computer";
 	var time = [600, 300, 20];
@@ -177,6 +183,8 @@ function fight(computer, player) {
 
 	//player motion:
 	$(p).animate(pgetpxstart, time[0], function() {
+		startpCompare(geti);
+		starteCompare(geti);
 		$(p).attr("src", charImgSet + player.shift()).css("opacity", "0");
 	}).animate(pgetpxend, time[1], function() {
 		$(p).attr("src", charImgSet + player.shift());
@@ -190,6 +198,9 @@ function fight(computer, player) {
 		$("#explode").css('visibility', 'hidden');
 	}).animate(pgetpxstart, time[1], function() {
 		$(p).attr("src", charImgSet + player.shift());
+		if(finish){
+			triangleVisibilty();
+		}
 	});
 
 	//computer motion:

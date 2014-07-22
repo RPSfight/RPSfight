@@ -246,7 +246,7 @@ function dbErrorHandler(e){
 
 function dbReady(){
 	// tables were successfully created.
-	alert("db ready");
+	//alert("db ready");
 }
 
 function querySuccess(){
