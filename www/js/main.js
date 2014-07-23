@@ -23,8 +23,10 @@ var saveData = {
 };
 
 var charImgSet;
+var player;
+var computer;
 
-function init() {
+function initMain() {
 	playerChosenMoves = new Array();
 	computerChosenMoves = new Array();
 	rps = ["rock", "paper", "scissors"];
@@ -40,6 +42,12 @@ function init() {
 
 	//init database
 	initDB();
+	loadPlayer(function(p){
+		player=p;
+	});
+	loadComputer(function(c){
+		computer=c;
+	});
 }
 
 function onDeviceReady() {
@@ -81,7 +89,7 @@ function doOnOrientationChange() {
 			});
 			$("#rps").css({
 				"top" : "100px",
-				"left" : "70px"
+				"left" : "60px"
 			});
 			$("#compare").css({
 				"top" : "100px",
@@ -128,6 +136,7 @@ function play() {
 		var pshow = playerChosenMoves.shift();
 		var finish=false;
 		initRPS(eshow, pshow);
+		//if(playerlife<==0||computerlife<==0){i=size}else
 		if(i===size-1){
 			finish=true;
 		}
@@ -197,7 +206,11 @@ function fight(computer, player, geti, finish) {
 		$(p).attr("src", charImgSet + player.shift()).css("opacity", "0");
 		$("#explode").css('visibility', 'hidden');
 	}).animate(pgetpxstart, time[1], function() {
+		//if(life>0){
 		$(p).attr("src", charImgSet + player.shift());
+		//}else{
+		//	$(p).attr("src", charImgSet + "Death2.png");
+		//}
 		if(finish){
 			triangleVisibilty();
 		}
@@ -205,13 +218,17 @@ function fight(computer, player, geti, finish) {
 
 	//computer motion:
 	$(e).animate(egetpxstart, time[0], function() {
-		$("#computer").attr("src", charImgSet + computer.shift()).css("opacity", "0");
+		$(e).attr("src", charImgSet + computer.shift()).css("opacity", "0");
 	}).animate(egetpxend, time[1], function() {
-		$("#computer").attr("src", charImgSet + computer.shift());
+		$(e).attr("src", charImgSet + computer.shift());
 	}).animate(egetpxmove, time[1]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[1], function() {
-		$("#computer").attr("src", charImgSet + computer.shift()).css("opacity", "0");
+		$(e).attr("src", charImgSet + computer.shift()).css("opacity", "0");
 	}).animate(egetpxstart, time[1], function() {
-		$("#computer").attr("src", charImgSet + computer.shift());
+		//if(life>0){
+		$(e).attr("src", charImgSet + computer.shift());
+		//}else{
+		//	$(p).attr("src", charImgSet + "Death2.png");
+		//}
 	});
 
 }

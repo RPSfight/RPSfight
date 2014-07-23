@@ -12,38 +12,18 @@
 		<script type="text/javascript" charset="utf-8" src="js/jquery-1.8.2.min.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.2.0.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.2.0.min.css" />
-		<style>
-			div {
-				location: relative;
-				top: 200px;
-			}
-
-		</style>
+		<script type="text/javascript" charset="utf-8" src="js/index.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
 	</head>
-	<body>
-		<div>
-			<input type="button" onclick="play()" value="Play"\>
-			<input type="button" onclick="update()" value="Update"\>
-			<input type="button" onclick="setting()" value="Setting"\>
-			<input type="button" onclick="viewDatabase()" value="View Database"\>
+	<body onload="initIndex()">
+		<div align="center">
+			<div id="box">
+				<input type="button" onclick="play()" value="Play"\>
+				<input type="button" onclick="update()" value="Update"\>
+				<input type="button" onclick="setting()" value="Setting"\>
+				<input type="button" onclick="viewDatabase()" value="View Database"\>
+			</div>
 		</div>
-		<script>
-			function play() {
-				window.location = "main.html";
-			}
-
-			function update() {
-				window.location = "update.html";
-			}
-
-			function setting() {
-				window.location = "setting.html";
-			}
-
-			function viewDatabase() {
-				window.location = "database_log.html";
-			}
-		</script>
 	</body>
 </html>
 

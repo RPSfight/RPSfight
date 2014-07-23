@@ -8,46 +8,67 @@
 		<meta name="author" content="Junxin" />
 		<!-- Date: 2014-07-15 -->
 		<link rel="stylesheet" type="text/css" href="css/update.css" />
-		<script type="text/javascript" charset="utf-8" src="js/database.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/update.js"></script>
+
+		<!--JQuery and JQuery style from the Jquery.com-->
 		<script type="text/javascript" charset="utf-8" src="js/jquery-1.8.2.min.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.2.0.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.2.0.min.css" />
 	</head>
-	<body onload="initDB()">
+	<body onload="initUpdate()">
 		<p>
-			Update
+			Train Center
 		</p>
 		<div>
-			<img src="img/rps/exp.png" id="exp">
-			<input type="text" id="exptext" value="0/1000" readonly/>
-			<br>
-			<img src="img/rps/exp_storage.png" id="exp_storage">
-			<input type="text" id="estext" value="1000 / Update Gold: 1000" readonly/>
-			<br>
-			<img src="img/rps/gold.png" id="gold">
-			<input type="text" id="goldtext" value="0/1000" readonly/>
-			<br>
-			<img src="img/rps/gold_storage.png" id="gold_storage">
-			<input type="text" id="gstext" value="1000 / Update Gold: 1000" readonly/>
-			<br>
-			<img src="img/rps/paperATT.png" id="pA">
-			<input type="text" id="pAtext" value="1 / Update Exp. 100" readonly/>
-			<img class="fixsize" src="img/rps/plus2.png">
-			<br>
-			<img src="img/rps/paperDEF.png" id="pD">
-			<input type="text" id="pDtext" value="1 / Update Exp. 100" readonly/>
-			<br>
-			<img src="img/rps/rockATT.png" id="rA">
-			<input type="text" id="rAtext" value="1 / Update Exp. 100" readonly/>
-			<br>
-			<img src="img/rps/rockDEF.png" id="rD">
-			<input type="text" id="rDtext" value="1 / Update Exp. 100" readonly/>
-			<br>
-			<img src="img/rps/scissorsATT.png" id="sA">
-			<input type="text" id="sAtext" value="1 / Update Exp. 100" readonly/>
-			<br>
-			<img src="img/rps/scissorsDEF.png" id="sD">
-			<input type="text" id="sDtext" value="1 / Update Exp. 100" readonly/>
-			<br>
+			<div id="goldexp">
+				<img src="img/rps/exp.png" id="exp">
+				<span>0/1000</span>
+				<img src="img/rps/gold.png" id="gold">
+				<span>0/1000</span>
+				<br>
+				<img src="img/rps/exp_storage.png" id="exp_storage">
+				<span>1000 </span>
+				<img class="fixsize" src="img/rps/plus1000.png">
+				<span> Cost Gold: 1000</span>
+				<br>
+				<img src="img/rps/gold_storage.png" id="gold_storage">
+				<span>1000 </span>
+				<img class="fixsize" src="img/rps/plus1000.png">
+				<span> Cost Gold: 1000</span>
+				<br>
+			</div>
+			<div id="attdef">
+				<img src="img/rps/paperATT.png" id="pA">
+				<span>1 </span>
+				<img class="fixsize" src="img/rps/plus2.png">
+				<span> Cost Exp. 100</span>
+				<br>
+				<img src="img/rps/paperDEF.png" id="pD">
+				<span>1 </span>
+				<img class="fixsize" src="img/rps/plus2.png">
+				<span> Cost Exp. 100</span>
+				<br>
+				<img src="img/rps/rockATT.png" id="rA">
+				<span>1 </span>
+				<img class="fixsize" src="img/rps/plus2.png">
+				<span> Cost Exp. 100</span>
+				<br>
+				<img src="img/rps/rockDEF.png" id="rD">
+				<span>1 </span>
+				<img class="fixsize" src="img/rps/plus2.png">
+				<span> Cost Exp. 100</span>
+				<br>
+				<img src="img/rps/scissorsATT.png" id="sA">
+				<span>1 </span>
+				<img class="fixsize" src="img/rps/plus2.png">
+				<span> Cost Exp. 100</span>
+				<br>
+				<img src="img/rps/scissorsDEF.png" id="sD">
+				<span>1 </span>
+				<img class="fixsize" src="img/rps/plus2.png">
+				<span> Cost Exp. 100</span>
+				<br>
+			</div>
 		</div>
 	</body>
 </html>

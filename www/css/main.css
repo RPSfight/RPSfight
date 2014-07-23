@@ -14,67 +14,52 @@
 	top: 0px;
 	right: 40px;
 }
-#compare {
+
+#rps, #life, #explode, #motion, #compare {
+	width: 300px;
 	position: relative;
-	width: 320px;
 }
 
-#motion {
-	position: relative;
-	width: 320px;
-}
-#rps {
-	width: 320px;
-	position: relative;
-}
-#life {
-	width: 320px;
-	position: relative;
-}
-#explode {
-	position: relative;
-	width: 320px;
-}
-#explode1{
+#explode1 {
 	width: 30px;
-	position:absolute;
-		left:125px;
-	top:-10px;
+	position: absolute;
+	left: 125px;
+	top: -10px;
 	z-index: 1;
 }
-#explode2{
+#explode2 {
 	width: 80px;
-	position:absolute;
-	top:-10px;
-	left:125px;
+	position: absolute;
+	top: -10px;
+	left: 125px;
 	z-index: 1;
 }
-#explode3{
+#explode3 {
 	width: 20px;
-	position:absolute;
-		left:175px;
-	top:45px;
+	position: absolute;
+	left: 175px;
+	top: 45px;
 	z-index: 1;
 }
-#explode4{
+#explode4 {
 	width: 40px;
-	position:absolute;
-		left:125px;
-	top:40px;
+	position: absolute;
+	left: 125px;
+	top: 40px;
 	z-index: 1;
 }
-#explode5{
+#explode5 {
 	width: 40px;
-	position:absolute;
-		left:105px;
-	top:15px;
+	position: absolute;
+	left: 105px;
+	top: 15px;
 	z-index: 1;
 }
-#explode6{
+#explode6 {
 	width: 40px;
-	position:absolute;
-		left:175px;
-	top:5px;
+	position: absolute;
+	left: 175px;
+	top: 5px;
 	z-index: 1;
 }
 .unselectable {
