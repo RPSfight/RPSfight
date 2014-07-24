@@ -5,12 +5,13 @@
  *
  */
 
-var playerChosenMoves;
-var computerChosenMoves;
+var playerChosenMoves = new Array();
+var computerChosenMoves = new Array();
 var rps;
 var playerCurLife;
 var computerCurLife;
 var visibility;
+var gameCompleted;
 //In order to have vibration on attact, set vibrate to true
 //Time delay has issue between motion and compare, need to change every time set vibrate.
 var setting = {
@@ -23,12 +24,21 @@ var saveData = {
 };
 
 var charImgSet;
-var player;
-var computer;
+var playerData = new Array();
+var computerData = new Array();
+var databaseReady = 0;
 
 function initMain() {
-	playerChosenMoves = new Array();
-	computerChosenMoves = new Array();
+	//init database
+	initDB();
+	loadPlayer(function(p) {
+		playerData = p;
+		databaseReady++;
+	});
+	loadComputer(function(c) {
+		computerData = c;
+		databaseReady++;
+	});
 	rps = ["rock", "paper", "scissors"];
 	charImgSet = "img/" + saveData["charater"] + "/" + saveData["color"] + "/", playerCurLife = 1;
 	computerCurLife = 1;
@@ -39,15 +49,6 @@ function initMain() {
 	document.addEventListener("deviceready", onDeviceReady, false);
 	window.addEventListener('orientationchange', doOnOrientationChange);
 	doOnOrientationChange();
-
-	//init database
-	initDB();
-	loadPlayer(function(p){
-		player=p;
-	});
-	loadComputer(function(c){
-		computer=c;
-	});
 }
 
 function onDeviceReady() {
@@ -114,33 +115,26 @@ function doOnOrientationChange() {
  * use fight() method display motion
  * reset arrays
  */
+
 function play() {
+	gameCompleted = false;
+	while (databaseReady !== 2) {
+	}
+
+	//hidden triangle and appear compare
 	visibility = true;
+	triangleVisibilty();
+	
+	//ramdom choose computer moves
 	for (var i = 0; i < 5; i++) {
 		computerChosenMoves.push(rps[Math.floor(Math.random() * 3)]);
 	}
 	document.getElementById("compare").innerHTML = initCompare(computerChosenMoves, playerChosenMoves);
 	var size = Math.max(computerChosenMoves.length, playerChosenMoves.length);
-	/*	startpCompare(0);
-	 starteCompare(0);
-	 for (var i = 0; i < size; i++) {
-	 var eshow = computerChosenMoves.shift();
-	 var pshow = playerChosenMoves.shift();
-	 initRPS(eshow, pshow);
-	 fight(getComputer(), getPlayer());
-	 }*/
-	triangleVisibilty();
 	var i = 0;
-	for (var i = 0; i < size; i++) {
-		var eshow = computerChosenMoves.shift();
-		var pshow = playerChosenMoves.shift();
-		var finish=false;
-		initRPS(eshow, pshow);
-		//if(playerlife<==0||computerlife<==0){i=size}else
-		if(i===size-1){
-			finish=true;
-		}
-		fight(getComputer(), getPlayer(), i, finish);
+	for (var i = 0; i < size && !gameCompleted; i++) {
+		initRPS(computerChosenMoves[i], playerChosenMoves[i]);
+		fight(getComputer(), getPlayer(), i, size);
 	}
 }
 
@@ -159,7 +153,7 @@ function triangleVisibilty() {
  * set up the time interval
  * when motion finish hide compare and display rps triangle
  */
-function fight(computer, player, geti, finish) {
+function fight(computer, player, geti, size) {
 	var p = "#player";
 	var e = "#computer";
 	var time = [600, 300, 20];
@@ -192,27 +186,40 @@ function fight(computer, player, geti, finish) {
 
 	//player motion:
 	$(p).animate(pgetpxstart, time[0], function() {
+		//compare movement of player
 		startpCompare(geti);
+		//compare movement of computer
 		starteCompare(geti);
+		//fight image 1
 		$(p).attr("src", charImgSet + player.shift()).css("opacity", "0");
 	}).animate(pgetpxend, time[1], function() {
+		//fight image 2
 		$(p).attr("src", charImgSet + player.shift());
+		//player blood bar
+		initFight(computerChosenMoves.shift(), playerChosenMoves.shift());
+		accessLife("#pBlood", playerData.current_life / playerData.max_life);
+		//computer blood bar
+		accessLife("#eBlood", computerData.current_life / computerData.max_life);
 	}).animate(pgetpxmove, time[1], function() {
 		$("#explode").css('visibility', 'visible');
 		if (setting["vibrate"]) {
 			navigator.notification.vibrate(100);
 		}
 	}).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[1], function() {
+		//fight image 3
 		$(p).attr("src", charImgSet + player.shift()).css("opacity", "0");
 		$("#explode").css('visibility', 'hidden');
 	}).animate(pgetpxstart, time[1], function() {
-		//if(life>0){
-		$(p).attr("src", charImgSet + player.shift());
-		//}else{
-		//	$(p).attr("src", charImgSet + "Death2.png");
-		//}
-		if(finish){
+		if (playerData.current_life > 0) {
+			$(p).attr("src", charImgSet + player.shift());
+		} else {
+			$(p).attr("src", charImgSet + "Death2.png");
+			gameCompleted = true;
+		}
+		if (gameCompleted||geti===size-1) {
 			triangleVisibilty();
+			$(p).clearQueue();
+			$(e).clearQueue();
 		}
 	});
 
@@ -224,19 +231,25 @@ function fight(computer, player, geti, finish) {
 	}).animate(egetpxmove, time[1]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[1], function() {
 		$(e).attr("src", charImgSet + computer.shift()).css("opacity", "0");
 	}).animate(egetpxstart, time[1], function() {
-		//if(life>0){
+		if (computerData.current_life > 0) {
 		$(e).attr("src", charImgSet + computer.shift());
-		//}else{
-		//	$(p).attr("src", charImgSet + "Death2.png");
-		//}
+		}else{
+			$(p).attr("src", charImgSet + "Death2.png");
+			gameCompleted = true;
+		}
+		if (gameCompleted||geti===size-1) {
+			triangleVisibilty();
+			$(p).clearQueue();
+			$(e).clearQueue();
+		}
 	});
 
 }
 
 //display how much charaters life left
-function accessLife(charater, i) {
+function accessLife(charater, lifePersentage) {
 	var w = {
-		"width" : Math.floor(82 * i) + "px"
+		"width" : Math.floor(82 * lifePersentage) + "px"
 	};
 	$(charater).animate(w);
 }

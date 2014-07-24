@@ -25,8 +25,8 @@ function testSavePlayer(){
 		paper_def:"1",
 		scissor_att:"1",
 		scissor_def:"1",
-		max_life:"1",
-		current_life:"1",
+		max_life:"10",
+		current_life:"10",
 		gold:userinput
 	};
 	savePlayer(player);
@@ -43,8 +43,8 @@ function testSaveComputer(){
 		paper_def:"1",
 		scissor_att:"1",
 		scissor_def:userinput,
-		max_life:"1",
-		current_life:"1",
+		max_life:"10",
+		current_life:"10",
 	};
 	saveComputer(computer);
 }
@@ -268,8 +268,8 @@ function initData(tx){
 	var paper_def   = 1;
 	var scissor_att = 1;
 	var scissor_def = 1;
-	var max_life    = 1;
-	var current_life= 1;
+	var max_life    = 10;
+	var current_life= 10;
 	var gold = 101;
 	
 	
