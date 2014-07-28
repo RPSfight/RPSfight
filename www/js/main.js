@@ -234,7 +234,7 @@ function fight(computer, player, geti, size) {
 		if (computerData.current_life > 0) {
 		$(e).attr("src", charImgSet + computer.shift());
 		}else{
-			$(p).attr("src", charImgSet + "Death2.png");
+			$(e).attr("src", charImgSet + "Death2.png");
 			gameCompleted = true;
 		}
 		if (gameCompleted||geti===size-1) {
