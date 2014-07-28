@@ -58,6 +58,7 @@ function testLoadPlayer(){
 	player = loadPlayer(function(player){
 		// must define a callback when calling
 		// load computer
+		
 		var results;
 		results = "Player's Current Stats...\n";
 		results += "level: "+player.level+"\n";
@@ -73,6 +74,7 @@ function testLoadPlayer(){
 		results += "gold: "+player.gold+"\n";
 		alert(results);  
 	});
+	
 }
 
 function testLoadComputer(){
@@ -187,6 +189,8 @@ function loadPlayer(callBackFunction){
 				current_life:row.current_life,
 				gold:row.gold
 			};
+			
+			
 			
 		   //callBackFunction to execute when 
 		   // we finally have the results from
@@ -360,8 +364,21 @@ function initPlayerTable(){
 			"	scissor_def INTEGER, 	" +
 			"	max_life INTEGER,		" +
 			"	current_life INTEGER, 	" +
-			"	gold INTEGER			" +
+			"	gold INTEGER,			" +
+			"   gold_storage INTEGER,   " +
+			"   exp_storage INTEGER     " + 
 			") ";
 	
 	return result;
+}
+
+//todo gold storage table
+//todo exp storage table
+
+function initGoldStorageTable(){
+	
+}
+
+function initGoldStorageTable(){
+	
 }
