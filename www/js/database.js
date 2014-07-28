@@ -13,6 +13,10 @@ function initDB(){
 	db.transaction(initTables,dbErrorHandler, dbReady);
 }
 
+function resetDB(){
+	db.transaction(initTablesHard,dbErrorHandler, dbReady);
+}
+
 function testSavePlayer(){
 	var userinput;
 	userinput = prompt("Enter a value to save in the 'gold' field...", "999");
@@ -230,6 +234,19 @@ function loadComputer(callBackFunction){
 }
 
 function initTables(tx){
+	//init tables
+	tx.executeSql(initPlayerTable());
+	tx.executeSql(initComputerTable());
+	tx.executeSql(initComputerDefaultStatsTable());
+	tx.executeSql(initExpPerLevelTable());
+	
+	//init default data
+	// if this is the first time the app has run.
+	// i.e. player, computer, etc. 
+	initData(tx);
+}
+
+function initTablesHard(tx){
 	//init tables
 	tx.executeSql("drop table if exists player");
 	tx.executeSql("drop table if exists computer");
