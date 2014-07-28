@@ -4,6 +4,7 @@
 var eimage = new Array();
 var pimage = new Array();
 var queueclear = false;
+var queueclear=false;
 var getstart = {
 	"left" : "130px",
 	"width" : "75px",
@@ -17,8 +18,7 @@ var getend = {
 	opacity : '0'
 };
 
-//time=1200 when vibrate
-var time=1080;
+var time=950;
 
 //init compare display compare in html file
 function initCompare(eList, pList) {
