@@ -388,14 +388,3 @@ function initPlayerTable(){
 	
 	return result;
 }
-
-//todo gold storage table
-//todo exp storage table
-
-function initGoldStorageTable(){
-	
-}
-
-function initGoldStorageTable(){
-	
-}
