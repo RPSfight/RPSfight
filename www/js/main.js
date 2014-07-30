@@ -5,8 +5,8 @@
  *
  */
 
-var playerChosenMoves = new Array();
-var computerChosenMoves = new Array();
+var playerChosenMoves = [];
+var computerChosenMoves = [];
 var rps;
 var playerCurLife;
 var computerCurLife;
@@ -24,8 +24,8 @@ var saveData = {
 };
 
 var charImgSet;
-var playerData = new Array();
-var computerData = new Array();
+var playerData = [];
+var computerData = [];
 var databaseReady = 0;
 
 function initMain() {
@@ -124,7 +124,7 @@ function play() {
 	//hidden triangle and appear compare
 	visibility = true;
 	triangleVisibilty();
-	
+
 	//ramdom choose computer moves
 	for (var i = 0; i < 5; i++) {
 		computerChosenMoves.push(rps[Math.floor(Math.random() * 3)]);
@@ -216,7 +216,13 @@ function fight(computer, player, geti, size) {
 			$(p).attr("src", charImgSet + "Death2.png");
 			gameCompleted = true;
 		}
-		if (gameCompleted||geti===size-1) {
+		if (computerData.current_life > 0) {
+			$(e).attr("src", charImgSet + computer.shift());
+		} else {
+			$(e).attr("src", charImgSet + "Death2.png");
+			gameCompleted = true;
+		}
+		if (gameCompleted || geti === size - 1) {
 			triangleVisibilty();
 			$(p).clearQueue();
 			$(e).clearQueue();
@@ -230,19 +236,7 @@ function fight(computer, player, geti, size) {
 		$(e).attr("src", charImgSet + computer.shift());
 	}).animate(egetpxmove, time[1]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[1], function() {
 		$(e).attr("src", charImgSet + computer.shift()).css("opacity", "0");
-	}).animate(egetpxstart, time[1], function() {
-		if (computerData.current_life > 0) {
-		$(e).attr("src", charImgSet + computer.shift());
-		}else{
-			$(e).attr("src", charImgSet + "Death2.png");
-			gameCompleted = true;
-		}
-		if (gameCompleted||geti===size-1) {
-			triangleVisibilty();
-			$(p).clearQueue();
-			$(e).clearQueue();
-		}
-	});
+	}).animate(egetpxstart, time[1]);
 
 }
 

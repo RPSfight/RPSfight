@@ -27,8 +27,8 @@ function testSavePlayer(){
 		rock_def:"1",
 		paper_att:"1",
 		paper_def:"1",
-		scissor_att:"1",
-		scissor_def:"1",
+		scissors_att:"1",
+		scissors_def:"1",
 		max_life:"10",
 		current_life:"10",
 		gold:userinput
@@ -38,15 +38,15 @@ function testSavePlayer(){
 
 function testSaveComputer(){
 	var userinput;
-	userinput = prompt("Enter a value to save in the 'scissor_def' field...", "999");
+	userinput = prompt("Enter a value to save in the 'scissors_def' field...", "999");
 	var computer = {
 		level:"1",
 		rock_att:"1",
 		rock_def:"1",
 		paper_att:"1",
 		paper_def:"1",
-		scissor_att:"1",
-		scissor_def:userinput,
+		scissors_att:"1",
+		scissors_def:userinput,
 		max_life:"10",
 		current_life:"10",
 	};
@@ -71,8 +71,8 @@ function testLoadPlayer(){
 		results += "rdef: "+player.rock_def+"\n"; 
 		results += "patt: "+player.paper_att+"\n"; 
 		results += "pdef: "+player.paper_def+"\n"; 
-		results += "satt: "+player.scissor_att+"\n"; 
-		results += "sdef: "+player.scissor_def+"\n"; 
+		results += "satt: "+player.scissors_att+"\n"; 
+		results += "sdef: "+player.scissors_def+"\n"; 
 		results += "max life: "+player.max_life+"\n"; 
 		results += "cur life: "+player.current_life+"\n"; 
 		results += "gold: "+player.gold+"\n";
@@ -96,8 +96,8 @@ function testLoadComputer(){
 		results += "rdef: "+computer.rock_def+"\n"; 
 		results += "patt: "+computer.paper_att+"\n"; 
 		results += "pdef: "+computer.paper_def+"\n"; 
-		results += "satt: "+computer.scissor_att+"\n"; 
-		results += "sdef: "+computer.scissor_def+"\n"; 
+		results += "satt: "+computer.scissors_att+"\n"; 
+		results += "sdef: "+computer.scissors_def+"\n"; 
 		results += "max life: "+computer.max_life+"\n"; 
 		results += "cur life: "+computer.current_life+"\n"; 
 		alert(results);  
@@ -112,8 +112,8 @@ function savePlayer(player){
 	var rock_def;
 	var paper_att;
 	var paper_def;
-	var scissor_att;
-	var scissor_def;
+	var scissors_att;
+	var scissors_def;
 	var max_life;
 	var current_life;
 	var gold;
@@ -125,18 +125,18 @@ function savePlayer(player){
 	rock_def      = player.rock_def;
 	paper_att     = player.paper_att;
 	paper_def     = player.paper_def;
-	scissor_att   = player.scissor_att;
-	scissor_def   = player.scissor_def;
+	scissors_att   = player.scissors_att;
+	scissors_def   = player.scissors_def;
 	max_life      = player.max_life;
 	current_life  = player.current_life;
 	gold          = player.gold;
 	
 	query = "update player	"+
-			"set level=?, experience=?, rock_att=?, rock_def=?, paper_att=?, paper_def=?, scissor_att=?, scissor_def=?, max_life=?, current_life=?, gold=?	"+
+			"set level=?, experience=?, rock_att=?, rock_def=?, paper_att=?, paper_def=?, scissors_att=?, scissors_def=?, max_life=?, current_life=?, gold=?	"+
 			"where id='1'";
 	
 	db.transaction(function(tx){
-		tx.executeSql(query,[level,experience,rock_att,rock_def,paper_att,paper_def,scissor_att,scissor_def,max_life,current_life,gold]);	
+		tx.executeSql(query,[level,experience,rock_att,rock_def,paper_att,paper_def,scissors_att,scissors_def,max_life,current_life,gold]);	
 	},dbErrorHandler, querySuccess);
 }
 
@@ -146,8 +146,8 @@ function saveComputer(computer){
 	var rock_def;
 	var paper_att;
 	var paper_def;
-	var scissor_att;
-	var scissor_def;
+	var scissors_att;
+	var scissors_def;
 	var max_life;
 	var current_life;
 	var query;
@@ -157,17 +157,17 @@ function saveComputer(computer){
 	rock_def      = computer.rock_def;
 	paper_att     = computer.paper_att;
 	paper_def     = computer.paper_def;
-	scissor_att   = computer.scissor_att;
-	scissor_def   = computer.scissor_def;
+	scissors_att   = computer.scissors_att;
+	scissors_def   = computer.scissors_def;
 	max_life      = computer.max_life;
 	current_life  = computer.current_life;
 	
 	query = "update computer	"+
-			"set level=?, rock_att=?, rock_def=?, paper_att=?, paper_def=?, scissor_att=?, scissor_def=?, max_life=?, current_life=? "+
+			"set level=?, rock_att=?, rock_def=?, paper_att=?, paper_def=?, scissors_att=?, scissors_def=?, max_life=?, current_life=? "+
 			"where id='1'";
 			
 	db.transaction(function(tx){
-		tx.executeSql(query,[level,rock_att,rock_def,paper_att,paper_def,scissor_att,scissor_def,max_life,current_life]);	
+		tx.executeSql(query,[level,rock_att,rock_def,paper_att,paper_def,scissors_att,scissors_def,max_life,current_life]);	
 	},dbErrorHandler, querySuccess);
 } 
 
@@ -187,8 +187,8 @@ function loadPlayer(callBackFunction){
 				rock_def:row.rock_def,
 				paper_att:row.paper_att,
 				paper_def:row.paper_def,
-				scissor_att:row.scissor_att,
-				scissor_def:row.scissor_def,
+				scissors_att:row.scissors_att,
+				scissors_def:row.scissors_def,
 				max_life:row.max_life,
 				current_life:row.current_life,
 				gold:row.gold
@@ -219,8 +219,8 @@ function loadComputer(callBackFunction){
 				rock_def:row.rock_def,
 				paper_att:row.paper_att,
 				paper_def:row.paper_def,
-				scissor_att:row.scissor_att,
-				scissor_def:row.scissor_def,
+				scissors_att:row.scissors_att,
+				scissors_def:row.scissors_def,
 				max_life:row.max_life,
 				current_life:row.current_life,
 			};
@@ -287,8 +287,8 @@ function initData(tx){
 	var rock_def	= 1;
 	var paper_att   = 1;
 	var paper_def   = 1;
-	var scissor_att = 1;
-	var scissor_def = 1;
+	var scissors_att = 1;
+	var scissors_def = 1;
 	var max_life    = 10;
 	var current_life= 10;
 	var gold = 101;
@@ -296,14 +296,14 @@ function initData(tx){
 	
 	// or ignore -> if data is already initialized in the table then do nothing.
 	tx.executeSql("insert or ignore into player "+
-				   "(id, level,experience,rock_att,rock_def,paper_att,paper_def,scissor_att,scissor_def,max_life,current_life,gold) "+
+				   "(id, level,experience,rock_att,rock_def,paper_att,paper_def,scissors_att,scissors_def,max_life,current_life,gold) "+
 				   "values(1,?,?,?,?,?,?,?,?,?,?,?) ",
-				   [level,experience,rock_att,rock_def,paper_att,paper_def,scissor_def,scissor_def,max_life,current_life,gold]);
+				   [level,experience,rock_att,rock_def,paper_att,paper_def,scissors_def,scissors_def,max_life,current_life,gold]);
 				   
     tx.executeSql("insert or ignore into computer "+
-				   "(id, level,rock_att,rock_def,paper_att,paper_def,scissor_att,scissor_def,max_life,current_life) "+
+				   "(id, level,rock_att,rock_def,paper_att,paper_def,scissors_att,scissors_def,max_life,current_life) "+
 				   "values(1,?,?,?,?,?,?,?,?,?) ",
-				   [level,rock_att,rock_def,paper_att,paper_def,scissor_def,scissor_def,max_life,current_life]);
+				   [level,rock_att,rock_def,paper_att,paper_def,scissors_def,scissors_def,max_life,current_life]);
 }
 
 //returns query to initialize the Exp_Per_Level table
@@ -337,8 +337,8 @@ function initComputerDefaultStatsTable(){
 			"	rock_def INTEGER, 		" +
 			"	paper_att INTEGER, 		" +
 			"	paper_def INTEGER, 		" +
-			"	scissor_att INTEGER, 	" +
-			"	scissor_def INTEGER, 	" +
+			"	scissors_att INTEGER, 	" +
+			"	scissors_def INTEGER, 	" +
 			"	life INTEGER			" +
 			") ";
 	
@@ -356,8 +356,8 @@ function initComputerTable(){
 			"	rock_def INTEGER, 		" +
 			"	paper_att INTEGER, 		" +
 			"	paper_def INTEGER, 		" +
-			"	scissor_att INTEGER, 	" +
-			"	scissor_def INTEGER, 	" +
+			"	scissors_att INTEGER, 	" +
+			"	scissors_def INTEGER, 	" +
 			"	max_life INTEGER,		" +
 			"	current_life INTEGER  	" +
 			") ";
@@ -377,8 +377,8 @@ function initPlayerTable(){
 			"	rock_def INTEGER, 		" +
 			"	paper_att INTEGER, 		" +
 			"	paper_def INTEGER, 		" +
-			"	scissor_att INTEGER, 	" +
-			"	scissor_def INTEGER, 	" +
+			"	scissors_att INTEGER, 	" +
+			"	scissors_def INTEGER, 	" +
 			"	max_life INTEGER,		" +
 			"	current_life INTEGER, 	" +
 			"	gold INTEGER,			" +
