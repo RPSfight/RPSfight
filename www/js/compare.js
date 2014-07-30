@@ -1,8 +1,8 @@
 /**
  * @author Junxin
  */
-var eimage = new Array();
-var pimage = new Array();
+var eimage = [];
+var pimage = [];
 var queueclear = false;
 var queueclear=false;
 var getstart = {
