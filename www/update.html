@@ -15,56 +15,59 @@
 		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.2.0.min.css" />
 	</head>
 	<body onload="initUpdate()">
-		<p>
-			Train Center
-		</p>
-		<div>
+		<div style="margin-left:20px">
+			<p>
+				Train Center
+			</p>
 			<div id="goldexp">
 				<img src="img/rps/exp.png">
-				<span id="exp">0/1000</span>
+				<span id="experience">0/1000</span>
+				<br>
 				<img src="img/rps/gold.png">
 				<span id="gold">0/1000</span>
 				<br>
+				<br>
 				<img src="img/rps/exp_storage.png">
 				<span id="exp_storage">1000 </span>
-				<img class="fixsize" src="img/rps/plus1000.png">
+				<img class="fixsize" src="img/rps/plus1000.png" onclick="updateExpGold(this)">
 				<span id="exp_storage_cost"> Cost Gold: 1000</span>
 				<br>
 				<img src="img/rps/gold_storage.png">
 				<span id="gold_storage">1000 </span>
-				<img class="fixsize" src="img/rps/plus1000.png">
+				<img class="fixsize" src="img/rps/plus1000.png" onclick="updateExpGold(this)">
 				<span id="gold_storage_cost"> Cost Gold: 1000</span>
+				<br>
 				<br>
 			</div>
 			<div id="attdef">
 				<img src="img/rps/paperATT.png">
-				<span id="paperATT">1 </span>
-				<img class="fixsize" src="img/rps/plus2.png">
+				<span id="paper_att">0 </span>
+				<img class="fixsize" src="img/rps/plus2.png" onclick="updatePower(this)">
 				<span id="paperATT_cost"> Cost Exp. 100</span>
 				<br>
 				<img src="img/rps/paperDEF.png">
-				<span id="paperDEF">1 </span>
-				<img class="fixsize" src="img/rps/plus2.png">
+				<span id="paper_def">0 </span>
+				<img class="fixsize" src="img/rps/plus2.png" onclick="updatePower(this)">
 				<span id="paperDEF_cost"> Cost Exp. 100</span>
 				<br>
 				<img src="img/rps/rockATT.png">
-				<span id="rockATT">1 </span>
-				<img class="fixsize" src="img/rps/plus2.png">
+				<span id="rock_att">0 </span>
+				<img class="fixsize" src="img/rps/plus2.png" onclick="updatePower(this)">
 				<span id="rockATT_cost"> Cost Exp. 100</span>
 				<br>
 				<img src="img/rps/rockDEF.png">
-				<span id="rockDEF">1 </span>
-				<img class="fixsize" src="img/rps/plus2.png">
+				<span id="rock_def">0 </span>
+				<img class="fixsize" src="img/rps/plus2.png" onclick="updatePower(this)">
 				<span id="rockDEF_cost"> Cost Exp. 100</span>
 				<br>
 				<img src="img/rps/scissorsATT.png">
-				<span  id="scissorsATT">1 </span>
-				<img class="fixsize" src="img/rps/plus2.png">
+				<span  id="scissors_att">0 </span>
+				<img class="fixsize" src="img/rps/plus2.png" onclick="updatePower(this)">
 				<span id="scissorsATT_cost"> Cost Exp. 100</span>
 				<br>
 				<img src="img/rps/scissorsDEF.png">
-				<span id="scissorsDEF">1 </span>
-				<img class="fixsize" src="img/rps/plus2.png">
+				<span id="scissors_def">0 </span>
+				<img class="fixsize" src="img/rps/plus2.png" onclick="updatePower(this)">
 				<span id="scissorsDEF_cost"> Cost Exp. 100</span>
 				<br>
 			</div>
