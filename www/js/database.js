@@ -31,7 +31,9 @@ function testSavePlayer(){
 		scissor_def:"1",
 		max_life:"10",
 		current_life:"10",
-		gold:userinput
+		gold:userinput, 
+		gold_storage:"100",
+		exp_storage:"100"
 	};
 	savePlayer(player);
 }
@@ -76,6 +78,10 @@ function testLoadPlayer(){
 		results += "max life: "+player.max_life+"\n"; 
 		results += "cur life: "+player.current_life+"\n"; 
 		results += "gold: "+player.gold+"\n";
+		results += "gold storage: "+player.gold_storage+"\n";
+		results += "exp storage: " +player.exp_storage+"\n";
+		
+		
 		alert(results);  
 	});
 	
@@ -117,6 +123,8 @@ function savePlayer(player){
 	var max_life;
 	var current_life;
 	var gold;
+	var gold_storage;
+	var exp_storage;
 	var query;
 	
 	level         = player.level;
@@ -130,13 +138,15 @@ function savePlayer(player){
 	max_life      = player.max_life;
 	current_life  = player.current_life;
 	gold          = player.gold;
+	gold_storage  = player.gold_storage;
+	exp_storage   = player.exp_storage;
 	
 	query = "update player	"+
-			"set level=?, experience=?, rock_att=?, rock_def=?, paper_att=?, paper_def=?, scissor_att=?, scissor_def=?, max_life=?, current_life=?, gold=?	"+
+			"set level=?, experience=?, rock_att=?, rock_def=?, paper_att=?, paper_def=?, scissor_att=?, scissor_def=?, max_life=?, current_life=?, gold=?, gold_storage=?, exp_storage=?	"+
 			"where id='1'";
 	
 	db.transaction(function(tx){
-		tx.executeSql(query,[level,experience,rock_att,rock_def,paper_att,paper_def,scissor_att,scissor_def,max_life,current_life,gold]);	
+		tx.executeSql(query,[level,experience,rock_att,rock_def,paper_att,paper_def,scissor_att,scissor_def,max_life,current_life,gold,gold_storage,exp_storage]);	
 	},dbErrorHandler, querySuccess);
 }
 
@@ -191,7 +201,9 @@ function loadPlayer(callBackFunction){
 				scissor_def:row.scissor_def,
 				max_life:row.max_life,
 				current_life:row.current_life,
-				gold:row.gold
+				gold:row.gold,
+				gold_storage:row.gold_storage,
+				exp_storage:row.exp_storage
 			};
 			
 			
