@@ -142,19 +142,11 @@ function savePlayer(player){
 	exp_storage   = player.exp_storage;
 	
 	query = "update player	"+
-<<<<<<< HEAD
-			"set level=?, experience=?, rock_att=?, rock_def=?, paper_att=?, paper_def=?, scissor_att=?, scissor_def=?, max_life=?, current_life=?, gold=?, gold_storage=?, exp_storage=?	"+
+			"set level=?, experience=?, rock_att=?, rock_def=?, paper_att=?, paper_def=?, scissors_att=?, scissors_def=?, max_life=?, current_life=?, gold=?, gold_storage=?, exp_storage=?	"+
 			"where id='1'";
 	
 	db.transaction(function(tx){
-		tx.executeSql(query,[level,experience,rock_att,rock_def,paper_att,paper_def,scissor_att,scissor_def,max_life,current_life,gold,gold_storage,exp_storage]);	
-=======
-			"set level=?, experience=?, rock_att=?, rock_def=?, paper_att=?, paper_def=?, scissors_att=?, scissors_def=?, max_life=?, current_life=?, gold=?	"+
-			"where id='1'";
-	
-	db.transaction(function(tx){
-		tx.executeSql(query,[level,experience,rock_att,rock_def,paper_att,paper_def,scissors_att,scissors_def,max_life,current_life,gold]);	
->>>>>>> 21405ca35c6019629d241ea9e78fb23975aa1232
+		tx.executeSql(query,[level,experience,rock_att,rock_def,paper_att,paper_def,scissors_att,scissors_def,max_life,current_life,gold,gold_storage,exp_storage]);	
 	},dbErrorHandler, querySuccess);
 }
 
@@ -312,13 +304,15 @@ function initData(tx){
 	var max_life    = 10;
 	var current_life= 10;
 	var gold = 101;
+	var gold_storage=100;
+	var exp_storage=100;
 	
 	
 	// or ignore -> if data is already initialized in the table then do nothing.
 	tx.executeSql("insert or ignore into player "+
-				   "(id, level,experience,rock_att,rock_def,paper_att,paper_def,scissors_att,scissors_def,max_life,current_life,gold) "+
-				   "values(1,?,?,?,?,?,?,?,?,?,?,?) ",
-				   [level,experience,rock_att,rock_def,paper_att,paper_def,scissors_def,scissors_def,max_life,current_life,gold]);
+				   "(id, level,experience,rock_att,rock_def,paper_att,paper_def,scissors_att,scissors_def,max_life,current_life,gold,gold_storage,exp_storage) "+
+				   "values(1,?,?,?,?,?,?,?,?,?,?,?,?,?) ",
+				   [level,experience,rock_att,rock_def,paper_att,paper_def,scissors_def,scissors_def,max_life,current_life,gold,gold_storage,exp_storage]);
 				   
     tx.executeSql("insert or ignore into computer "+
 				   "(id, level,rock_att,rock_def,paper_att,paper_def,scissors_att,scissors_def,max_life,current_life) "+
