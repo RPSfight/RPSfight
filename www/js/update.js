@@ -5,8 +5,8 @@ function initUpdate() {
 	loadPlayer(function(playerData) {
 		$("#exp").text(playerData.experience+"/"+playerData.exp_storage);
 		$("#gold").text(playerData.gold+"/"+playerData.gold_storage);
-		$("#exp_storage").text(playerData.exp_storage+"/1000");
-		$("#gold_storage").text(playerData.gold_storage+"/1000");
+		$("#exp_storage").text(playerData.exp_storage);
+		$("#gold_storage").text(playerData.gold_storage);
 		$("#exp_storage_cost").text(" Cost Gold: "+playerData.exp_storage);
 		$("#gold_storage_cost").text(" Cost Gold: "+playerData.gold_storage);
 		$("#paperATT").text(playerData.paper_att);

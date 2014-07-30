@@ -304,8 +304,8 @@ function initData(tx){
 	var max_life    = 10;
 	var current_life= 10;
 	var gold = 101;
-	var gold_storage=100;
-	var exp_storage=100;
+	var gold_storage=1000;
+	var exp_storage=1000;
 	
 	
 	// or ignore -> if data is already initialized in the table then do nothing.
