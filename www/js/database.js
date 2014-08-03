@@ -22,7 +22,7 @@ function testSavePlayer(){
 	userinput = prompt("Enter a value to save in the 'gold' field...", "999");
 	var player = {
 		level:"1",
-		experience:"1",
+		experience:"999",
 		rock_att:"1",
 		rock_def:"1",
 		paper_att:"1",
@@ -32,8 +32,8 @@ function testSavePlayer(){
 		max_life:"10",
 		current_life:"10",
 		gold:userinput, 
-		gold_storage:"100",
-		exp_storage:"100"
+		gold_storage:"1000",
+		exp_storage:"1000"
 	};
 	savePlayer(player);
 }
@@ -304,8 +304,8 @@ function initData(tx){
 	var max_life    = 10;
 	var current_life= 10;
 	var gold = 101;
-	var gold_storage=100;
-	var exp_storage=100;
+	var gold_storage=1000;
+	var exp_storage=1000;
 	
 	
 	// or ignore -> if data is already initialized in the table then do nothing.
