@@ -39,6 +39,7 @@ function initMain() {
 		computerData = c;
 		databaseReady++;
 	});
+	
 	rps = ["rock", "paper", "scissors"];
 	charImgSet = "img/" + saveData["charater"] + "/" + saveData["color"] + "/", playerCurLife = 1;
 	computerCurLife = 1;

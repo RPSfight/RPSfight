@@ -402,3 +402,6 @@ function initPlayerTable(){
 	
 	return result;
 }
+
+//computer - gold to give to player
+//computer - exp to give to player
