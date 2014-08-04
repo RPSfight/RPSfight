@@ -23,6 +23,8 @@ var saveData = {
 	color : "brond"
 };
 
+var background=["greatwall","mountain"];
+
 var charImgSet;
 var playerData = [];
 var computerData = [];
@@ -39,6 +41,7 @@ function initMain() {
 		computerData = c;
 		databaseReady++;
 	});
+	$("body").css("background","url(img/background/"+background[Math.floor(Math.random() * background.length)]+".png) no-repeat");
 	rps = ["rock", "paper", "scissors"];
 	charImgSet = "img/" + saveData["charater"] + "/" + saveData["color"] + "/", playerCurLife = 1;
 	computerCurLife = 1;
@@ -92,6 +95,7 @@ function doOnOrientationChange() {
 				"top" : "100px",
 				"right" : "-120px"
 			});
+			$("body").css("background-size","cover").css("background-position","bottom");//contain/cover
 			break;
 		default:
 			$("#life").css({
@@ -114,6 +118,7 @@ function doOnOrientationChange() {
 				"top" : "300px",
 				"right" : "auto"
 			});
+			$("body").css("background-size","cover").css("background-position","right");//contain/cover
 			break;
 	}
 }
@@ -137,7 +142,7 @@ function play() {
 
 	//ramdom choose computer moves
 	for (var i = 0; i < 5; i++) {
-		computerChosenMoves.push(rps[Math.floor(Math.random() * 3)]);
+		computerChosenMoves.push(rps[Math.floor(Math.random() * rps.length)]);
 	}
 	document.getElementById("compare").innerHTML = initCompare(computerChosenMoves, playerChosenMoves);
 	var size = Math.max(computerChosenMoves.length, playerChosenMoves.length);
@@ -277,5 +282,5 @@ function someoneWasHurt(type) {
 
 //loading screen jquery code
 $(window).load(function() {
-  $("#loader").delay(3000).fadeOut("fast");
+  $("#loader").delay(500).fadeOut("fast");
 });
