@@ -264,3 +264,8 @@ function someoneWasHurt(type) {
 		computerLife(computerCurLife);
 	}
 }
+
+//loading screen jquery code
+$(window).load(function() {
+  $("#loader").delay(3000).fadeOut("fast");
+});
