@@ -8,6 +8,7 @@ span{
 	position:relative;
 	top:-12px;
 	border:none;
+	font-weight:bold;
 }
 #gold,#exp{
 	width:42px;
@@ -20,6 +21,6 @@ p{
 	font-weight:bold;
 	font-size:30px;
 }
-span{
-	font-weight:bold;
+body{
+	overflow: hidden;
 }

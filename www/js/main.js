@@ -51,8 +51,18 @@ function initMain() {
 	doOnOrientationChange();
 }
 
+function onPause() {
+	$("#player").stop();
+}
+
+function onResume() {
+	// Handle the resume event
+}
+
 function onDeviceReady() {
 	//device ready
+	document.addEventListener("pause", onPause, false);
+	document.addEventListener("resume", onResume, false);
 }
 
 /*

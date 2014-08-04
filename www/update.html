@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>update</title>
 		<meta name="author" content="Junxin" />
 		<!-- Date: 2014-07-15 -->
 		<link rel="stylesheet" type="text/css" href="css/update.css" />
 		<script type="text/javascript" charset="utf-8" src="js/update.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/database.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/popup.js"></script>
 
 		<!--JQuery and JQuery style from the Jquery.com-->
 		<script type="text/javascript" charset="utf-8" src="js/jquery-1.8.2.min.js"></script>
@@ -15,11 +16,11 @@
 		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.2.0.min.css" />
 	</head>
 	<body onload="initUpdate()">
-		<div style="margin-left:20px">
-			<p>
-				Train Center
-			</p>
-			<div id="goldexp">
+		<div data-role="header">
+			<h2>Train Center</h2>
+		</div>
+		<div data-role="main" class="ui-content">
+			<div id="goldexp" style="margin-left:10px">
 				<img src="img/rps/exp.png">
 				<span id="experience">0/1000</span>
 				<br>
@@ -39,7 +40,7 @@
 				<br>
 				<br>
 			</div>
-			<div id="attdef">
+			<div id="attdef" style="margin-left:20px">
 				<img src="img/rps/paperATT.png">
 				<span id="paper_att">0 </span>
 				<img class="fixsize" src="img/rps/plus2.png" onclick="updatePower(this)">
@@ -71,6 +72,7 @@
 				<span id="scissorsDEF_cost"> Cost Exp. 100</span>
 				<br>
 			</div>
+			<div id="message" style="background-color: white; font-weight:bold; display:none;" data-role="popup" id="popupBasic" class="ui-content"></div>
 		</div>
 	</body>
 </html>
