@@ -14,7 +14,7 @@ function doOnOrientationChange() {
 		case -90:
 		case 90:
 			$("#attdef").css({
-				"top" : "-200px",
+				"top" : "-240px",
 				"left" : "280px",
 			});
 			break;
@@ -46,6 +46,7 @@ function refresh() {
 	$("#scissorsATT_cost").text(" Cost Exp. " + playerData.scissors_att * 100);
 	$("#scissors_def").text(playerData.scissors_def);
 	$("#scissorsDEF_cost").text(" Cost Exp. " + playerData.scissors_def * 100);
+	$("#level").text(playerData.level);
 }
 
 function updatePower(element) {
@@ -57,7 +58,8 @@ function updatePower(element) {
 		savePlayer(playerData);
 		refresh();
 	} else {
-		popupwindow("Not Enough Experience!");
+		$("#textInfo").text("Not Enough Experience");
+		$("#message").popup("open");
 	}
 }
 
@@ -70,6 +72,11 @@ function updateExpGold(element) {
 		savePlayer(playerData);
 		refresh();
 	} else {
-		popupwindow("Not Enough Gold!");
+		$("#textInfo").text("Not Enough Gold");
+		$("#message").popup("open");
 	}
+}
+
+function updateLevel(element){
+	
 }

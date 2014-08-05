@@ -8,15 +8,17 @@
 	transform: scaleX(-1);
 	filter: FlipH;
 	-ms-filter: "FlipH";
+	height: 120px;
 }
 #computer {
 	position: absolute;
 	top: 0px;
 	right: 40px;
+	height: 120px;
 }
 
 #rps, #life, #explode, #motion, #compare {
-	width: 300px;
+	width: 320px;
 	position: relative;
 }
 
@@ -73,7 +75,6 @@
 	-ms-user-select: none;
 	user-select: none;
 	-webkit-user-drag: none; /* Prevents dragging of images/divs etc */
-	user-drag: none;
 }
 
 /* css for loading gif */
@@ -89,4 +90,12 @@
 	padding-top: 40%;
 	overflow: hidden;
 	z-index: 2;
+}
+a {
+	width: 80px;
+	position:relative;
+	left:7px;
+}
+#menu {
+	position: relative;
 }

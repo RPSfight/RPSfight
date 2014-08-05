@@ -23,7 +23,7 @@ var saveData = {
 	color : "brond"
 };
 
-var background=["greatwall","mountain"];
+var background = ["greatwall", "mountain"];
 
 var charImgSet;
 var playerData = [];
@@ -41,7 +41,7 @@ function initMain() {
 		computerData = c;
 		databaseReady++;
 	});
-	$("body").css("background","url(img/background/"+background[Math.floor(Math.random() * background.length)]+".png) no-repeat");
+	$("body").css("background", "url(img/background/" + background[Math.floor(Math.random() * background.length)] + ".png) no-repeat");
 	rps = ["rock", "paper", "scissors"];
 	charImgSet = "img/" + saveData["charater"] + "/" + saveData["color"] + "/", playerCurLife = 1;
 	computerCurLife = 1;
@@ -52,14 +52,6 @@ function initMain() {
 	document.addEventListener("deviceready", onDeviceReady, false);
 	window.addEventListener('orientationchange', doOnOrientationChange);
 	doOnOrientationChange();
-}
-
-function onPause() {
-	$("#player").stop();
-}
-
-function onResume() {
-	// Handle the resume event
 }
 
 function onDeviceReady() {
@@ -95,7 +87,14 @@ function doOnOrientationChange() {
 				"top" : "100px",
 				"right" : "-120px"
 			});
-			$("body").css("background-size","cover").css("background-position","bottom");//contain/cover
+			$("body").css({
+				"background-size" : "cover",
+				"background-position" : "bottom"
+			});//contain/cover
+			$("#menu").css({
+				"left" : "120px",
+				"top" : "10px"
+			});
 			break;
 		default:
 			$("#life").css({
@@ -118,7 +117,15 @@ function doOnOrientationChange() {
 				"top" : "300px",
 				"right" : "auto"
 			});
-			$("body").css("background-size","cover").css("background-position","right");//contain/cover
+			$("#menu").css({
+				"left" : "auto",
+				"top" : "auto"
+			});
+			$("body").css({
+				"background-size" : "cover",
+				"background-position" : "right"
+			});
+			//contain/cover
 			break;
 	}
 }
@@ -241,6 +248,13 @@ function fight(computer, player, geti, size) {
 			triangleVisibilty();
 			$(p).clearQueue();
 			$(e).clearQueue();
+			if (playerData.current_life <= 0 && computerData.current_life <= 0) {
+
+			} else if (playerData.current_life <= 0) {
+
+			} else if (computerData.current_life <= 0) {
+
+			}
 		}
 	});
 
@@ -280,7 +294,19 @@ function someoneWasHurt(type) {
 	}
 }
 
+function resume(){
+	$("#menuBox").popup("close");
+}
+
+function restart(){
+	//initMain();
+}
+
+function quit(){
+	window.location = "index.html";
+}
+
 //loading screen jquery code
 $(window).load(function() {
-  $("#loader").delay(500).fadeOut("fast");
+	$("#loader").delay(500).fadeOut("fast");
 });
