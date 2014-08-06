@@ -48,6 +48,10 @@ function initMain() {
 	$("#explode").css('visibility', 'hidden');
 	$("#player").attr("src", charImgSet + "Ready.png");
 	$("#computer").attr("src", charImgSet + "Ready.png");
+	
+	$("#rock").on("touchstart touchend",function(){add("rock");});
+	$("#paper").on("touchstart touchend",function(){add("paper");});
+	$("#scissors").on("touchstart touchend",function(){add("scissors");});
 
 	document.addEventListener("deviceready", onDeviceReady, false);
 	window.addEventListener('orientationchange', doOnOrientationChange);
@@ -90,7 +94,8 @@ function doOnOrientationChange() {
 			$("body").css({
 				"background-size" : "cover",
 				"background-position" : "bottom"
-			});//contain/cover
+			});
+			//contain/cover
 			$("#menu").css({
 				"left" : "120px",
 				"top" : "10px"
@@ -248,13 +253,13 @@ function fight(computer, player, geti, size) {
 			triangleVisibilty();
 			$(p).clearQueue();
 			$(e).clearQueue();
-			if (playerData.current_life <= 0 && computerData.current_life <= 0) {
-
-			} else if (playerData.current_life <= 0) {
-
-			} else if (computerData.current_life <= 0) {
-
-			}
+		}
+		if (playerData.current_life <= 0 && computerData.current_life <= 0) {
+			setTimeout(function(){window.location = "gameover.html?result=tie";},1500);
+		} else if (playerData.current_life <= 0) {
+			setTimeout(function(){window.location = "gameover.html?result=lose";},1500);
+		} else if (computerData.current_life <= 0) {
+			setTimeout(function(){window.location = "gameover.html?result=win";},1500);
 		}
 	});
 
@@ -294,16 +299,20 @@ function someoneWasHurt(type) {
 	}
 }
 
-function resume(){
+function resume() {
 	$("#menuBox").popup("close");
 }
 
-function restart(){
-	//initMain();
+function restart() {
+	if (confirm('Are you sure?')) {
+		window.location.reload();
+	}
 }
 
-function quit(){
-	window.location = "index.html";
+function quit() {
+	if (confirm('Are you sure?')) {
+		window.location = "index.html";
+	}
 }
 
 //loading screen jquery code

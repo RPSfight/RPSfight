@@ -58,7 +58,7 @@ function updatePower(element) {
 		savePlayer(playerData);
 		refresh();
 	} else {
-		$("#textInfo").text("Not Enough Experience");
+		$("#textInfo1").text("Not Enough Experience");
 		$("#message").popup("open");
 	}
 }
@@ -72,7 +72,7 @@ function updateExpGold(element) {
 		savePlayer(playerData);
 		refresh();
 	} else {
-		$("#textInfo").text("Not Enough Gold");
+		$("#textInfo1").text("Not Enough Gold");
 		$("#message").popup("open");
 	}
 }

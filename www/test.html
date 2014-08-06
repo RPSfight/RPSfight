@@ -5,80 +5,32 @@
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
 		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
-	</head>
-	<body>
-		<div data-role="page">
-			<div align="center">
-				<h2>Train Center</h2>
-			</div>
-			<div id="box" style="margin-left:20px">
-				<div id="goldexp">
-					<img src="img/rps/level.png">
-					<span class="spanbold" id="level">0</span>
-					<img class="fixsize" src="img/rps/plus.png" onclick="updateLevel(this)">
-					<span id="level_cost"> Cost Exp. 1000</span>
-					<br>
-					<img src="img/rps/exp.png">
-					<span class="spanbold" id="experience">0/1000</span>
-					<br>
-					<img src="img/rps/gold.png">
-					<span class="spanbold" id="gold">0/1000</span>
-					<br>
-					<br>
-					<img src="img/rps/exp_storage.png">
-					<span class="spanbold" id="exp_storage">1000 </span>
-					<img class="fixsize" src="img/rps/plus1000.png" onclick="updateExpGold(this)">
-					<span id="exp_storage_cost"> Cost Gold: 1000</span>
-					<br>
-					<img src="img/rps/gold_storage.png">
-					<span class="spanbold" id="gold_storage">1000 </span>
-					<img class="fixsize" src="img/rps/plus1000.png" onclick="updateExpGold(this)">
-					<span id="gold_storage_cost"> Cost Gold: 1000</span>
-					<br>
-					<br>
-				</div>
-				<div id="attdef">
-					<img src="img/rps/paperATT.png">
-					<span class="spanbold" id="paper_att">0 </span>
-					<img class="fixsize" src="img/rps/plus2.png" onclick="updatePower(this)">
-					<span id="paperATT_cost"> Cost Exp. 100</span>
-					<br>
-					<img src="img/rps/paperDEF.png">
-					<span class="spanbold" id="paper_def">0 </span>
-					<img class="fixsize" src="img/rps/plus2.png" onclick="updatePower(this)">
-					<span id="paperDEF_cost"> Cost Exp. 100</span>
-					<br>
-					<img src="img/rps/rockATT.png">
-					<span class="spanbold" id="rock_att">0 </span>
-					<img class="fixsize" src="img/rps/plus2.png" onclick="updatePower(this)">
-					<span id="rockATT_cost"> Cost Exp. 100</span>
-					<br>
-					<img src="img/rps/rockDEF.png">
-					<span class="spanbold" id="rock_def">0 </span>
-					<img class="fixsize" src="img/rps/plus2.png" onclick="updatePower(this)">
-					<span id="rockDEF_cost"> Cost Exp. 100</span>
-					<br>
-					<img src="img/rps/scissorsATT.png">
-					<span class="spanbold"  id="scissors_att">0 </span>
-					<img class="fixsize" src="img/rps/plus2.png" onclick="updatePower(this)">
-					<span id="scissorsATT_cost"> Cost Exp. 100</span>
-					<br>
-					<img src="img/rps/scissorsDEF.png">
-					<span class="spanbold" id="scissors_def">0 </span>
-					<img class="fixsize" src="img/rps/plus2.png" onclick="updatePower(this)">
-					<span id="scissorsDEF_cost"> Cost Exp. 100</span>
-					<br>
-				</div>
-			</div>
-			<div data-role="main" class="ui-content">
-				<div data-role="popup" id="myPopupDialog">
-					<div data-role="main" class="ui-content">
-						<p>
-						</p>
-						<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b ui-icon-back ui-btn-icon-left" data-rel="back">OK</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</body>
+		<script type="text/javascript" charset="utf-8" src="js/test.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/t.css" />
+	    <script>
+        function submitform(){
+            alert("You entered " + document.getElementById("password").value);
+            return true;
+        }
+    </script>
+
+<style>
+    body{
+        text-align:center;
+        font-family:Arial, Helvetica, sans-serif;
+    }
+</style>
+</head>
+
+<body>
+    <form method="post" onsubmit="return submitform()">
+        <h2>Please login</h2>
+
+        <div>
+            <input type="password" id="password" name="password" class="patternlock" />
+            <input type="submit" value="login"/>
+        </div>
+    </form>
+
+</body>
 </html>

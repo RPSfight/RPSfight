@@ -6,9 +6,10 @@
 		<meta name="author" content="Junxin" />
 		<!-- Date: 2014-07-15 -->
 		<link rel="stylesheet" type="text/css" href="css/update.css" />
+		<link rel="stylesheet" type="text/css" href="css/global.css" />
 		<script type="text/javascript" charset="utf-8" src="js/update.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/database.js"></script>
-		<script type="text/javascript" charset="utf-8" src="js/popup.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/global.js"></script>
 
 		<!--JQuery and JQuery style from the Jquery.com-->
 		<script type="text/javascript" charset="utf-8" src="js/jquery-1.8.2.min.js"></script>
@@ -17,6 +18,7 @@
 	</head>
 	<body onload="initUpdate()">
 		<div data-role="page">
+			<a id="backButton" href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-back ui-btn-icon-notext" onclick="goBack()"></a>
 			<div align="center">
 				<h2>Train Center</h2>
 			</div>
@@ -81,7 +83,7 @@
 			</div>
 			<div data-role="popup" id="message">
 				<div data-role="main" class="ui-content">
-					<p id="textInfo"></p>
+					<p id="textInfo1"></p>
 				</div>
 			</div>
 		</div>
