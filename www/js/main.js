@@ -41,6 +41,7 @@ function initMain() {
 		computerData = c;
 		databaseReady++;
 	});
+	
 	$("body").css("background", "url(img/background/" + background[Math.floor(Math.random() * background.length)] + ".png) no-repeat");
 	rps = ["rock", "paper", "scissors"];
 	charImgSet = "img/" + saveData["charater"] + "/" + saveData["color"] + "/", playerCurLife = 1;
