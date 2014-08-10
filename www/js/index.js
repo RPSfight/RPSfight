@@ -20,7 +20,7 @@ function doOnOrientationChange() {
 }
 
 function play() {
-	window.location = "main.html";
+	window.location = "world.html";
 }
 
 function update() {
