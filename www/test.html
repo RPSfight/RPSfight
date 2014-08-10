@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/test.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/t.css" />
+	    <script>
+        function submitform(){
+            alert("You entered " + document.getElementById("password").value);
+            return true;
+        }
+    </script>
+
+<style>
+    body{
+        text-align:center;
+        font-family:Arial, Helvetica, sans-serif;
+    }
+</style>
+</head>
+
+<body>
+    <form method="post" onsubmit="return submitform()">
+        <h2>Please login</h2>
+
+        <div>
+            <input type="password" id="password" name="password" class="patternlock" />
+            <input type="submit" value="login"/>
+        </div>
+    </form>
+
+</body>
+</html>

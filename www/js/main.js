@@ -23,6 +23,8 @@ var saveData = {
 	color : "brond"
 };
 
+var background = ["greatwall", "mountain"];
+
 var charImgSet;
 var playerData = [];
 var computerData = [];
@@ -40,12 +42,17 @@ function initMain() {
 		databaseReady++;
 	});
 	
+	$("body").css("background", "url(img/background/" + background[Math.floor(Math.random() * background.length)] + ".png) no-repeat");
 	rps = ["rock", "paper", "scissors"];
 	charImgSet = "img/" + saveData["charater"] + "/" + saveData["color"] + "/", playerCurLife = 1;
 	computerCurLife = 1;
 	$("#explode").css('visibility', 'hidden');
 	$("#player").attr("src", charImgSet + "Ready.png");
 	$("#computer").attr("src", charImgSet + "Ready.png");
+	
+	$("#rock").on("touchstart touchend",function(){add("rock");});
+	$("#paper").on("touchstart touchend",function(){add("paper");});
+	$("#scissors").on("touchstart touchend",function(){add("scissors");});
 
 	document.addEventListener("deviceready", onDeviceReady, false);
 	window.addEventListener('orientationchange', doOnOrientationChange);
@@ -54,6 +61,8 @@ function initMain() {
 
 function onDeviceReady() {
 	//device ready
+	document.addEventListener("pause", onPause, false);
+	document.addEventListener("resume", onResume, false);
 }
 
 /*
@@ -83,6 +92,15 @@ function doOnOrientationChange() {
 				"top" : "100px",
 				"right" : "-120px"
 			});
+			$("body").css({
+				"background-size" : "cover",
+				"background-position" : "bottom"
+			});
+			//contain/cover
+			$("#menu").css({
+				"left" : "120px",
+				"top" : "10px"
+			});
 			break;
 		default:
 			$("#life").css({
@@ -105,6 +123,15 @@ function doOnOrientationChange() {
 				"top" : "300px",
 				"right" : "auto"
 			});
+			$("#menu").css({
+				"left" : "auto",
+				"top" : "auto"
+			});
+			$("body").css({
+				"background-size" : "cover",
+				"background-position" : "right"
+			});
+			//contain/cover
 			break;
 	}
 }
@@ -128,7 +155,7 @@ function play() {
 
 	//ramdom choose computer moves
 	for (var i = 0; i < 5; i++) {
-		computerChosenMoves.push(rps[Math.floor(Math.random() * 3)]);
+		computerChosenMoves.push(rps[Math.floor(Math.random() * rps.length)]);
 	}
 	document.getElementById("compare").innerHTML = initCompare(computerChosenMoves, playerChosenMoves);
 	var size = Math.max(computerChosenMoves.length, playerChosenMoves.length);
@@ -228,6 +255,13 @@ function fight(computer, player, geti, size) {
 			$(p).clearQueue();
 			$(e).clearQueue();
 		}
+		if (playerData.current_life <= 0 && computerData.current_life <= 0) {
+			setTimeout(function(){window.location = "gameover.html?result=tie";},1500);
+		} else if (playerData.current_life <= 0) {
+			setTimeout(function(){window.location = "gameover.html?result=lose";},1500);
+		} else if (computerData.current_life <= 0) {
+			setTimeout(function(){window.location = "gameover.html?result=win";},1500);
+		}
 	});
 
 	//computer motion:
@@ -265,3 +299,24 @@ function someoneWasHurt(type) {
 		computerLife(computerCurLife);
 	}
 }
+
+function resume() {
+	$("#menuBox").popup("close");
+}
+
+function restart() {
+	if (confirm('Are you sure?')) {
+		window.location.reload();
+	}
+}
+
+function quit() {
+	if (confirm('Are you sure?')) {
+		window.location = "index.html";
+	}
+}
+
+//loading screen jquery code
+$(window).load(function() {
+	$("#loader").delay(500).fadeOut("fast");
+});

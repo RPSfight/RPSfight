@@ -14,16 +14,17 @@
 
 		<script type="text/javascript" charset="utf-8" src="js/rockpaperscissors.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/compare.js"></script>
-		<script type="text/javascript" charset="utf-8" src="js/database.js"></script>      
+		<script type="text/javascript" charset="utf-8" src="js/database.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/main.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/fight.js"></script>
-		<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script>
+		<!--<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script>-->
+		<script type="text/javascript" charset="utf-8" src="js/pause_plugin.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/rps.css" />
 		<link rel="stylesheet" type="text/css" href="css/life.css" />
 		<link rel="stylesheet" type="text/css" href="css/main.css" />
 
 		<script>
-			var makeUnselectable = function($target) {
+			/*var makeUnselectable = function($target) {
 				$target.addClass('unselectable')// All these attributes are inheritable
 				.attr('unselectable', 'on')// For IE9 - This property is not inherited, needs to be placed onto everything
 				.attr('draggable', 'false')// For moz and webkit, although Firefox 16 ignores this when -moz-user-select: none; is set, it's like these properties are mutually exclusive, seems to be a bug.
@@ -35,12 +36,15 @@
 				$target// Apply non-inheritable properties to the child elements
 				.find('*').attr('draggable', 'false').attr('unselectable', 'on');
 			};
-			$('body').addClass('noscroll').css('top', -(document.documentElement.scrollTop) + 'px');
-
+			$('body').addClass('noscroll').css('top', -(document.documentElement.scrollTop) + 'px');*/
+			$("*").live('selectstart dragstart', function(evt){ evt.preventDefault(); return false; });
 		</script>
 	</head>
 	<body onload="initMain()">
 		<div align="center">
+			<div id="loader">
+				<img id="loader_img" src="img/rps/ajax-loader.gif" width="50%">
+			</div>
 			<input type="button" onclick="play()" value="start"\>
 			<div id="life">
 				<img src="img/rps/blood.png" id="pBlood">
@@ -68,6 +72,16 @@
 				<img src="img/rps/explode.png" id="explode4">
 				<img src="img/rps/explode.png" id="explode5">
 				<img src="img/rps/explode.png" id="explode6">
+			</div>
+			<a id="menu" href="#menuBox" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn ui-shadow ui-corner-all ui-icon-grid ui-btn-icon-notext"></a>
+			<div data-role="popup" id="menuBox">
+				<div data-role="main" class="ui-content">
+					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="resume()">Resume</a>
+					<br>
+					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="restart()">Restart</a>
+					<br>
+					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="quit()">Quit</a>
+				</div>
 			</div>
 		</div>
 	</body>

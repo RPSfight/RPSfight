@@ -1,25 +1,37 @@
-img{
-	height:35px;
+img {
+	height: 35px;
+	width:35px;
 }
-.fixsize{
-	height:35px;
+.fixsize {
+	height: 35px;
 }
-span{
-	position:relative;
-	top:-12px;
-	border:none;
+span {
+	font-family: Garamond, serif;
+	position: relative;
+	top: -12px;
+	border: none;
+	color: #be6029;
+	line-height: 1em;
 }
-#gold,#exp{
-	width:42px;
+.spanbold {
+	line-height: 1em;
+color: #74ccb6;
+text-shadow:0px 0px 0 rgb(-149,-61,-83), 1px 0px 0 rgb(-404,-316,-338),2px 0px 1px rgba(0,0,0,0.15),2px 0px 1px rgba(0,0,0,0.5),0px 0px 1px rgba(0,0,0,.2);
 }
-#goldexp,#attdef{
-	position:relative;
-	width:300px;
+#gold, #exp {
+	width: 42px;
 }
-p{
-	font-weight:bold;
-	font-size:30px;
+#goldexp, #attdef {
+	position: relative;
+	width: 300px;
 }
-span{
-	font-weight:bold;
+p {
+font-family: Garamond, serif;
+line-height: 1em;
+color: #74056c;
+font-weight:bold;
+font-size: 20px;
+}
+body {
+	overflow: hidden;
 }
