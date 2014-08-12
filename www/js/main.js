@@ -28,20 +28,20 @@ var background = ["greatwall", "mountain"];
 var charImgSet;
 var playerData = [];
 var computerData = [];
-var databaseReady = 0;
 
 function initMain() {
 	//init database
 	initDB();
 	loadPlayer(function(p) {
 		playerData = p;
-		databaseReady++;
-	});
-	loadComputer(function(c) {
-		computerData = c;
-		databaseReady++;
 	});
 	
+	///problem!!!!
+	loadComputerDefaultStatsTable(getQuery("level"),function(c) {
+		computerData = c;
+	});//problem!!!!!
+	
+	setDiffculty(getQuery("diffculty"));
 	$("body").css("background", "url(img/background/" + background[Math.floor(Math.random() * background.length)] + ".png) no-repeat");
 	rps = ["rock", "paper", "scissors"];
 	charImgSet = "img/" + saveData["charater"] + "/" + saveData["color"] + "/", playerCurLife = 1;
@@ -151,9 +151,8 @@ function doOnOrientationChange() {
  */
 
 function play() {
+	alert(computerData.level);
 	gameCompleted = false;
-	while (databaseReady !== 2) {
-	}
 
 	//hidden triangle and appear compare
 	visibility = true;
@@ -318,16 +317,16 @@ function resume() {
 
 function restart() {
 	if (confirm('Are you sure?')) {
-		$(p).clearQueue();
-		$(e).clearQueue();
+		$("#player").clearQueue();
+		$("#computer").clearQueue();
 		window.location.reload();
 	}
 }
 
 function quit() {
 	if (confirm('Are you sure?')) {
-		$(p).clearQueue();
-		$(e).clearQueue();
+		$("#player").clearQueue();
+		$("#computer").clearQueue();
 		window.location = "world.html";
 	}
 }

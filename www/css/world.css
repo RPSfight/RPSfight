@@ -7,4 +7,10 @@ body{
 	overflow:hidden;
 }
 
+#popup{
+	width:170px;
+}
 
+div>div>a{
+	width:90px;
+}
