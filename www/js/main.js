@@ -28,27 +28,34 @@ var background = ["greatwall", "mountain"];
 var charImgSet;
 var playerData = [];
 var computerData = [];
+var p = "#player";
+var e = "#computer";
 
 function initMain() {
 	//init database
 	initDB();
 	loadPlayer(function(p) {
 		playerData = p;
+		playerData.current_life = playerData.max_life;
 	});
-	
+
 	///problem!!!!
-	loadComputerDefaultStatsTable(getQuery("level"),function(c) {
+	loadComputerDefaultStatsTable(getQuery("level"), function(c) {
 		computerData = c;
-	});//problem!!!!!
-	
+		computerData["current_life"] = computerData.life;
+		computerData["max_life"] = computerData.life;
+	});
+	//problem!!!!!
+
 	setDiffculty(getQuery("diffculty"));
 	$("body").css("background", "url(img/background/" + background[Math.floor(Math.random() * background.length)] + ".png) no-repeat");
 	rps = ["rock", "paper", "scissors"];
-	charImgSet = "img/" + saveData["charater"] + "/" + saveData["color"] + "/", playerCurLife = 1;
+	charImgSet = "img/" + saveData["charater"] + "/" + saveData["color"] + "/";
+	playerCurLife = 1;
 	computerCurLife = 1;
 	$("#explode").css('visibility', 'hidden');
-	$("#player").attr("src", charImgSet + "Ready.png");
-	$("#computer").attr("src", charImgSet + "Ready.png");
+	$(p).attr("src", charImgSet + "Ready.png");
+	$(e).attr("src", charImgSet + "Ready.png");
 
 	/*$("#rock").on("touchstart touchend", function() {
 	 add("rock");
@@ -151,7 +158,6 @@ function doOnOrientationChange() {
  */
 
 function play() {
-	alert(computerData.level);
 	gameCompleted = false;
 
 	//hidden triangle and appear compare
@@ -187,8 +193,6 @@ function triangleVisibilty() {
  * when motion finish hide compare and display rps triangle
  */
 function fight(computer, player, geti, size) {
-	var p = "#player";
-	var e = "#computer";
 	var time = [600, 300, 20];
 	var pixal = ["40px", "75px", "65px"];
 	var pgetpxstart = {
@@ -259,19 +263,15 @@ function fight(computer, player, geti, size) {
 			triangleVisibilty();
 			$(p).clearQueue();
 			$(e).clearQueue();
+			savePlayer(playerData);
+			saveComputer(computerData);
 		}
 		if (playerData.current_life <= 0 && computerData.current_life <= 0) {
-			setTimeout(function() {
-				window.location = "gameover.html?result=tie";
-			}, 1500);
+			gameover("tie");
 		} else if (playerData.current_life <= 0) {
-			setTimeout(function() {
-				window.location = "gameover.html?result=lose";
-			}, 1500);
+			gameover("lose");
 		} else if (computerData.current_life <= 0) {
-			setTimeout(function() {
-				window.location = "gameover.html?result=win";
-			}, 1500);
+			gameover("win");
 		}
 	});
 
@@ -284,6 +284,28 @@ function fight(computer, player, geti, size) {
 		$(e).attr("src", charImgSet + computer.shift()).css("opacity", "0");
 	}).animate(egetpxstart, time[1]);
 
+}
+
+function gameover(result) {
+	var reward = {
+		win : 1,
+		tie : 10,
+		lose : 100
+	};
+	var gold = computerData.gold_reward / reward[result];
+	var exp = computerData.exp_reward / reward[result];
+	playerData.gold += gold;
+	playerData.experience += exp;
+	if(playerData.gold>playerData.gold_storage){
+		playerData.gold=playerData.gold_storage;
+	}
+	if(playerData.experience>playerData.exp_storage){
+		playerData.experience=playerData.exp_storage;
+	}
+	savePlayer(playerData);
+	setTimeout(function() {
+		window.location = "gameover.html?result=" + result + "&gold=" + gold + "&exp=" + exp+"&tgold="+playerData.gold+"/"+playerData.gold_storage+"&texp="+playerData.experience+"/"+playerData.exp_storage;
+	}, 1500);
 }
 
 //display how much charaters life left
@@ -317,16 +339,16 @@ function resume() {
 
 function restart() {
 	if (confirm('Are you sure?')) {
-		$("#player").clearQueue();
-		$("#computer").clearQueue();
+		$(p).clearQueue();
+		$(e).clearQueue();
 		window.location.reload();
 	}
 }
 
 function quit() {
 	if (confirm('Are you sure?')) {
-		$("#player").clearQueue();
-		$("#computer").clearQueue();
+		$(p).finish();
+		$(e).finish();
 		window.location = "world.html";
 	}
 }

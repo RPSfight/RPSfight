@@ -1,0 +1,13 @@
+#resultImg{
+	width:300px;
+	height:200px;
+}
+img {
+	height: 35px;
+	width:35px;
+}
+span{
+	font-weight:bold;
+	position: relative;
+	top: -12px;
+}

@@ -1,4 +1,5 @@
 var playerData;
+var levelData;
 function initUpdate() {
 	initDB();
 	window.addEventListener('orientationchange', doOnOrientationChange);
@@ -47,6 +48,10 @@ function refresh() {
 	$("#scissors_def").text(playerData.scissors_def);
 	$("#scissorsDEF_cost").text(" Cost Exp. " + playerData.scissors_def * 100);
 	$("#level").text(playerData.level);
+	loadPlayerLevelUpInfo(playerData.level+1, function(info) {
+		levelData=info;
+		$("#level_cost").text(" Cost Exp: "+levelData.req_exp);
+	});
 }
 
 function updatePower(element) {
@@ -77,6 +82,21 @@ function updateExpGold(element) {
 	}
 }
 
-function updateLevel(element){
-	
+function updateLevel(element) {
+	var id = $(element).prev().attr('id');
+	if(playerData.experience>=levelData.req_exp){
+		playerData.experience-=levelData.req_exp;
+		playerData.level++;
+		playerData.rock_att+=levelData.rock_att_boost;
+		playerData.rock_def+=levelData.rock_def_boost;
+		playerData.paper_att+=levelData.paper_att_boost;
+		playerData.paper_def+=levelData.paper_def_boost;
+		playerData.scissors_att +=levelData.scissors_att_boost ;
+		playerData.scissors_def +=levelData.scissors_def_boost ;
+		savePlayer(playerData);
+		refresh();
+	}else {
+		$("#textInfo1").text("Not Enough Experience");
+		$("#message").popup("open");
+	}
 }
