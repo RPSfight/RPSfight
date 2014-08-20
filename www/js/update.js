@@ -15,7 +15,7 @@ function doOnOrientationChange() {
 		case -90:
 		case 90:
 			$("#attdef").css({
-				"top" : "-240px",
+				"top" : "-255px",
 				"left" : "280px",
 			});
 			break;
@@ -48,6 +48,8 @@ function refresh() {
 	$("#scissors_def").text(playerData.scissors_def);
 	$("#scissorsDEF_cost").text(" Cost Exp. " + playerData.scissors_def * 100);
 	$("#level").text(playerData.level);
+	$("#max_life").text(playerData.max_life);
+	$("#max_life_cost").text(" Cost Exp. " + playerData.max_life * 10);
 	loadPlayerLevelUpInfo(playerData.level+1, function(info) {
 		levelData=info;
 		$("#level_cost").text(" Cost Exp: "+levelData.req_exp);
@@ -78,6 +80,20 @@ function updateExpGold(element) {
 		refresh();
 	} else {
 		$("#textInfo1").text("Not Enough Gold");
+		$("#message").popup("open");
+	}
+}
+
+function updateLife(element){
+	var id = $(element).prev().attr('id');
+	var currentAmount = playerData[id];
+	if (playerData.experience >= currentAmount * 10) {
+		playerData.experience -= currentAmount * 10;
+		playerData[id] += 2;
+		savePlayer(playerData);
+		refresh();
+	} else {
+		$("#textInfo1").text("Not Enough Experience");
 		$("#message").popup("open");
 	}
 }

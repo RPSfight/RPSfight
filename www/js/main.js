@@ -23,13 +23,15 @@ var saveData = {
 	color : "brond"
 };
 
-var background = ["greatwall", "mountain"];
+//var background = ["greatwall", "mountain"];
 
 var charImgSet;
 var playerData = [];
 var computerData = [];
 var p = "#player";
 var e = "#computer";
+
+var maxTime=currentTime = 2;
 
 function initMain() {
 	//init database
@@ -48,7 +50,7 @@ function initMain() {
 	//problem!!!!!
 
 	setDiffculty(getQuery("diffculty"));
-	$("body").css("background", "url(img/background/" + background[Math.floor(Math.random() * background.length)] + ".png) no-repeat");
+	//$("body").css("background", "url(img/background/" + background[Math.floor(Math.random() * background.length)] + ".png) no-repeat");
 	rps = ["rock", "paper", "scissors"];
 	charImgSet = "img/" + saveData["charater"] + "/" + saveData["color"] + "/";
 	playerCurLife = 1;
@@ -57,25 +59,41 @@ function initMain() {
 	$(p).attr("src", charImgSet + "Ready.png");
 	$(e).attr("src", charImgSet + "Ready.png");
 
-	/*$("#rock").on("touchstart touchend", function() {
-	 add("rock");
-	 });
-	 $("#paper").on("touchstart touchend", function() {
-	 add("paper");
-	 });
-	 $("#scissors").on("touchstart touchend", function() {
-	 add("scissors");
-	 });*/
-
 	document.addEventListener("deviceready", onDeviceReady, false);
 	window.addEventListener('orientationchange', doOnOrientationChange);
 	doOnOrientationChange();
+	document.getElementById("rps").addEventListener("touchstart", touchstart, false);
+}
+
+function touchstart(e) {
+	e.preventDefault();
+	/*var id = document.elementFromPoint(e.touches[0].pageX, e.touches[0].pageY).id;
+	 if (id !== idCollection[idCollection.length - 1]) {
+	 idCollection.push(id);
+	 }*/
+	var timer = setInterval(function() {
+		if (currentTime >= 0) {
+			$("#timer").text(currentTime);
+			currentTime = Math.round(currentTime * 10 - 1) / 10;
+		} else {
+			clearInterval(timer);
+			$("#timer").text(maxTime);
+			currentTime=maxTime;
+			play();
+		}
+	}, 100);
+	document.getElementById("rps").addEventListener("touchmove", function() {
+		var id = document.elementFromPoint(e.touches[0].pageX, e.touches[0].pageY).id;
+		if (id !== playerChosenMoves[playerChosenMoves.length - 1]) {
+			if (id === "rock" || id === "paper" || id === "scissors") {
+				add(id);
+			}
+		}
+	});
 }
 
 function onDeviceReady() {
-	//device ready
-	document.addEventListener("pause", onPause, false);
-	document.addEventListener("resume", onResume, false);
+
 }
 
 /*
@@ -296,15 +314,15 @@ function gameover(result) {
 	var exp = computerData.exp_reward / reward[result];
 	playerData.gold += gold;
 	playerData.experience += exp;
-	if(playerData.gold>playerData.gold_storage){
-		playerData.gold=playerData.gold_storage;
+	if (playerData.gold > playerData.gold_storage) {
+		playerData.gold = playerData.gold_storage;
 	}
-	if(playerData.experience>playerData.exp_storage){
-		playerData.experience=playerData.exp_storage;
+	if (playerData.experience > playerData.exp_storage) {
+		playerData.experience = playerData.exp_storage;
 	}
 	savePlayer(playerData);
 	setTimeout(function() {
-		window.location = "gameover.html?result=" + result + "&gold=" + gold + "&exp=" + exp+"&tgold="+playerData.gold+"/"+playerData.gold_storage+"&texp="+playerData.experience+"/"+playerData.exp_storage;
+		window.location = "gameover.html?result=" + result + "&gold=" + gold + "&exp=" + exp + "&tgold=" + playerData.gold + "/" + playerData.gold_storage + "&texp=" + playerData.experience + "/" + playerData.exp_storage + "&level=" + getQuery("level") + "&diffculty=" + getQuery("diffculty");
 	}, 1500);
 }
 
@@ -318,6 +336,12 @@ function accessLife(charater, lifePersentage) {
 
 //Add rock, paper, or scissors into array
 function add(id) {
+	setTimeout(function() {
+		$("#" + id).attr("src", "img/rps/" + id + "_green.png");
+	}, 100);
+	setTimeout(function() {
+		$("#" + id).attr("src", "img/rps/" + id + ".png");
+	}, 200);
 	playerChosenMoves.push(id);
 }
 

@@ -34,3 +34,7 @@ function setting() {
 function viewDatabase() {
 	window.location = "database_log.html";
 }
+
+function test(){
+	window.location="test.html";
+}

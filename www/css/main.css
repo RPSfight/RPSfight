@@ -99,3 +99,8 @@ a {
 #menu {
 	position: relative;
 }
+
+#timer{
+	font-size:40px;
+	text-shadow: 3px 3px 8px rgba(83, 74, 191, 0.79);
+}
