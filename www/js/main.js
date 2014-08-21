@@ -7,9 +7,7 @@
 
 var playerChosenMoves = [];
 var computerChosenMoves = [];
-var rps;
-var playerCurLife;
-var computerCurLife;
+var rps = ["rock", "paper", "scissors"];
 var visibility;
 var gameCompleted;
 //In order to have vibration on attact, set vibrate to true
@@ -18,46 +16,38 @@ var setting = {
 	vibrate : false,
 };
 
-var saveData = {
-	charater : "knight",
-	color : "brond"
-};
-
 //var background = ["greatwall", "mountain"];
 
-var charImgSet;
+var playerImgSet;
+var computerImgSet;
 var playerData = [];
 var computerData = [];
 var p = "#player";
 var e = "#computer";
 
-var maxTime=currentTime = 2;
+var maxTime = currentTime = 2.0;
 
 function initMain() {
 	//init database
 	initDB();
-	loadPlayer(function(p) {
-		playerData = p;
+	loadPlayer(function(player) {
+		playerData = player;
 		playerData.current_life = playerData.max_life;
+		playerImgSet = "img/" + playerData["character"] + "/" + playerData["color"] + "/";
+		$(p).attr("src", playerImgSet + "Ready.png");
 	});
 
-	///problem!!!!
-	loadComputerDefaultStatsTable(getQuery("level"), function(c) {
-		computerData = c;
+	loadComputerDefaultStatsTable(getQuery("level"), function(computer) {
+		computerData = computer;
 		computerData["current_life"] = computerData.life;
 		computerData["max_life"] = computerData.life;
+		computerImgSet = "img/" + computerData["character"] + "/" + computerData["color"] + "/";
+		$(e).attr("src", computerImgSet + "Ready.png");
 	});
-	//problem!!!!!
 
 	setDiffculty(getQuery("diffculty"));
-	//$("body").css("background", "url(img/background/" + background[Math.floor(Math.random() * background.length)] + ".png) no-repeat");
-	rps = ["rock", "paper", "scissors"];
-	charImgSet = "img/" + saveData["charater"] + "/" + saveData["color"] + "/";
-	playerCurLife = 1;
-	computerCurLife = 1;
 	$("#explode").css('visibility', 'hidden');
-	$(p).attr("src", charImgSet + "Ready.png");
-	$(e).attr("src", charImgSet + "Ready.png");
+	//$("body").css("background", "url(img/background/" + background[Math.floor(Math.random() * background.length)] + ".png) no-repeat");
 
 	document.addEventListener("deviceready", onDeviceReady, false);
 	window.addEventListener('orientationchange', doOnOrientationChange);
@@ -73,12 +63,12 @@ function touchstart(e) {
 	 }*/
 	var timer = setInterval(function() {
 		if (currentTime >= 0) {
-			$("#timer").text(currentTime);
+			$("#timer").text(currentTime.toFixed(1));
 			currentTime = Math.round(currentTime * 10 - 1) / 10;
 		} else {
 			clearInterval(timer);
-			$("#timer").text(maxTime);
-			currentTime=maxTime;
+			$("#timer").text(maxTime.toFixed(1));
+			currentTime = maxTime;
 			play();
 		}
 	}, 100);
@@ -246,10 +236,10 @@ function fight(computer, player, geti, size) {
 		//compare movement of computer
 		starteCompare(geti);
 		//fight image 1
-		$(p).attr("src", charImgSet + player.shift()).css("opacity", "0");
+		$(p).attr("src", playerImgSet + player.shift()).css("opacity", "0");
 	}).animate(pgetpxend, time[1], function() {
 		//fight image 2
-		$(p).attr("src", charImgSet + player.shift());
+		$(p).attr("src", playerImgSet + player.shift());
 		//player blood bar
 		initFight(computerChosenMoves.shift(), playerChosenMoves.shift());
 		accessLife("#pBlood", playerData.current_life / playerData.max_life);
@@ -262,19 +252,19 @@ function fight(computer, player, geti, size) {
 		}
 	}).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[1], function() {
 		//fight image 3
-		$(p).attr("src", charImgSet + player.shift()).css("opacity", "0");
+		$(p).attr("src", playerImgSet + player.shift()).css("opacity", "0");
 		$("#explode").css('visibility', 'hidden');
 	}).animate(pgetpxstart, time[1], function() {
 		if (playerData.current_life > 0) {
-			$(p).attr("src", charImgSet + player.shift());
+			$(p).attr("src", playerImgSet + player.shift());
 		} else {
-			$(p).attr("src", charImgSet + "Death2.png");
+			$(p).attr("src", playerImgSet + "Death2.png");
 			gameCompleted = true;
 		}
 		if (computerData.current_life > 0) {
-			$(e).attr("src", charImgSet + computer.shift());
+			$(e).attr("src", computerImgSet + computer.shift());
 		} else {
-			$(e).attr("src", charImgSet + "Death2.png");
+			$(e).attr("src", computerImgSet + "Death2.png");
 			gameCompleted = true;
 		}
 		if (gameCompleted || geti === size - 1) {
@@ -295,11 +285,11 @@ function fight(computer, player, geti, size) {
 
 	//computer motion:
 	$(e).animate(egetpxstart, time[0], function() {
-		$(e).attr("src", charImgSet + computer.shift()).css("opacity", "0");
+		$(e).attr("src", computerImgSet + computer.shift()).css("opacity", "0");
 	}).animate(egetpxend, time[1], function() {
-		$(e).attr("src", charImgSet + computer.shift());
+		$(e).attr("src", computerImgSet + computer.shift());
 	}).animate(egetpxmove, time[1]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[2]).animate(egetpxmove, time[2]).animate(egetpxend, time[1], function() {
-		$(e).attr("src", charImgSet + computer.shift()).css("opacity", "0");
+		$(e).attr("src", computerImgSet + computer.shift()).css("opacity", "0");
 	}).animate(egetpxstart, time[1]);
 
 }
@@ -343,18 +333,6 @@ function add(id) {
 		$("#" + id).attr("src", "img/rps/" + id + ".png");
 	}, 200);
 	playerChosenMoves.push(id);
-}
-
-function someoneWasHurt(type) {
-	if (type === "player") {
-		//player was hurt
-		playerCurLife = playerCurLife - .1;
-		playerLife(playerCurLife);
-	} else {
-		//computer was hurt
-		computerCurLife = computerCurLife - .1;
-		computerLife(computerCurLife);
-	}
 }
 
 function resume() {

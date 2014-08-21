@@ -18,11 +18,17 @@ function doOnOrientationChange() {
 				"top" : "-255px",
 				"left" : "280px",
 			});
+			$("#page").css({
+				"width" : "568px"
+			});
 			break;
 		default:
 			$("#attdef").css({
 				"top" : "auto",
 				"left" : "auto",
+			});
+			$("#page").css({
+				"width" : "320px"
 			});
 			break;
 	}
@@ -50,9 +56,9 @@ function refresh() {
 	$("#level").text(playerData.level);
 	$("#max_life").text(playerData.max_life);
 	$("#max_life_cost").text(" Cost Exp. " + playerData.max_life * 10);
-	loadPlayerLevelUpInfo(playerData.level+1, function(info) {
-		levelData=info;
-		$("#level_cost").text(" Cost Exp: "+levelData.req_exp);
+	loadPlayerLevelUpInfo(playerData.level + 1, function(info) {
+		levelData = info;
+		$("#level_cost").text(" Cost Exp: " + levelData.req_exp);
 	});
 }
 
@@ -84,7 +90,7 @@ function updateExpGold(element) {
 	}
 }
 
-function updateLife(element){
+function updateLife(element) {
 	var id = $(element).prev().attr('id');
 	var currentAmount = playerData[id];
 	if (playerData.experience >= currentAmount * 10) {
@@ -100,18 +106,18 @@ function updateLife(element){
 
 function updateLevel(element) {
 	var id = $(element).prev().attr('id');
-	if(playerData.experience>=levelData.req_exp){
-		playerData.experience-=levelData.req_exp;
+	if (playerData.experience >= levelData.req_exp) {
+		playerData.experience -= levelData.req_exp;
 		playerData.level++;
-		playerData.rock_att+=levelData.rock_att_boost;
-		playerData.rock_def+=levelData.rock_def_boost;
-		playerData.paper_att+=levelData.paper_att_boost;
-		playerData.paper_def+=levelData.paper_def_boost;
-		playerData.scissors_att +=levelData.scissors_att_boost ;
-		playerData.scissors_def +=levelData.scissors_def_boost ;
+		playerData.rock_att += levelData.rock_att_boost;
+		playerData.rock_def += levelData.rock_def_boost;
+		playerData.paper_att += levelData.paper_att_boost;
+		playerData.paper_def += levelData.paper_def_boost;
+		playerData.scissors_att += levelData.scissors_att_boost;
+		playerData.scissors_def += levelData.scissors_def_boost;
 		savePlayer(playerData);
 		refresh();
-	}else {
+	} else {
 		$("#textInfo1").text("Not Enough Experience");
 		$("#message").popup("open");
 	}

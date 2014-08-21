@@ -25,49 +25,39 @@
 
 		<script type="text/javascript" charset="utf-8" src="js/global.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/global.css" />
+		<link rel="stylesheet" type="text/css" href="css/setting.css" />
+		<script type="text/javascript" charset="utf-8" src="js/setting.js"></script>
 	</head>
 
-	<body>
-		<div data-role="page">
+	<body onload="initSetting()">
+		<div data-role="page" id="page" align="center">
 			<div data-role="header">
 				<a id="backButton" href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-back ui-btn-icon-notext" onclick="goBack()"></a>
 				<div align="center">
 					<h2>Setting</h2>
 				</div>
 			</div>
-			<div class="ui-field-contain">
-				<fieldset data-role="controlgroup" data-type="horizontal">
-					<legend>
-						Music:
-					</legend>
-					<label for="on">ON</label>
-					<input type="radio" name="vibration" id="on" value="on">
-					<label for="off">OFF</label>
-					<input type="radio" name="vibration" id="off" value="off">
-				</fieldset>
-			</div>
-			<div class="ui-field-contain">
-				<fieldset data-role="controlgroup" data-type="horizontal">
-					<legend>
-						Sound Effect:
-					</legend>
-					<label for="on">ON</label>
-					<input type="radio" name="vibration" id="on" value="on">
-					<label for="off">OFF</label>
-					<input type="radio" name="vibration" id="off" value="off">
-				</fieldset>
-			</div>
-			<div class="ui-field-contain">
-				<fieldset data-role="controlgroup" data-type="horizontal">
-					<legend>
-						Vibrate Effect:
-					</legend>
-					<label for="on">ON</label>
-					<input type="radio" name="vibration" id="on" value="on">
-					<label for="off">OFF</label>
-					<input type="radio" name="vibration" id="off" value="off">
-				</fieldset>
-			</div>
+			<table>
+				<tr>
+					<th>Music:</th>
+					<td>
+					<input type="checkbox" id="checkbox-based-flipswitch" data-role="flipswitch">
+					</td>
+				</tr>
+
+				<tr>
+					<th>Sound Effect:</th>
+					<td>
+					<input type="checkbox" id="checkbox-based-flipswitch" data-role="flipswitch">
+					</td>
+				</tr>
+				<tr>
+					<th>Vibration Effect:</th>
+					<td>
+					<input type="checkbox" id="checkbox-based-flipswitch" data-role="flipswitch">
+					</td>
+				</tr>
+		</div>
 		</div>
 	</body>
 </html>

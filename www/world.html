@@ -17,97 +17,99 @@
 	</head>
 
 	<body onload="initWorld()">
-		<div data-role="page" id="greece">
-			<div data-role="header">
-				<a id="backButton" href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-back ui-btn-icon-notext" onclick="goBack()"></a>
-				<div align="center">
-					<h2>RPS World</h2>
+		<div align="center">
+			<div data-role="page" id="greece">
+				<div data-role="header">
+					<a id="backButton" href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-back ui-btn-icon-notext" onclick="goBack()"></a>
+					<div align="center">
+						<h2>RPS World</h2>
+					</div>
+					<div data-role="navbar">
+						<ul>
+							<li>
+								<a href="#" class="ui-btn-active">Greece</a>
+							</li>
+							<li>
+								<a href="#china" data-theme="b">China</a>
+							</li>
+							<li>
+								<a href="#japan" data-theme="b">Japan</a>
+							</li>
+						</ul>
+					</div>
 				</div>
-				<div data-role="navbar">
-					<ul>
-						<li>
-							<a href="#" class="ui-btn-active">Greece</a>
-						</li>
-						<li>
-							<a href="#china" data-theme="b">China</a>
-						</li>
-						<li>
-							<a href="#japan" data-theme="b">Japan</a>
-						</li>
-					</ul>
+
+				<div data-role="main" class="content" align="center">
+					<p id="greeceText"></p>
 				</div>
 			</div>
 
-			<div data-role="main" class="content" align="center">
-				<p id="greeceText"></p>
+			<div data-role="page" id="china">
+				<div data-role="header">
+					<a id="backButton" href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-back ui-btn-icon-notext" onclick="goBack()"></a>
+					<div align="center">
+						<h2>RPS World</h2>
+					</div>
+					<div data-role="navbar">
+						<ul>
+							<li>
+								<a href="#greece" data-theme="b">Greece</a>
+							</li>
+							<li>
+								<a href="#" class="ui-btn-active">China</a>
+							</li>
+							<li>
+								<a href="#japan" data-theme="b">Japan</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div data-role="main" class="content" align="center">
+					<p id="chinaText"></p>
+				</div>
 			</div>
+
+			<div data-role="page" id="japan">
+				<div data-role="header">
+					<a id="backButton" href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-back ui-btn-icon-notext" onclick="goBack()"></a>
+					<div align="center">
+						<h2>RPS World</h2>
+					</div>
+					<div data-role="navbar">
+						<ul>
+							<li>
+								<a href="#greece" data-theme="b">Greece</a>
+							</li>
+							<li>
+								<a href="#china" data-theme="b">China</a>
+							</li>
+							<li>
+								<a href="#" class="ui-btn-active">Japan</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div data-role="main" class="content" align="center">
+					<p id="japanText"></p>
+				</div>
+			</div>
+
+			<div data-role="page" id="popup" data-theme="b">
+
+				<div data-role="header">
+					<h1>Diffculty</h1>
+				</div><!-- /header -->
+
+				<div data-role="content" data-theme="a">
+					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="goMain(this.innerHTML)">Easy</a>
+					<br>
+					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="goMain(this.innerHTML)">Medium</a>
+					<br>
+					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="goMain(this.innerHTML)">Hard</a>
+				</div><!-- /content -->
+			</div><!-- /page popup -->
 		</div>
-
-		<div data-role="page" id="china">
-			<div data-role="header">
-				<a id="backButton" href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-back ui-btn-icon-notext" onclick="goBack()"></a>
-				<div align="center">
-					<h2>RPS World</h2>
-				</div>
-				<div data-role="navbar">
-					<ul>
-						<li>
-							<a href="#greece" data-theme="b">Greece</a>
-						</li>
-						<li>
-							<a href="#" class="ui-btn-active">China</a>
-						</li>
-						<li>
-							<a href="#japan" data-theme="b">Japan</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-
-			<div data-role="main" class="content" align="center">
-				<p id="chinaText"></p>
-			</div>
-		</div>
-
-		<div data-role="page" id="japan">
-			<div data-role="header">
-				<a id="backButton" href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-back ui-btn-icon-notext" onclick="goBack()"></a>
-				<div align="center">
-					<h2>RPS World</h2>
-				</div>
-				<div data-role="navbar">
-					<ul>
-						<li>
-							<a href="#greece" data-theme="b">Greece</a>
-						</li>
-						<li>
-							<a href="#china" data-theme="b">China</a>
-						</li>
-						<li>
-							<a href="#" class="ui-btn-active">Japan</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-
-			<div data-role="main" class="content" align="center">
-				<p id="japanText"></p>
-			</div>
-		</div>
-
-		<div data-role="page" id="popup" data-theme="b">
-
-			<div data-role="header">
-				<h1>Diffculty</h1>
-			</div><!-- /header -->
-
-			<div data-role="content" data-theme="a">
-				<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="goMain(this.innerHTML)">Easy</a>
-				<br>
-				<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="goMain(this.innerHTML)">Medium</a>
-				<br>
-				<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="goMain(this.innerHTML)">Hard</a>
-			</div><!-- /content -->
-		</div><!-- /page popup -->
 	</body>
 </html>
