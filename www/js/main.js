@@ -326,12 +326,10 @@ function accessLife(charater, lifePersentage) {
 
 //Add rock, paper, or scissors into array
 function add(id) {
-	setTimeout(function() {
-		$("#" + id).attr("src", "img/rps/" + id + "_green.png");
-	}, 100);
+	$("#" + id).attr("src", "img/rps/" + id + "_green.png");
 	setTimeout(function() {
 		$("#" + id).attr("src", "img/rps/" + id + ".png");
-	}, 200);
+	}, 400);
 	playerChosenMoves.push(id);
 }
 
