@@ -7,14 +7,27 @@ function doOnOrientationChange() {
 	switch(window.orientation) {
 		case -90:
 		case 90:
-			$("#box").css({
-				"top" : "50px",
-			});
-			break;
+			if (screen.width < 700) {
+				$("#box").css({
+					"top" : "80px",
+				});
+				break;
+			} else {
+				$("#box").css({
+					"top" : "250px",
+				});
+				break;
+			}
 		default:
-			$("#box").css({
-				"top" : "150px",
-			});
+			if (screen.width < 700) {
+				$("#box").css({
+					"top" : "150px",
+				});
+			} else {
+				$("#box").css({
+					"top" : "350px",
+				});
+			}
 			break;
 	}
 }
@@ -35,6 +48,6 @@ function viewDatabase() {
 	window.location = "database_log.html";
 }
 
-function test(){
-	window.location="test.html";
+function test() {
+	window.location = "test.html";
 }

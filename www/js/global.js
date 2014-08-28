@@ -13,3 +13,16 @@ function getQuery(variable) {
 	}
 	return (false);
 }
+
+function refreshPage(){
+	window.location.reload();
+}
+
+function backToWorld(){
+	window.location = "world.html";
+}
+
+//loading screen jquery code
+$(window).load(function() {
+	$("#loader").delay(500).fadeOut("fast");
+});

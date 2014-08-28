@@ -1,6 +1,5 @@
 #player {
 	position: absolute;
-	top: 0px;
 	left: 40px;
 	-moz-transform: scaleX(-1);
 	-o-transform: scaleX(-1);
@@ -12,7 +11,6 @@
 }
 #computer {
 	position: absolute;
-	top: 0px;
 	right: 40px;
 	height: 120px;
 }
@@ -87,20 +85,78 @@
 	text-align: center;
 	margin: 0;
 	padding: 0;
-	padding-top: 40%;
 	overflow: hidden;
 	z-index: 2;
 }
+@media screen and (orientation: portrait) {
+	#loader {
+		padding-top: 50%;
+	}
+}
+@media screen and (orientation: landscape) {
+	#loader {
+		padding-top: 20%;
+	}
+}
 a {
 	width: 80px;
-	position:relative;
-	left:7px;
+	position: relative;
+	left: 7px;
 }
 #menu {
 	position: relative;
 }
 
-#timer{
-	font-size:40px;
+#timer {
+	font-size: 40px;
 	text-shadow: 3px 3px 8px rgba(83, 74, 191, 0.79);
+}
+
+@media screen and (min-width: 700px) {
+	#player {
+		left: 40px;
+		height: 300px;
+	}
+	#computer {
+		right: 40px;
+		height: 300px;
+	}
+
+	#rps, #life, #explode, #motion, #compare {
+		width: 700px;
+	}
+
+	#explode1 {
+		width: 100px;
+		left: 200px;
+		top: 50px;
+	}
+	#explode2 {
+		width: 160px;
+		top: 20px;
+		left: 250px;
+	}
+	#explode3 {
+		width: 80px;
+		left: 400px;
+		top: 60px;
+	}
+	#explode4 {
+		width: 70px;
+		left: 300px;
+		top: 80px;
+	}
+	#explode5 {
+		width: 80px;
+		left: 280px;
+		top: 15px;
+	}
+	#explode6 {
+		width: 160px;
+		left: 300px;
+		top: 50px;
+	}
+	#timer {
+		font-size: 80px;
+	}
 }

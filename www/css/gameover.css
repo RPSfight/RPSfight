@@ -2,12 +2,14 @@
 	width:300px;
 	height:200px;
 }
-img {
-	height: 35px;
-	width:35px;
+p>img {
+	height: 20px;
+	width:20px;
 }
-span{
+p>span{
 	font-weight:bold;
 	position: relative;
-	top: -12px;
+	top: -6px;
+	font-size:15px;
 }
+

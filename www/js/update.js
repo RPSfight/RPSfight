@@ -14,21 +14,26 @@ function doOnOrientationChange() {
 	switch(window.orientation) {
 		case -90:
 		case 90:
-			$("#attdef").css({
-				"top" : "-255px",
-				"left" : "280px",
-			});
-			$("#page").css({
-				"width" : "568px"
-			});
-			break;
+			if (screen.width < 700) {
+				$("#attdef").css({
+					"top" : "-255px",
+					"left" : "280px",
+				});
+				break;
+			} else {
+				$("#attdef").css({
+					"top" : "-440px",
+					"left" : "500px",
+				});
+				break;
+			}
 		default:
 			$("#attdef").css({
 				"top" : "auto",
 				"left" : "auto",
 			});
-			$("#page").css({
-				"width" : "320px"
+			$("#goldexp").css({
+				"left" : "auto"
 			});
 			break;
 	}

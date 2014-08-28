@@ -1,17 +1,28 @@
-.level{
-	width:20px;
-	height:25px;
+.level {
+	width: 20px;
+	height: 25px;
 }
 
-body{
-	overflow:hidden;
+body {
+	overflow: hidden;
 }
 
-#popup>div{
-	width:180px;
-	text-align:center;
+#popup > div {
+	width: 180px;
+	text-align: center;
 }
 
-div>div>a{
-	width:110px;
+div > div > a {
+	width: 110px;
+}
+
+@media screen and (min-width: 700px) {
+	.level {
+		width: 40px;
+		height: 55px;
+		font-size:30px;
+	}
+	li>a{
+		size:50px;
+	}
 }
