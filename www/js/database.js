@@ -28,6 +28,7 @@ function testSavePlayer(){
 	var player = {
 		level:"1",
 		experience:"999",
+		current_computer_level:"1",
 		rock_att:"1",
 		rock_def:"1",
 		paper_att:"1",
@@ -52,6 +53,7 @@ function testSaveComputer(){
 	userinput = prompt("Enter a value to save in the 'scissors_def' field...", "999");
 	var computer = {
 		level:"1",
+		difficulty:"easy",
 		rock_att:"1",
 		rock_def:"1",
 		paper_att:"1",
@@ -72,11 +74,13 @@ function testSaveComputerDefStats(){
 	var level_toedit;
 	var gold_reward;
 	level_toedit = prompt("Specify a level to edit", "13");
-	if(level_toedit > 0 && level_toedit<21){
+	if(level_toedit > 0 && level_toedit<97){
 		gold_reward = prompt("Specify a value to save in the 'gold_reward' field...", "403");
 		
 		var stats = {
-			level		:level_toedit,   
+			level		:level_toedit,
+			medium_lock :1,
+			hard_lock   :1,   
 			rock_att	:level_toedit,       
 			rock_def	:level_toedit,       
 			paper_att	:level_toedit,   
@@ -136,6 +140,7 @@ function testLoadPlayer(){
 		results = "Player's Current Stats...\n";
 		results += "level: "+player.level+"\n";
 		results += "exp: "+player.experience+"\n"; 
+		results += "current comp level: " +player.current_computer_level+"\n";
 		results += "ratt: "+player.rock_att+"\n"; 
 		results += "rdef: "+player.rock_def+"\n"; 
 		results += "patt: "+player.paper_att+"\n"; 
@@ -166,6 +171,7 @@ function testLoadComputer(){
 		var results;
 		results = "Computer's Current Stats...\n";
 		results += "level: "+computer.level+"\n";
+		results += "difficulty: "+computer.difficulty+"\n";
 		results += "ratt: "+computer.rock_att+"\n"; 
 		results += "rdef: "+computer.rock_def+"\n"; 
 		results += "patt: "+computer.paper_att+"\n"; 
@@ -188,12 +194,14 @@ function testLoadComputer(){
 function testLoadComputerDefStats(){
 	var level;
 	level = prompt("Specify a level to view", "13");
-	if(level > 0 && level < 21){
+	if(level > 0 && level < 97){
 		stats = loadComputerDefaultStatsTable(level,function(stats){
 			
 			var results;
 			results = "Comuter Default Stats: \n";
 			results += "level: "+stats.level		  +"\n";
+			results += "medium_lock"+stats.medium_lock +"\n";
+			results += "hard_lock"+stats.hard_lock     +"\n";
 			results += "rock_att: "+stats.rock_att     +"\n";
 			results += "rock_def: "+stats.rock_def     +"\n";
 			results += "paper_att: "+stats.paper_att    +"\n";
@@ -249,6 +257,7 @@ function savePlayer(player){
 	
 	var level;
 	var experience;
+	var current_computer_level;
 	var rock_att;
 	var rock_def;
 	var paper_att;
@@ -266,12 +275,13 @@ function savePlayer(player){
 	
 	level         = player.level;
 	experience    = player.experience;
+	current_computer_level = player.current_computer_level;
 	rock_att      = player.rock_att;
 	rock_def      = player.rock_def;
 	paper_att     = player.paper_att;
 	paper_def     = player.paper_def;
-	scissors_att   = player.scissors_att;
-	scissors_def   = player.scissors_def;
+	scissors_att  = player.scissors_att;
+	scissors_def  = player.scissors_def;
 	max_life      = player.max_life;
 	current_life  = player.current_life;
 	gold          = player.gold;
@@ -284,6 +294,7 @@ function savePlayer(player){
 	query = "update player   "   +
 			"set level=?, 	 "   +
 			"experience=?, 	 "   +
+			"current_computer_level=?, "  +
 			"rock_att=?, 	 "   +
 			"rock_def=?, 	 "   +
 			"paper_att=?, 	 "   +
@@ -304,6 +315,7 @@ function savePlayer(player){
 			[
 				level,
 				experience,
+				current_computer_level,
 				rock_att,
 				rock_def,
 				paper_att,
@@ -321,26 +333,53 @@ function savePlayer(player){
 	},dbErrorHandler, querySuccess);
 }
 
-function initComputerDefaultStatsTable(){
-	var result;
-	result = "create table if not exists comp_def_stats " +
-			"( " +
-			"	level INTEGER PRIMARY KEY AUTOINCREMENT, " +
-			"	rock_att INTEGER, 		" +
-			"	rock_def INTEGER, 		" +
-			"	paper_att INTEGER, 		" +
-			"	paper_def INTEGER, 		" +
-			"	scissors_att INTEGER, 	" +
-			"	scissors_def INTEGER, 	" +
-			"	life INTEGER			" +
-			") ";
+function saveLevelLock(levelLock){
+	var query = "update level_lock   	"   +
+				"	easy_lock=?,	 	"   +
+				"	medium_lock=?,      "   +  
+				"	hard_lock=?	 		"   +  
+				"where			 		"	+
+				"	country=? and 		"   +
+				"	level=?	 			";
+				
+	db.transaction(function(tx){
+		tx.executeSql(query,
+			[
+				levelLock.easy_lock,
+				levelLock.medium_lock,
+				levelLock.hard_lock,
+				levelLock.country,
+				levelLock.level
+			]);	
+	},dbErrorHandler, querySuccess);
 	
-	return result;
 }
 
+function saveSetting(setting){
+	
+	//ensure only 1 and 0 are used for value.
+	if(setting.value !== 0){
+		setting.value=1;		
+	}
+	
+	var query = "update settings   	    "   +
+				"	value=?	 			"   +  
+				"where			 		"	+
+				"	settings=?    		"   +
+				
+	db.transaction(function(tx){
+		tx.executeSql(query,
+			[
+				setting.value,
+				setting.setting
+			]);	
+	},dbErrorHandler, querySuccess);
+}
 
 function saveComputerDefaultStats(stats){
 	var level		=stats.level		;
+	var medium_lock =stats.medium_lock;
+	var hard_lock   =stats.hard_lock;
 	var rock_att	=stats.rock_att	;            
 	var rock_def	=stats.rock_def	;             
 	var paper_att	=stats.paper_att	;           
@@ -365,7 +404,9 @@ function saveComputerDefaultStats(stats){
 			"	gold_reward=?, "    +
 			"	exp_reward=?, "     +
 			"	color=?, "   		+
-			"	character=? "   	+
+			"	character=?, "   	+
+			"   medium_lock=?, "    +
+			"   hard_lock=?    "    +
 			"where level=?";    
 			
 	db.transaction(function(tx){
@@ -382,6 +423,8 @@ function saveComputerDefaultStats(stats){
 				exp_reward,
 				color,
 				character,
+				medium_lock,
+				hard_lock,
 				level
 			]);	
 	},dbErrorHandler, querySuccess);
@@ -426,6 +469,7 @@ function savePlayerLevelUpInfo(info){
 function saveComputer(computer){
 	
 	var level;
+	var difficulty;
 	var rock_att;
 	var rock_def;
 	var paper_att;
@@ -441,6 +485,7 @@ function saveComputer(computer){
 	var query;
 	
 	level         = computer.level;
+	difficulty    = computer.difficulty;
 	rock_att      = computer.rock_att;
 	rock_def      = computer.rock_def;
 	paper_att     = computer.paper_att;
@@ -456,6 +501,7 @@ function saveComputer(computer){
 	
 	query = "update computer	"+
 			"	set level=?, "      +
+			"   set difficulty=?, " +
 			"	rock_att=?, "       +
 			"	rock_def=?, "       +
 			"	paper_att=?, "      +
@@ -474,6 +520,7 @@ function saveComputer(computer){
 		tx.executeSql(query,
 			[
 				level,
+				difficulty,
 				rock_att,
 				rock_def,
 				paper_att,
@@ -502,6 +549,7 @@ function loadPlayer(callBackFunction){
 			var result = {
 				level:row.level,
 				experience:row.experience,
+				current_computer_level:row.current_computer_level,
 				rock_att:row.rock_att,
 				rock_def:row.rock_def,
 				paper_att:row.paper_att,
@@ -515,6 +563,49 @@ function loadPlayer(callBackFunction){
 				exp_storage:row.exp_storage,
 				color:row.color,
 				character:row.character
+			};
+			
+			
+			
+		   //callBackFunction to execute when 
+		   // we finally have the results from
+		   // the sql query
+		   callBackFunction(result);		
+		}, dbErrorHandler);
+	},dbErrorHandler,querySuccess);
+}
+
+function loadLevelLock(country, level, callBackFunction){
+	db.transaction(function(tx){
+		tx.executeSql("Select * from level_lock where country=? and level=?",[country, level],
+		function (tx, results){
+			var row = results.rows.item(0);
+			var result = {
+				country:row.country,
+				level:row.level,
+				easy_lock:row.easy_lock,
+				medium_lock:row.medium_lock,
+				hard_lock:row.hard_lock
+			};
+			
+			
+			
+		   //callBackFunction to execute when 
+		   // we finally have the results from
+		   // the sql query
+		   callBackFunction(result);		
+		}, dbErrorHandler);
+	},dbErrorHandler,querySuccess);
+}
+
+function loadSetting(setting, callBackFunction){
+	db.transaction(function(tx){
+		tx.executeSql("Select * from settings where setting=?",[setting],
+		function (tx, results){
+			var row = results.rows.item(0);
+			var result = {
+				setting:row.setting,
+				value:row.value
 			};
 			
 			
@@ -558,6 +649,8 @@ function loadComputerDefaultStatsTable(forLevel, callBackFunction){
 				var row = results.rows.item(0);
 				var result = {
 					level:row.level,
+					medium_lock:row.medium_lock,
+					hard_lock:row.hard_lock,
 					rock_att:row.rock_att,
 					rock_def:row.rock_def,
 					paper_att:row.paper_att,
@@ -588,6 +681,7 @@ function loadComputer(callBackFunction){
 			var row = results.rows.item(0);
 			var result = {
 				level:row.level,
+				difficulty:row.difficulty,
 				rock_att:row.rock_att,
 				rock_def:row.rock_def,
 				paper_att:row.paper_att,
@@ -616,6 +710,8 @@ function initTables(tx){
 	tx.executeSql(initComputerTable());
 	tx.executeSql(initComputerDefaultStatsTable());
 	tx.executeSql(initPlayerLevelUpInfoTable());
+	tx.executeSql(initLevelLockTable());
+	tx.executeSql(initSettingsTable());
 	
 	//init default data
 	// if this is the first time the app has run.
@@ -630,11 +726,15 @@ function initTablesHard(tx){
 	tx.executeSql("drop table if exists exp_per_level");
 	tx.executeSql("drop table if exists comp_def_stats");
 	tx.executeSql("drop table if exists player_level_up_info");
+	tx.executeSql("drop table if exists level_lock");
+	tx.executeSql("drop table if exists settings");
 	
 	tx.executeSql(initPlayerTable());
 	tx.executeSql(initComputerTable());
 	tx.executeSql(initComputerDefaultStatsTable());
 	tx.executeSql(initPlayerLevelUpInfoTable());
+	tx.executeSql(initLevelLockTable());
+	tx.executeSql(initSettingsTable());
 // 	
 	// //init default data
 	// // if this is the first time the app has run.
@@ -666,7 +766,9 @@ function initData(tx){
 	
 	//defaults
 	var level = 1;
+	var difficulty = "easy";
 	var experience = 0;
+	var current_computer_level = 1;
 	var rock_att	= 1;
 	var rock_def	= 1;
 	var paper_att   = 1;
@@ -690,6 +792,7 @@ function initData(tx){
 					"   id, "            +
 					"  	level, "         +
 					"  	experience, "    +
+					"  current_computer_level, " +
 					"  	rock_att, "      +
 					"  	rock_def, "      +
 					" 	paper_att, "     +
@@ -704,10 +807,11 @@ function initData(tx){
 					" 	color, "  +
 					" 	character "  +
 				   ") "+
-				   "values(1,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ",
+				   "values(1,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ",
 				   [
 					   level,
 					   experience,
+					   current_computer_level,
 					   rock_att,
 					   rock_def,
 					   paper_att,
@@ -728,6 +832,7 @@ function initData(tx){
 				   "("                  +
 					" 	id, "+
 					"	level, "    +
+					"   difficulty, "    +
 					" 	rock_att, "     +
 					" 	rock_def, "     +
 					" 	paper_att, "    +
@@ -741,9 +846,10 @@ function initData(tx){
 					" 	color, "  +
 					" 	character "  +
 				   ") "+
-				   "values(1,?,?,?,?,?,?,?,?,?,?,?,?,?) ",
+				   "values(1,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ",
 				   [
 					   level,
+					   difficulty,
 					   rock_att,
 					   rock_def,
 					   paper_att,
@@ -758,9 +864,96 @@ function initData(tx){
 					   character
 				  ]
 				 );
-	
+				 
 	initComputerDefaultStatsData(tx);
-	initPlayerLevelUpInfoData(tx);			 
+	initPlayerLevelUpInfoData(tx);	
+	initLevelLockData(tx);	
+	initSettingData(tx);	 
+}
+var level;
+    var rock_att;
+    var rock_def;
+    var paper_att;
+    var paper_def;
+    var scissors_def;
+    var scissors_def;
+    var life;
+    var gold_reward;
+    var exp_reward;
+    var color="bronze";
+    var character="knight";
+	
+	for(i=1; i<= 20; i++){
+		level        = i;
+		rock_att     = i;
+		rock_def     = i;
+		paper_att    = i;
+		paper_def    = i;
+		scissors_def = i;
+		scissors_def = i;
+		life     = i * 10;
+		gold_reward  = i * 200;
+		exp_reward   = i * 100;
+		
+		tx.executeSql("insert or ignore into comp_def_stats "+
+					   "(	"               +
+					    "   level, "	    +
+						" 	rock_att, "     +
+						" 	rock_def, "     +
+						" 	paper_att, "    +
+						"  	paper_def, "    +
+						" 	scissors_att, " +
+						" 	scissors_def, " +
+						" 	life, "     +
+						" 	gold_reward, "  +
+						" 	exp_reward, "  +
+						" 	color, "  +
+						" 	character "  +
+					   ") "+
+					   "values(?,?,?,?,?,?,?,?,?,?,?,?) ",
+					   [
+						   level,
+						   rock_att,
+						   rock_def,
+						   paper_att,
+						   paper_def,
+						   scissors_def,
+						   scissors_def,
+						   life,
+						   gold_reward,
+						   exp_reward,
+						   color,
+						   character
+					  ]
+				 );
+	}
+function initLevelLockData(tx){
+	var countries = ["Greece","China","Japan"];
+	var country = "";
+	for(countryIndex=0; countryIndex<3; countryIndex++){
+		country=countries[countryIndex];
+		for(level=1; level <=21; level++){
+			tx.executeSql("insert or ignore into level_lock "+
+					   "(									"               +
+					    "   country, 						"	    +
+						" 	level 							"     +
+					   ") 									" +
+					   "values(?,?) 						",
+					   [
+						   country,
+						   level
+					  ]
+				 );
+		}
+	}
+	
+}
+
+// music (yes, no), sound effects(yes, no), vibrate (on, off)
+function initSettingData(tx){
+	tx.executeSql("insert or ignore into settings (setting,value) values (?,?)",["Music",1]);
+	tx.executeSql("insert or ignore into settings (setting,value) values (?,?)",["SoundEffect",1]);
+	tx.executeSql("insert or ignore into settings (setting,value) values (?,?)",["Vibration",1]);
 }
 
 function initPlayerLevelUpInfoTable(){
@@ -827,7 +1020,13 @@ function initPlayerLevelUpInfoData(tx){
 }
 
 function initComputerDefaultStatsData(tx){
+    
+    
+    //every 8 computer levels has a different color
+	//every 24 computer levels has a different character (knight, soldier, samuri?)
     var level;
+    var medium_lock;
+    var hard_lock;
     var rock_att;
     var rock_def;
     var paper_att;
@@ -837,11 +1036,17 @@ function initComputerDefaultStatsData(tx){
     var life;
     var gold_reward;
     var exp_reward;
-    var color="bronze";
-    var character="knight";
+    var color;
+    var character;
+	var colorIndex=0;
+	var characterIndex=0;
+	var colors = ["bronze","silver","gold"];
+	var characters = ["knight","soldier","samurai"];
 	
-	for(i=1; i<= 20; i++){
+	for(i=1; i<= 96; i++){
 		level        = i;
+		medium_lock  = 1;
+		hard_lock    = 1;
 		rock_att     = i;
 		rock_def     = i;
 		paper_att    = i;
@@ -852,9 +1057,27 @@ function initComputerDefaultStatsData(tx){
 		gold_reward  = i * 200;
 		exp_reward   = i * 100;
 		
+		if(i%9==0){
+			colorIndex=colorIndex+1;
+			if(colorIndex>2){
+				colorIndex=0;
+			}
+		}
+		if(i%25==0){
+			characterIndex=characterIndex+1;
+			if(characterIndex>2){
+				characterIndex=0;
+			}
+		}
+		
+		color=colors[colorIndex];
+		character=characters[characterIndex];
+		
 		tx.executeSql("insert or ignore into comp_def_stats "+
 					   "(	"               +
 					    "   level, "	    +
+					    "   medium_lock, "  +
+					    "   hard_lock,  "   +
 						" 	rock_att, "     +
 						" 	rock_def, "     +
 						" 	paper_att, "    +
@@ -867,9 +1090,11 @@ function initComputerDefaultStatsData(tx){
 						" 	color, "  +
 						" 	character "  +
 					   ") "+
-					   "values(?,?,?,?,?,?,?,?,?,?,?,?) ",
+					   "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?) ",
 					   [
 						   level,
+						   medium_lock,
+						   hard_lock,
 						   rock_att,
 						   rock_def,
 						   paper_att,
@@ -932,6 +1157,8 @@ function initComputerDefaultStatsTable(){
 	result = "create table if not exists comp_def_stats " +
 			"( " +
 			"	level INTEGER PRIMARY KEY AUTOINCREMENT, " +
+			"	medium_lock INTEGER DEFAULT 1, 				" +
+			"	hard_lock INTEGER DEFAULT 1,				" +
 			"	rock_att INTEGER, 		" +
 			"	rock_def INTEGER, 		" +
 			"	paper_att INTEGER, 		" +
@@ -955,6 +1182,7 @@ function initComputerTable(){
 			"( " +
 			"	id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 			"	level INTEGER, 			" +
+			"   difficulty TEXT,        " +
 			"	rock_att INTEGER, 		" +
 			"	rock_def INTEGER, 		" +
 			"	paper_att INTEGER, 		" +
@@ -986,6 +1214,7 @@ function initPlayerTable(){
 			"	id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 			"	level INTEGER, 			" +
 			"	experience INTEGER, 	" +
+			"   current_computer_level INTEGER, " +
 			"	rock_att INTEGER, 		" +
 			"	rock_def INTEGER, 		" +
 			"	paper_att INTEGER, 		" +
@@ -1004,11 +1233,34 @@ function initPlayerTable(){
 	return result;
 }
 
-//computer - gold to give to player
-//computer - exp to give to player
-//computer  - color
-///computer - character
-// player - color
-// player - character
-//comp_def_stats - make some reasonable default data (20 levels)
-//req_level - add on stats.
+function initLevelLockTable(){
+	var result;
+	result = "create table if not exists level_lock 		" +
+			"( 												" +
+			"   country TEXT, 								" +
+			"   level INTEGER, 								" +
+			"	easy_lock INTEGER DEFAULT 1, 				" +
+			"	medium_lock INTEGER DEFAULT 1, 				" +
+			"	hard_lock INTEGER DEFAULT 1,				" +
+			"	PRIMARY KEY(country , level ) 					" +
+			") ";
+	
+	return result;
+}
+
+//setting - name of setting
+//value - 1 for on, 0 for off.
+function initSettingsTable(){
+	var result;
+	result = "create table if not exists settings " + 
+	"( " +
+	"	setting TEXT PRIMARY KEY, "+
+	"	value INTEGER DEFAULT 1 "+
+	")";
+	
+	return result;
+}
+
+//todo:
+//sound effects (record or find opensource)
+
