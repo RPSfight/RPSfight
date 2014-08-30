@@ -1,28 +1,35 @@
-function initGameover() {
-	$("#resultImg").attr("src", "img/background/" + getQuery("result") + ".png");
-	setTimeout(function(){
-		$("#gold").append("<img src='img/rps/gold.png'> <span>+"+getQuery("gold")+"</span> ");
-		$("#exp").append("<img src='img/rps/exp.png'> <span>+"+getQuery("exp")+"</span> ");
-	},500);
-	setTimeout(function(){
-		$("#gold").append(" <img src='img/rps/plus.png' style=' -ms-transform: rotate(90deg);-webkit-transform: rotate(90deg);transform: rotate(90deg)'> ");
-		$("#exp").append(" <img src='img/rps/plus.png' style=' -ms-transform: rotate(90deg);-webkit-transform: rotate(90deg);transform: rotate(90deg)'> ");
-	},1000);
-	setTimeout(function(){
-		$("#gold").append(" <img src='img/rps/gold.png'> <span>"+getQuery("tgold")+"</span>");
-		$("#exp").append(" <img src='img/rps/exp.png'> <span>"+getQuery("texp")+"</span>");
-	},1500);
-	
-	setTimeout(function(){
-		$("#ok").append("<a href='#' class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b' onclick='replay()'>Replay</a>");
-		$("#ok").append("<a href='#' class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b' onclick='redirect()'>Back to World</a>");
-	},2000);
+var reward = {
+	win : 1,
+	tie : 10,
+	lose : 100
+};
+
+function initGameover(result) {
+	$("#result").popup("open");
+	var gold = computerData.gold_reward / reward[result];
+	var exp = computerData.exp_reward / reward[result];
+	var orgGold = playerData.gold;
+	var orgExp = playerData.experience;
+	playerData.gold += gold;
+	playerData.experience += exp;
+	if (playerData.gold > playerData.gold_storage) {
+		playerData.gold = playerData.gold_storage;
+	}
+	if (playerData.experience > playerData.exp_storage) {
+		playerData.experience = playerData.exp_storage;
+	}
+	savePlayer(playerData);
+	$("#resultImg").attr("src", "img/background/" + result + ".png");
+	$("#picture").click();
+	$("#gold").text(orgGold + "/" + playerData.gold_storage);
+	$("#exp").text(orgExp + "/" + playerData.exp_storage);
+	setTimeout(function() {
+		$("#gold").text("+" + computerData.gold_reward / reward[result] + "/" + playerData.gold_storage);
+		$("#exp").text("+" + computerData.exp_reward / reward[result] + "/" + playerData.exp_storage);
+	}, 1000);
+	setTimeout(function() {
+		$("#gold").text(playerData.gold + "/" + playerData.gold_storage);
+		$("#exp").text(playerData.experience + "/" + playerData.exp_storage);
+	}, 2000);
 }
 
-function redirect(){
-	window.location="world.html";
-}
-
-function replay(){
-	window.location="main.html?level="+getQuery("level")+"&diffculty="+getQuery("diffculty");
-}

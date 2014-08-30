@@ -4,21 +4,11 @@
 var eimage = [];
 var pimage = [];
 var queueclear = false;
-var queueclear=false;
-var getstart = {
-	"left" : "130px",
-	"width" : "75px",
-	"top":"-=20px",
-	opacity : '1'
-};
-var getend = {
-	"left" : "0px",
-	"width" : "20px",
-	"top":"+=20px",
-	opacity : '0'
-};
+var queueclear = false;
+var getstart;
+var getend;
 
-var time=950;
+var time = 950;
 
 //init compare display compare in html file
 function initCompare(eList, pList) {
@@ -26,7 +16,41 @@ function initCompare(eList, pList) {
 	var string = "";
 	var size = Math.max(pList.length, eList.length);
 	string += "<div id='images'>";
-	var position = 280;
+	var position;
+	var top;
+	if (screen.width < 700) {
+		position = 200;
+		getstart = {
+			"left" : "130px",
+			"width" : "75px",
+			"top" : "-=20px",
+			opacity : '1'
+		};
+		getend = {
+			"left" : "0px",
+			"width" : "20px",
+			"top" : "+=20px",
+			opacity : '0'
+		};
+
+		top=100;
+	} else {
+		position = 600;
+		getstart = {
+			"left" : "310px",
+			"width" : "100px",
+			"top" : "-=40px",
+			opacity : '1'
+		};
+		getend = {
+			"left" : "0px",
+			"width" : "20px",
+			"top" : "+=40px",
+			opacity : '0'
+		};
+		
+		top=150;
+	}
 	for (var i = size - 1; i >= 0; i--) {
 		if (pList[i]) {
 			var image = "'img/rps/" + pList[i] + ".png'";
@@ -34,7 +58,7 @@ function initCompare(eList, pList) {
 		}
 		if (eList[i]) {
 			image = "'img/rps/" + eList[i] + ".png'";
-			string += "<img src=" + image + " style='position: absolute; top:100px; opacity : 0; width:20px; left:" + position.toString() + "px;' id='e" + i + "'>";
+			string += "<img src=" + image + " style='position: absolute; top:"+top+"px; opacity : 0; width:20px; left:" + position.toString() + "px;' id='e" + i + "'>";
 		}
 	}
 	string += "</div>";

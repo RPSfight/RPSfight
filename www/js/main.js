@@ -25,7 +25,11 @@ var computerData = [];
 var p = "#player";
 var e = "#computer";
 
+var timeStart=false;
+
 var maxTime = currentTime = 2.0;
+
+var lastId;
 
 function initMain() {
 	//init database
@@ -53,108 +57,24 @@ function initMain() {
 	window.addEventListener('orientationchange', doOnOrientationChange);
 	doOnOrientationChange();
 	document.getElementById("rps").addEventListener("touchstart", touchstart, false);
+	//$("#rock,#paper,#scissors").click(function(){add($(this).attr("id"));});
 }
 
 function touchstart(e) {
 	e.preventDefault();
-	/*var id = document.elementFromPoint(e.touches[0].pageX, e.touches[0].pageY).id;
-	 if (id !== idCollection[idCollection.length - 1]) {
-	 idCollection.push(id);
-	 }*/
-	var timer = setInterval(function() {
-		if (currentTime >= 0) {
-			$("#timer").text(currentTime.toFixed(1));
-			currentTime = Math.round(currentTime * 10 - 1) / 10;
-		} else {
-			clearInterval(timer);
-			$("#timer").text(maxTime.toFixed(1));
-			currentTime = maxTime;
-			play();
-		}
-	}, 100);
 	document.getElementById("rps").addEventListener("touchmove", function() {
 		var id = document.elementFromPoint(e.touches[0].pageX, e.touches[0].pageY).id;
-		if (id !== playerChosenMoves[playerChosenMoves.length - 1]) {
+		if (id !== lastId) {
 			if (id === "rock" || id === "paper" || id === "scissors") {
 				add(id);
 			}
+			lastId=id;
 		}
 	});
 }
 
 function onDeviceReady() {
 
-}
-
-/*
- * This  function is for orientation
- */
-function doOnOrientationChange() {
-	switch(window.orientation) {
-		case -90:
-		case 90:
-			$("#life").css({
-				"top" : "10px",
-				"left" : "120px"
-			});
-			$("#rps").css({
-				"top" : "30px",
-				"left" : "-80px"
-			});
-			$("#compare").css({
-				"top" : "30px",
-				"left" : "-180px"
-			});
-			$("#motion").css({
-				"top" : "100px",
-				"right" : "-120px"
-			});
-			$("#explode").css({
-				"top" : "100px",
-				"right" : "-120px"
-			});
-			$("body").css({
-				"background-size" : "cover",
-				"background-position" : "bottom"
-			});
-			//contain/cover
-			$("#menu").css({
-				"left" : "120px",
-				"top" : "10px"
-			});
-			break;
-		default:
-			$("#life").css({
-				"top" : "auto",
-				"left" : "auto"
-			});
-			$("#rps").css({
-				"top" : "100px",
-				"left" : "60px"
-			});
-			$("#compare").css({
-				"top" : "100px",
-				"left" : "auto"
-			});
-			$("#motion").css({
-				"top" : "300px",
-				"right" : "auto"
-			});
-			$("#explode").css({
-				"top" : "300px",
-				"right" : "auto"
-			});
-			$("#menu").css({
-				"left" : "auto",
-				"top" : "auto"
-			});
-			$("body").css({
-				"background-size" : "cover",
-				"background-position" : "right"
-			});
-			//contain/cover
-			break;
-	}
 }
 
 /*
@@ -275,11 +195,11 @@ function fight(computer, player, geti, size) {
 			saveComputer(computerData);
 		}
 		if (playerData.current_life <= 0 && computerData.current_life <= 0) {
-			gameover("tie");
+			initGameover("tie");
 		} else if (playerData.current_life <= 0) {
-			gameover("lose");
+			initGameover("lose");
 		} else if (computerData.current_life <= 0) {
-			gameover("win");
+			initGameover("win");
 		}
 	});
 
@@ -294,45 +214,44 @@ function fight(computer, player, geti, size) {
 
 }
 
-function gameover(result) {
-	var reward = {
-		win : 1,
-		tie : 10,
-		lose : 100
-	};
-	var gold = computerData.gold_reward / reward[result];
-	var exp = computerData.exp_reward / reward[result];
-	playerData.gold += gold;
-	playerData.experience += exp;
-	if (playerData.gold > playerData.gold_storage) {
-		playerData.gold = playerData.gold_storage;
-	}
-	if (playerData.experience > playerData.exp_storage) {
-		playerData.experience = playerData.exp_storage;
-	}
-	savePlayer(playerData);
-	setTimeout(function() {
-		window.location = "gameover.html?result=" + result + "&gold=" + gold + "&exp=" + exp + "&tgold=" + playerData.gold + "/" + playerData.gold_storage + "&texp=" + playerData.experience + "/" + playerData.exp_storage + "&level=" + getQuery("level") + "&diffculty=" + getQuery("diffculty");
-	}, 1500);
-}
-
-//display how much charaters life left
 function accessLife(charater, lifePersentage) {
+	var lifewidth;
+	if (screen.width < 700) {
+		lifewidth = 82;
+	} else {
+		lifewidth = 200;
+	}
 	var w = {
-		"width" : Math.floor(82 * lifePersentage) + "px"
+		"width" : Math.floor(lifewidth * lifePersentage) + "px"
 	};
 	$(charater).animate(w);
 }
-
 //Add rock, paper, or scissors into array
 function add(id) {
-	setTimeout(function() {
-		$("#" + id).attr("src", "img/rps/" + id + "_green.png");
-	}, 100);
+	if(!timeStart){
+		startTime();
+		timeStart=true;
+	}
+	$("#" + id).attr("src", "img/rps/" + id + "_green.png");
 	setTimeout(function() {
 		$("#" + id).attr("src", "img/rps/" + id + ".png");
 	}, 200);
 	playerChosenMoves.push(id);
+}
+
+function startTime() {
+	var timer = setInterval(function() {
+		if (currentTime >= 0) {
+			$("#timer").text(currentTime.toFixed(1));
+			currentTime = Math.round(currentTime * 10 - 1) / 10;
+		} else {
+			clearInterval(timer);
+			timeStart=false;
+			$("#timer").text(maxTime.toFixed(1));
+			currentTime = maxTime;
+			play();
+		}
+	}, 100);
 }
 
 function resume() {
@@ -343,7 +262,7 @@ function restart() {
 	if (confirm('Are you sure?')) {
 		$(p).clearQueue();
 		$(e).clearQueue();
-		window.location.reload();
+		refreshPage();
 	}
 }
 
@@ -351,11 +270,6 @@ function quit() {
 	if (confirm('Are you sure?')) {
 		$(p).finish();
 		$(e).finish();
-		window.location = "world.html";
+		backToWorld();
 	}
 }
-
-//loading screen jquery code
-$(window).load(function() {
-	$("#loader").delay(500).fadeOut("fast");
-});

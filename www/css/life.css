@@ -12,8 +12,6 @@
 #pBlood {
 	position: absolute;
 	left: 60px;
-	height:16px;
-	width:82px;
 	-moz-transform: scaleX(-1);
 	-o-transform: scaleX(-1);
 	-webkit-transform: scaleX(-1);
@@ -30,14 +28,42 @@
 #eBlood {
 	position: absolute;
 	right: 60px;
-	height:16px;
-	width:82px;
 }
 
-#eBlood, #pBlood{
-	top:15px;
+#eBlood, #pBlood {
+	top: 15px;
+	height: 16px;
+	width: 82px;
 }
 
-#eLife, #pLife{
-	top:8px;
+#eLife, #pLife {
+	top: 8px;
+}
+@media screen and (min-width: 700px) {
+	#pBlood {
+		left: 128px;
+	}
+
+	#eBlood {
+		right: 128px;
+	}
+
+	#pLife {
+		left: 34px;
+	}
+
+	#eLife {
+		right: 34px;
+	}
+
+	#eBlood, #pBlood {
+		height: 35px;
+		width: 200px;
+		top: 28px;
+	}
+
+	#eLife, #pLife {
+		top: 8px;
+		width: 300px;
+	}
 }

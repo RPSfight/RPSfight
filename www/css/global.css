@@ -2,17 +2,23 @@ body {
 
 }
 h2 {
-font-family: 'Arial Black', sans-serif;
-line-height: 1em;
-color: #a174cc;
-font-weight:bold;
-font-style:italic;
-font-size: 25px;
-text-shadow:0px 0px 0 rgb(137,92,180),1px 0px 0 rgb(124,79,167),2px 0px 0 rgb(110,65,153),3px 0px 0 rgb(97,52,140),4px 0px 0 rgb(83,38,126), 5px 0px 0 rgb(69,24,112),6px 0px 5px rgba(0,0,0,0.75),6px 0px 1px rgba(0,0,0,0.5),0px 0px 5px rgba(0,0,0,.2);
+	font-family: 'Arial Black', sans-serif;
+	line-height: 1em;
+	color: #a174cc;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 25px;
+	text-shadow: 0px 0px 0 rgb(137,92,180), 1px 0px 0 rgb(124,79,167), 2px 0px 0 rgb(110,65,153), 3px 0px 0 rgb(97,52,140), 4px 0px 0 rgb(83,38,126), 5px 0px 0 rgb(69,24,112), 6px 0px 5px rgba(0,0,0,0.75), 6px 0px 1px rgba(0,0,0,0.5), 0px 0px 5px rgba(0,0,0,.2);
 }
 
-#backButton{
-	position:absolute;
-	left:10px;
-	top:10px;
+#backButton {
+	position: absolute;
+	left: 10px;
+	top: 10px;
+}
+
+@media screen and (min-width: 700px) {
+	h2 {
+		font-size: 50px;
+	}
 }

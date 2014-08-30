@@ -26,13 +26,13 @@ body {
 }
 #paper {
 	position: absolute;
-	top:0px;
+	top: 0px;
 	left: 67px;
 }
 #rock {
 	top: 95px;
 	position: absolute;
-	left:10px;
+	left: 10px;
 }
 #scissors {
 	top: 95px;
@@ -40,3 +40,32 @@ body {
 	position: absolute;
 }
 
+@media screen and (min-width: 700px) {
+	#line1 {
+		top: 110px;
+		left: 190px;
+	}
+	#line2 {
+		top: 110px;
+		left: 290px;
+	}
+	#line3 {
+		top: 190px;
+		left: 240px;
+	}
+	#paper {
+		top: 0px;
+		left: 240px;
+	}
+	#rock {
+		top: 150px;
+		left: 150px;
+	}
+	#scissors {
+		top: 150px;
+		left: 320px;
+	}
+	#rps>img{
+		width:100px;
+	}
+}
