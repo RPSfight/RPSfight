@@ -14,10 +14,11 @@
 		<link rel="stylesheet" type="text/css" href="css/world.css" />
 		<script type="text/javascript" charset="utf-8" src="js/global.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/world.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/database.js"></script>
 	</head>
 
 	<body onload="initWorld()">
-		<div data-role="page" align="center" id="page">
+		<div align="center" id="page">
 			<div>
 				<a id="backButton" href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-back ui-btn-icon-notext" onclick="goBack()"></a>
 				<h2>RPS World</h2>
@@ -37,20 +38,33 @@
 			</div>
 
 			<div data-role="main" class="ui-content" id="window">
-				<p id="text" style="margin-right:10px;"></p>
+				<p id="text"></p>
+			</div>
 
-				<div data-role="popup" id="diffculty">
-					<div data-role="header">
-						<h1>Diffculty</h1>
-					</div>
+			<div data-role="popup" id="difficulty">
+				<div data-role="header">
+					<h1>Difficulty</h1>
+				</div>
 
-					<div data-role="main" class="ui-content">
-						<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="goMain(this.innerHTML)">Easy</a>
-						<br>
-						<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="goMain(this.innerHTML)">Medium</a>
-						<br>
-						<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="goMain(this.innerHTML)">Hard</a>
-					</div>
+				<div data-role="main" class="ui-content">
+					<p>
+						<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" onclick="goMain(this.innerHTML)">Easy</a>
+					</p>
+					<p id="medium"></p>
+					<p id="hard"></p>
+				</div>
+			</div>
+			
+			<div data-role="popup" id="resumeOrNew" align="center">
+				<p>
+					You still have a fight that had not complete yet.
+					<br>
+					Do you like to resume to the fight or have a new fight?
+				</p>
+
+				<div data-role="main" class="ui-content">
+					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="goToMain()">Resume</a>
+					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" onclick="newGame()">New</a>
 				</div>
 			</div>
 		</div>

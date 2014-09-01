@@ -22,6 +22,10 @@ function backToWorld(){
 	window.location = "world.html";
 }
 
+function goToMain(){
+	window.location="main.html";
+}
+
 //loading screen jquery code
 $(window).load(function() {
 	$("#loader").delay(500).fadeOut("fast");

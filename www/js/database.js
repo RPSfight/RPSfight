@@ -501,7 +501,7 @@ function saveComputer(computer){
 	
 	query = "update computer	"+
 			"	set level=?, "      +
-			"   set difficulty=?, " +
+			"   difficulty=?, "     +
 			"	rock_att=?, "       +
 			"	rock_def=?, "       +
 			"	paper_att=?, "      +

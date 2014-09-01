@@ -1,10 +1,15 @@
 .level {
-	width: 20px;
+	width: 25px;
+	height: 25px;
+}
+
+.locklevel {
+	width: 0px;
 	height: 25px;
 }
 
 body {
-	overflow: hidden;
+	overflow: auto;
 }
 
 #popup > div {
@@ -12,13 +17,30 @@ body {
 	text-align: center;
 }
 
-div > div > a {
-	width: 110px;
+#difficulty > div >p>a{
+margin:0px;	
+}
+
+#difficulty > div >p> .ui-btn-a {
+	width: 130px;
+}
+
+#difficulty > div >p> .ui-btn-b {
+	width: 108px;
+}
+
+[data-role="main"]{
+    padding:3px;
 }
 
 @media screen and (min-width: 700px) {
 	.level {
-		width: 40px;
+		width: 45px;
+		height: 55px;
+		font-size:30px;
+	}
+	.locklevel {
+		width: 0px;
 		height: 55px;
 		font-size:30px;
 	}

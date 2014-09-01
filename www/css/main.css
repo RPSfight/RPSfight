@@ -108,6 +108,7 @@ a {
 }
 
 #timer {
+	color:	#DA8FFF;
 	font-size: 40px;
 	text-shadow: 3px 3px 8px rgba(83, 74, 191, 0.79);
 }
@@ -159,4 +160,14 @@ a {
 	#timer {
 		font-size: 80px;
 	}
+}
+
+.ui-page, .ui-panel-content-wrap {
+    background: url(img/background/greatwall.png) !important;
+    background-attachment:fixed;
+	background-size:cover;
+}
+
+div .ui-page, .ui-content, .ui-btn {
+	background: transparent;
 }

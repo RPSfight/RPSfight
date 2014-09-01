@@ -25,7 +25,7 @@ var computerData = [];
 var p = "#player";
 var e = "#computer";
 
-var timeStart=false;
+var timeStart = false;
 
 var maxTime = currentTime = 2.0;
 
@@ -36,22 +36,23 @@ function initMain() {
 	initDB();
 	loadPlayer(function(player) {
 		playerData = player;
-		playerData.current_life = playerData.max_life;
 		playerImgSet = "img/" + playerData["character"] + "/" + playerData["color"] + "/";
 		$(p).attr("src", playerImgSet + "Ready.png");
+		//player blood bar
+		accessLife("#pBlood", playerData.current_life / playerData.max_life);
 	});
 
-	loadComputerDefaultStatsTable(getQuery("level"), function(computer) {
+	loadComputer(function(computer) {
 		computerData = computer;
-		computerData["current_life"] = computerData.life;
-		computerData["max_life"] = computerData.life;
 		computerImgSet = "img/" + computerData["character"] + "/" + computerData["color"] + "/";
 		$(e).attr("src", computerImgSet + "Ready.png");
+		//computer blood bar
+		accessLife("#eBlood", computerData.current_life / computerData.max_life);
+		setDifficulty(computerData.difficulty);
 	});
 
-	setDiffculty(getQuery("diffculty"));
 	$("#explode").css('visibility', 'hidden');
-	//$("body").css("background", "url(img/background/" + background[Math.floor(Math.random() * background.length)] + ".png) no-repeat");
+	$("body").css("background", "url(img/background/greatwall.png) no-repeat");
 
 	document.addEventListener("deviceready", onDeviceReady, false);
 	window.addEventListener('orientationchange', doOnOrientationChange);
@@ -68,7 +69,7 @@ function touchstart(e) {
 			if (id === "rock" || id === "paper" || id === "scissors") {
 				add(id);
 			}
-			lastId=id;
+			lastId = id;
 		}
 	});
 }
@@ -226,11 +227,12 @@ function accessLife(charater, lifePersentage) {
 	};
 	$(charater).animate(w);
 }
+
 //Add rock, paper, or scissors into array
 function add(id) {
-	if(!timeStart){
+	if (!timeStart) {
 		startTime();
-		timeStart=true;
+		timeStart = true;
 	}
 	$("#" + id).attr("src", "img/rps/" + id + "_green.png");
 	setTimeout(function() {
@@ -246,7 +248,7 @@ function startTime() {
 			currentTime = Math.round(currentTime * 10 - 1) / 10;
 		} else {
 			clearInterval(timer);
-			timeStart=false;
+			timeStart = false;
 			$("#timer").text(maxTime.toFixed(1));
 			currentTime = maxTime;
 			play();
@@ -260,9 +262,13 @@ function resume() {
 
 function restart() {
 	if (confirm('Are you sure?')) {
+		playerData["current_life"] = playerData.max_life;
+		computerData["current_life"] = computerData.max_life;
+		savePlayer(playerData);
+		saveComputer(computerData);
 		$(p).clearQueue();
 		$(e).clearQueue();
-		refreshPage();
+		setTimeout(function(){refreshPage();},1000);
 	}
 }
 
