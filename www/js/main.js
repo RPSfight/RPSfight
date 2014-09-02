@@ -63,13 +63,20 @@ function initMain() {
 
 function touchstart(e) {
 	e.preventDefault();
+	var id;
 	document.getElementById("rps").addEventListener("touchmove", function() {
-		var id = document.elementFromPoint(e.touches[0].pageX, e.touches[0].pageY).id;
+		id = document.elementFromPoint(e.touches[0].pageX, e.touches[0].pageY).id;
 		if (id !== lastId) {
 			if (id === "rock" || id === "paper" || id === "scissors") {
 				add(id);
 			}
 			lastId = id;
+		}
+	});
+	document.getElementById("rps").addEventListener("touchend", function() {
+		id = e.target.id;
+		if (id === "rock" || id === "paper" || id === "scissors") {
+			add(id);
 		}
 	});
 }
@@ -268,7 +275,9 @@ function restart() {
 		saveComputer(computerData);
 		$(p).clearQueue();
 		$(e).clearQueue();
-		setTimeout(function(){refreshPage();},1000);
+		setTimeout(function() {
+			refreshPage();
+		}, 1000);
 	}
 }
 

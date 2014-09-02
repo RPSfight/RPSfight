@@ -108,9 +108,15 @@ a {
 }
 
 #timer {
-	color:	#DA8FFF;
+	color:	white;
 	font-size: 40px;
-	text-shadow: 3px 3px 8px rgba(83, 74, 191, 0.79);
+	text-shadow:
+       3px 3px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+	-webkit-text-stroke: 1px black;
 }
 
 @media screen and (min-width: 700px) {

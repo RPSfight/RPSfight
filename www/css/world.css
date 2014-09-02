@@ -33,6 +33,21 @@ margin:0px;
     padding:3px;
 }
 
+p{
+	color:#000066;
+	font-weight:bold;
+}
+
+p>a{
+	color: white;
+   text-shadow:
+       3px 3px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+}
+
 @media screen and (min-width: 700px) {
 	.level {
 		width: 45px;

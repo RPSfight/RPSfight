@@ -81,17 +81,17 @@
 			</div>
 			<a id="menu" href="#menuBox" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn ui-shadow ui-corner-all ui-icon-grid ui-btn-icon-notext"></a>
 			
-			<div data-role="popup" id="menuBox">
+			<div data-role="popup" id="menuBox" style="background-color:rgba(255, 255, 255, 0.8)">
 				<div data-role="main" class="ui-content">
-					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="resume()">Resume</a>
+					<a href="#" class="ui-btn ui-icon-check ui-btn-icon-left ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="resume()">Resume</a>
 					<br>
-					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="restart()">Restart</a>
+					<a href="#" class="ui-btn ui-icon-refresh ui-btn-icon-left ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="restart()">Restart</a>
 					<br>
-					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="quit()">Quit</a>
+					<a href="#" class="ui-btn ui-icon-power ui-btn-icon-left ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="quit()">Quit</a>
 				</div>
 			</div>
 			
-			<div data-role="popup" id="result" data-dismissible="false" align="center">
+			<div data-role="popup" id="result" data-dismissible="false" align="center" style="background-color:rgba(255, 255, 255, 0.8)">
 				<img src=# id="resultImg" style="width:300px;height:130px;">
 				<p><img src='img/rps/gold.png'> <span id="gold"></span></p>
 				<p><img src='img/rps/exp.png'> <span id="exp"></span></p>
