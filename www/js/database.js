@@ -116,7 +116,8 @@ function testSavePlayerLevelUpInfo(){
 			paper_att_boost		:level_toedit,   
 			paper_def_boost		:level_toedit,   
 			scissors_att_boost	:level_toedit,       
-			scissors_def_boost	:scissor_def_boost      
+			scissors_def_boost	:scissor_def_boost,
+			max_life_boost      :1      
 		};
 		
 		savePlayerLevelUpInfo(info);
@@ -224,9 +225,8 @@ function testLoadComputerDefStats(){
 function testLoadPlayerLevelUpInfo(){
 	var level;
 	level = prompt("Specify a level to view", "7");
-	if(level > 1 && level < 21){
+	if(level > 1 && level < 97){
 		stats = loadPlayerLevelUpInfo(level,function(info){
-			
 			var results;
 			results = "Player Level Up Info: \n";
 			results += "level: "+info.level		  +"\n";
@@ -237,8 +237,8 @@ function testLoadPlayerLevelUpInfo(){
 			results += "paper_def_boost: "+info.paper_def_boost    +"\n";
 			results += "scis_att_boost: "+info.scissors_att_boost +"\n";
 			results += "scis_def_boost: "+info.scissors_def_boost +"\n";
-			
-			alert(results);  
+			results += "max_life_boost: "+info.max_life_boost +"\n";
+			alert(results);
 		});
 	}else{
 		alert("invalid input");
@@ -438,7 +438,8 @@ function savePlayerLevelUpInfo(info){
 	var paper_att_boost		=info.paper_att_boost		;           
 	var paper_def_boost		=info.paper_def_boost		;           
 	var scissors_att_boost	=info.scissors_att_boost	;  
-	var scissors_def_boost	=info.scissors_def_boost	; 
+	var scissors_def_boost	=info.scissors_def_boost	;
+	var max_life_boost      =info.max_life_boost		; 
 	var query;    
 	
 	query = "update player_level_up_info	"+
@@ -448,7 +449,8 @@ function savePlayerLevelUpInfo(info){
 			"	paper_att_boost	=?, "       +
 			"	paper_def_boost	=?, "       +
 			"	scissors_att_boost	=?, "   +
-			"	scissors_def_boost	=?  "   +
+			"	scissors_def_boost	=?, "   +
+			"   max_life_boost  =?  " +
 			"where level=?";  
 			  
 	db.transaction(function(tx){
@@ -461,6 +463,7 @@ function savePlayerLevelUpInfo(info){
 				paper_def_boost,
 				scissors_att_boost,
 				scissors_def_boost,
+				max_life_boost,
 				level
 			]);	
 	},dbErrorHandler, querySuccess);
@@ -632,7 +635,8 @@ function loadPlayerLevelUpInfo(forLevel,callBackFunction){
 					paper_att_boost:row.paper_att_boost,
 					paper_def_boost:row.paper_def_boost,
 					scissors_att_boost:row.scissors_att_boost,
-					scissors_def_boost:row.scissors_def_boost
+					scissors_def_boost:row.scissors_def_boost,
+					max_life_boost:row.max_life_boost
 				};
 			
 			//callBackFunction to execute
@@ -982,6 +986,7 @@ function initPlayerLevelUpInfoData(tx){
     var paper_def_boost;
     var scissors_def_boost;
     var scissors_def_boost;
+    var max_life_boost=1;
     
     for (i=2; i<= 20; i++){
     	level              = i;
@@ -1002,9 +1007,10 @@ function initPlayerLevelUpInfoData(tx){
 						" 	paper_att_boost, "    	+
 						"  	paper_def_boost, "    	+
 						" 	scissors_att_boost, " 	+
-						" 	scissors_def_boost " 	+
+						" 	scissors_def_boost, " 	+
+						"   max_life_boost   "	    +
 					   ") "+						
-					   "values(?,?,?,?,?,?,?,?) ",
+					   "values(?,?,?,?,?,?,?,?,?) ",
 					   [
 						   level,
 						   req_exp,
@@ -1013,7 +1019,8 @@ function initPlayerLevelUpInfoData(tx){
 						   paper_att_boost,
 						   paper_def_boost,
 						   scissors_def_boost,
-						   scissors_def_boost
+						   scissors_def_boost,
+						   max_life_boost
 					  ]
 				 );
     }
@@ -1063,7 +1070,7 @@ function initComputerDefaultStatsData(tx){
 				colorIndex=0;
 			}
 		}
-		if(i%25==0){
+		if(i%24==0){
 			characterIndex=characterIndex+1;
 			if(characterIndex>2){
 				characterIndex=0;
@@ -1141,7 +1148,8 @@ function initPlayerLevelUpInfoTable(){
 			 "	paper_att_boost INTEGER,			     " +
 			 "	paper_def_boost INTEGER,			     " +
 			 "	scissors_att_boost INTEGER,			     " +
-			 "	scissors_def_boost INTEGER			     " +
+			 "	scissors_def_boost INTEGER,			     " +
+			 "	max_life_boost INTEGER			         " +
 			 ")";
 			 
     return result;
@@ -1263,4 +1271,4 @@ function initSettingsTable(){
 
 //todo:
 //sound effects (record or find opensource)
-
+//music
