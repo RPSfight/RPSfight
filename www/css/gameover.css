@@ -13,3 +13,7 @@ p>span{
 	font-size:15px;
 }
 
+#message,#message1{
+	color:#990000;
+	font-weight:bold;
+}

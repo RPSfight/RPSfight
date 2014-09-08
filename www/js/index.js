@@ -1,3 +1,7 @@
+function onBodyLoad() {
+	document.addEventListener("deviceready", initIndex, false);
+}
+
 function initIndex() {
 	window.addEventListener('orientationchange', doOnOrientationChange);
 	doOnOrientationChange();

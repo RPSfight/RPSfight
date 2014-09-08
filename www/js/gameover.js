@@ -45,14 +45,16 @@ function unlockDifficulity() {
 	loadComputerDefaultStatsTable(computerData.level, function(stats) {
 		if (stats.medium_lock === 1) {
 			stats["medium_lock"] = 0;
+			$("#message1").text("Difficulty Medium Has Been Unlock!");
 		} else if (stats.hard_lock === 1 && computerData.difficulty.toLowerCase() === "medium") {
 			stats["hard_lock"] = 0;
+			$("#message1").text("Difficulty Hard Has Been Unlock!");
 		}
 		saveComputerDefaultStats(stats);
 	});
 	if (computerData.level === playerData.current_computer_level) {
 		playerData["current_computer_level"]++;
 		savePlayer(playerData);
-		alert("New Level Has Been Unlock");
+		$("#message").text("New Level Has Been Unlock!");
 	}
 }

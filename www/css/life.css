@@ -30,6 +30,20 @@
 	right: 60px;
 }
 
+#eBloodAmount, #pBloodAmount{
+	font-weight:bold;
+	position: relative;
+	top:13px;
+}
+
+#pBloodAmount{
+	left:-40px;
+}
+
+#eBloodAmount{
+	right:-40px;
+}
+
 #eBlood, #pBlood {
 	top: 15px;
 	height: 16px;
@@ -66,4 +80,17 @@
 		top: 8px;
 		width: 300px;
 	}
+	
+	#eBloodAmount, #pBloodAmount{
+	font-size:40px;
+	top:18px;
+}
+
+#pBloodAmount{
+	left:-80px;
+}
+
+#eBloodAmount{
+	right:-80px;
+}
 }

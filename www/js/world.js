@@ -4,6 +4,10 @@ var playerData;
 var computerData;
 var computersData = [];
 
+function onBodyLoad() {
+	document.addEventListener("deviceready", initWorld, false);
+}
+
 function initWorld() {
 	initDB();
 	loadPlayer(function(player) {

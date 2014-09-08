@@ -1,5 +1,10 @@
 var playerData;
 var levelData;
+
+function onBodyLoad() {
+	document.addEventListener("deviceready", initUpdate, false);
+}
+
 function initUpdate() {
 	initDB();
 	window.addEventListener('orientationchange', doOnOrientationChange);

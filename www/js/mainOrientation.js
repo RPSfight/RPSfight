@@ -28,7 +28,7 @@ function doOnOrientationChange() {
 				});
 				$("#menu").css({
 					"left" : "120px",
-					"top" : "12px"
+					"top" : "-10px"
 				});
 			} else {
 				$("#life").css({
@@ -53,7 +53,7 @@ function doOnOrientationChange() {
 				});
 				$("#menu").css({
 					"left" : "200px",
-					"top" : "30px"
+					"top" : "-19px"
 				});
 			}
 			$("body").css({
@@ -82,7 +82,7 @@ function doOnOrientationChange() {
 				});
 				$("#menu").css({
 					"left" : "auto",
-					"top" : "auto"
+					"top" : "-21px"
 				});
 			} else {
 				$("#rps").css({
@@ -103,7 +103,7 @@ function doOnOrientationChange() {
 				});
 				$("#menu").css({
 					"left" : "auto",
-					"top" : "20px"
+					"top" : "-29px"
 				});
 			}
 			$("#life").css({

@@ -20,6 +20,7 @@
 		<script type="text/javascript" charset="utf-8" src="js/global.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/gameover.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/mainOrientation.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script>
 		<!--<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script>-->
 		<link rel="stylesheet" type="text/css" href="css/rps.css" />
 		<link rel="stylesheet" type="text/css" href="css/life.css" />
@@ -44,9 +45,10 @@
 				evt.preventDefault();
 				return false;
 			});
+			
 		</script>
 	</head>
-	<body onload="initMain()">
+	<body onload="onBodyLoad()">
 		<div align="center" id="outterBox">
 			<div id="loader">
 				<img id="loader_img" src="img/rps/ajax-loader.gif">
@@ -57,6 +59,8 @@
 				<img src="img/rps/life.png" id="pLife">
 				<img src="img/rps/blood.png" id="eBlood">
 				<img src="img/rps/life.png" id="eLife">
+				<span id="pBloodAmount"></span>
+				<span id="eBloodAmount"></span>
 			</div>
 			<div id="rps">
 				<img src="img/rps/line.png" id="line1">
@@ -95,6 +99,8 @@
 				<img src=# id="resultImg" style="width:300px;height:130px;">
 				<p><img src='img/rps/gold.png'> <span id="gold"></span></p>
 				<p><img src='img/rps/exp.png'> <span id="exp"></span></p>
+				<p id="message"></p>
+				<p id="message1"></p>
 				<p id="ok">
 					<a href='#' class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b' onclick='restart()'>Replay</a>
 					<a href='#' class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b' onclick='backToWorld()'>Quit</a>

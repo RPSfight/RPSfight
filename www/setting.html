@@ -28,11 +28,12 @@
 
 		<link rel="stylesheet" type="text/css" href="css/setting.css" />
 		<script type="text/javascript" charset="utf-8" src="js/setting.js"></script>
-		
+
 		<script type="text/javascript" charset="utf-8" src="js/database.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script>
 	</head>
 
-	<body onload="initSetting()">
+	<body onload="onBodyLoad()">
 		<div data-role="page" id="page" align="center">
 			<div>
 				<a id="backButton" href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-back ui-btn-icon-notext" onclick="goBack()"></a>
@@ -44,20 +45,28 @@
 				<tr>
 					<th>Music:</th>
 					<td>
-					<input type="checkbox" id="music" data-role="flipswitch">
-					</td>
+					<select data-role="slider" id="Music">
+						<option value="0">Off</option>
+						<option value="1">On</option>
+					</select></td>
 				</tr>
 
 				<tr>
-					<th>Sound Effect:</th>
+					<th>Sound:</th>
 					<td>
-					<input type="checkbox" id="sound_effect" data-role="flipswitch">
+					<select data-role="slider" id="SoundEffect">
+						<option value="0">Off</option>
+						<option value="1">On</option>
+					</select></td>
 					</td>
 				</tr>
 				<tr>
-					<th>Vibration Effect:</th>
+					<th>Vibration:</th>
 					<td>
-					<input type="checkbox" id="vibration_effect" data-role="flipswitch">
+					<select data-role="slider" id="Vibration">
+						<option value="0">Off</option>
+						<option value="1">On</option>
+					</select></td>
 					</td>
 				</tr>
 			</table>

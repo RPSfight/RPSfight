@@ -1,18 +1,31 @@
-var settings = ["music", "sound_effect", "vibration_effect"];
+function onBodyLoad() {
+	document.addEventListener("deviceready", initSetting, false);
+}
 
 function initSetting() {
 	initDB();
-	for (var i = 0; i < settings.length; i++) {
-		loadSetting(settings[i], function(setting) {
-			if (setting) {
-				$("#"+settings[i]).attr("checked", true).checkboxradio("refresh");
-			}
-		});
-	}
 
-	alert($("#music").prop("checked"));
+	loadSetting("Music", function(setting) {
+		$("#Music").val(setting.value).slider('refresh');
+	});
+
+	loadSetting("SoundEffect", function(setting) {
+		$("#SoundEffect").val(setting.value).slider('refresh');
+	});
+
+	loadSetting("Vibration", function(setting) {
+		$("#Vibration").val(setting.value).slider('refresh');
+	});
+
 	window.addEventListener('orientationchange', doOnOrientationChange);
 	doOnOrientationChange();
+
+	$("[data-role='slider']").change(function(){
+		var settings=new Object();
+		settings["setting"]=$(this).attr("id");
+		settings["value"]=parseInt($(this).val());
+		saveSetting(settings);
+	});
 }
 
 function doOnOrientationChange() {

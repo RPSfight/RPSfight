@@ -22,6 +22,12 @@ function initFight(eMove, pMove) {
 			computerData.current_life -= playerData[pMove + "_att"] * playerData[pMove + "_att"] / (computerData[eMove + "_def"] * difficulty);
 			playerData.current_life -= computerData[eMove + "_att"] * computerData[eMove + "_att"] * difficulty * difficulty / playerData[pMove + "_def"];
 	}
+	if(computerData.current_life<0){
+		computerData["current_life"]=0;
+	}
+	if(playerData.current_life<0){
+		playerData["current_life"]=0;
+	}
 }
 
 function setDifficulty(text) {

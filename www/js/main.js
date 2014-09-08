@@ -12,9 +12,7 @@ var visibility;
 var gameCompleted;
 //In order to have vibration on attact, set vibrate to true
 //Time delay has issue between motion and compare, need to change every time set vibrate.
-var setting = {
-	vibrate : false,
-};
+var settings = new Object();
 
 //var background = ["greatwall", "mountain"];
 
@@ -30,6 +28,10 @@ var timeStart = false;
 var maxTime = currentTime = 2.0;
 
 var lastId;
+
+function onBodyLoad() {
+	document.addEventListener("deviceready", initMain, false);
+}
 
 function initMain() {
 	//init database
@@ -49,6 +51,19 @@ function initMain() {
 		//computer blood bar
 		accessLife("#eBlood", computerData.current_life / computerData.max_life);
 		setDifficulty(computerData.difficulty);
+	});
+
+	loadSetting("Music", function(setting) {
+		settings[setting.setting] = setting.value;
+	});
+
+	loadSetting("SoundEffect", function(setting) {
+		settings[setting.setting] = setting.value;
+	});
+
+	loadSetting("Vibration", function(setting) {
+		settings[setting.setting] = setting.value;
+
 	});
 
 	$("#explode").css('visibility', 'hidden');
@@ -175,7 +190,7 @@ function fight(computer, player, geti, size) {
 		accessLife("#eBlood", computerData.current_life / computerData.max_life);
 	}).animate(pgetpxmove, time[1], function() {
 		$("#explode").css('visibility', 'visible');
-		if (setting["vibrate"]) {
+		if (settings["Vibration"] === 1) {
 			navigator.notification.vibrate(100);
 		}
 	}).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[2]).animate(pgetpxmove, time[2]).animate(pgetpxend, time[1], function() {
@@ -233,6 +248,11 @@ function accessLife(charater, lifePersentage) {
 		"width" : Math.floor(lifewidth * lifePersentage) + "px"
 	};
 	$(charater).animate(w);
+	if (charater.charAt(1) === 'p') {
+		$("#pBloodAmount").text(Math.round(playerData.current_life) + "/" + playerData.max_life);
+	} else {
+		$("#eBloodAmount").text(Math.round(computerData.current_life) + "/" + computerData.max_life);
+	}
 }
 
 //Add rock, paper, or scissors into array

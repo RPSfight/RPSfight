@@ -335,7 +335,7 @@ function savePlayer(player){
 
 function saveLevelLock(levelLock){
 	var query = "update level_lock   	"   +
-				"	easy_lock=?,	 	"   +
+				"	set easy_lock=?,	 	"   +
 				"	medium_lock=?,      "   +  
 				"	hard_lock=?	 		"   +  
 				"where			 		"	+
@@ -363,9 +363,9 @@ function saveSetting(setting){
 	}
 	
 	var query = "update settings   	    "   +
-				"	value=?	 			"   +  
+				"	set value=?	 			"   +  
 				"where			 		"	+
-				"	settings=?    		"   +
+				"	setting=?    		" ;
 				
 	db.transaction(function(tx){
 		tx.executeSql(query,
@@ -988,15 +988,15 @@ function initPlayerLevelUpInfoData(tx){
     var scissors_def_boost;
     var max_life_boost=1;
     
-    for (i=2; i<= 20; i++){
+    for (i=1; i<= 99; i++){
     	level              = i;
-		req_exp            = i*100;
-		rock_att_boost     = i;
-		rock_def_boost     = i;
-		paper_att_boost    = i;
-		paper_def_boost    = i;
-		scissors_def_boost = i;
-		scissors_def_boost = i;	
+		req_exp            = i*500;
+		rock_att_boost     = Math.ceil(i/2);
+		rock_def_boost     = Math.ceil(i/2);
+		paper_att_boost    = Math.ceil(i/2);
+		paper_def_boost    = Math.ceil(i/2);
+		scissors_def_boost = Math.ceil(i/2);
+		scissors_def_boost = Math.ceil(i/2);	
 		
 		tx.executeSql("insert or ignore into player_level_up_info "+
 					   "(	"               		+
@@ -1048,19 +1048,19 @@ function initComputerDefaultStatsData(tx){
 	var colorIndex=0;
 	var characterIndex=0;
 	var colors = ["bronze","silver","gold"];
-	var characters = ["knight","soldier","samurai"];
+	var characters = ["knight","general","samurai"];
 	
 	for(i=1; i<= 96; i++){
 		level        = i;
 		medium_lock  = 1;
 		hard_lock    = 1;
-		rock_att     = i;
-		rock_def     = i;
-		paper_att    = i;
-		paper_def    = i;
-		scissors_def = i;
-		scissors_def = i;
-		life     = i * 10;
+		rock_att     = i*2;
+		rock_def     = i*2;
+		paper_att    = i*2;
+		paper_def    = i*2;
+		scissors_def = i*2;
+		scissors_def = i*2;
+		life     = i * 40;
 		gold_reward  = i * 200;
 		exp_reward   = i * 100;
 		
