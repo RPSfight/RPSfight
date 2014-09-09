@@ -8,6 +8,11 @@
 var playerChosenMoves = [];
 var computerChosenMoves = [];
 var rps = ["rock", "paper", "scissors"];
+var computerNumberMove={
+	easy:5,
+	medium:10,
+	hard:15
+};
 var visibility;
 var gameCompleted;
 //In order to have vibration on attact, set vibrate to true
@@ -116,7 +121,7 @@ function play() {
 	triangleVisibilty();
 
 	//ramdom choose computer moves
-	for (var i = 0; i < 5; i++) {
+	for (var i = 0; i < computerNumberMove[computerData.difficulty.toLowerCase()]; i++) {
 		computerChosenMoves.push(rps[Math.floor(Math.random() * rps.length)]);
 	}
 	document.getElementById("compare").innerHTML = initCompare(computerChosenMoves, playerChosenMoves);

@@ -986,17 +986,18 @@ function initPlayerLevelUpInfoData(tx){
     var paper_def_boost;
     var scissors_def_boost;
     var scissors_def_boost;
-    var max_life_boost=1;
+    var max_life_boost;
     
     for (i=1; i<= 99; i++){
     	level              = i;
-		req_exp            = i*500;
+		req_exp            = i*200;
 		rock_att_boost     = Math.ceil(i/2);
 		rock_def_boost     = Math.ceil(i/2);
 		paper_att_boost    = Math.ceil(i/2);
 		paper_def_boost    = Math.ceil(i/2);
 		scissors_def_boost = Math.ceil(i/2);
 		scissors_def_boost = Math.ceil(i/2);	
+		max_life_boost=i*10;
 		
 		tx.executeSql("insert or ignore into player_level_up_info "+
 					   "(	"               		+
@@ -1060,7 +1061,7 @@ function initComputerDefaultStatsData(tx){
 		paper_def    = i*2;
 		scissors_def = i*2;
 		scissors_def = i*2;
-		life     = i * 40;
+		life     = i * 10;
 		gold_reward  = i * 200;
 		exp_reward   = i * 100;
 		

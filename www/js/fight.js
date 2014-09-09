@@ -36,10 +36,10 @@ function setDifficulty(text) {
 			difficulty = 1;
 			break;
 		case "medium":
-			difficulty = 2;
+			difficulty = 1;
 			break;
 		case "hard":
-			difficulty = 3;
+			difficulty = 1;
 			break;
 
 	}

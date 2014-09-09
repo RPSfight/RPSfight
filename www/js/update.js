@@ -125,6 +125,7 @@ function updateLevel(element) {
 		playerData.paper_def += levelData.paper_def_boost;
 		playerData.scissors_att += levelData.scissors_att_boost;
 		playerData.scissors_def += levelData.scissors_def_boost;
+		playerData.max_life+=levelData.max_life_boost;
 		savePlayer(playerData);
 		refresh();
 	} else {
